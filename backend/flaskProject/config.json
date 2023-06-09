@@ -1,0 +1,6 @@
+{
+  "url-backend": "127.0.0.1",
+  "port": 5000,
+  "data-db-connection": "mongodb+srv://ambarcouturedb:PruebaAmbar@cluster0.dbscdgc.mongodb.net/Ambar?retryWrites=true&w=majority",
+  "name-db": "Ambar"
+}
