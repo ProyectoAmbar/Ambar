@@ -19,6 +19,7 @@ product = ProductoController()
 def crearProducto():
     data = request.get_json()
     json = product.create(data)
+    print(json)
     return jsonify(json)
 
 @app.route('/productos/<string:id>' , methods=['PUT'])

@@ -7,7 +7,7 @@ class RepositorioProductos(interfaceRepositorio[Producto]):
         collection = self.db[self.collection]
         response = collection.find_one({"referencia": ref})
         if response:
-            return response
+            return True
         else:
             return None
 

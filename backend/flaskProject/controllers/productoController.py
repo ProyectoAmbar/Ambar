@@ -8,9 +8,9 @@ class ProductoController():
 
     def create(self, infoProducto):
         try:
-            print("crear un producto")
-            if infoProducto["nombre"] and infoProducto["referencia"] and infoProducto["imagenProducto"] and infoProducto["cantidadTallaS"] and infoProducto["cantidadTallaM"] and infoProducto["cantidadTallaL"]:
+            if infoProducto['nombre'] and infoProducto['referencia'] and infoProducto['imagenProducto'] and infoProducto['cantidadTallaS'] and infoProducto['cantidadTallaM'] and infoProducto['cantidadTallaL']:
                 theProduct = Producto(infoProducto)
+                print(theProduct)
                 productoPorReferencia = self.RepositorioProductos.getByReferencia(theProduct.referencia)
                 productoPorNombre = self.RepositorioProductos.getByNombre(theProduct.nombre)
                 if not productoPorNombre and not productoPorReferencia:
