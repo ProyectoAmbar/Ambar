@@ -13,7 +13,7 @@ class ProductoController():
                 theProduct = Producto(infoProducto)
                 productoPorReferencia = self.RepositorioProductos.getByReferencia(theProduct.referencia)
                 productoPorNombre = self.RepositorioProductos.getByNombre(theProduct.nombre)
-                if not productoPorNombre and productoPorReferencia :
+                if not productoPorNombre and not productoPorReferencia:
                     response = self.RepositorioProductos.save(theProduct)
                     response.append({"status": True, "code": 200, "message": "El producto fue agregado a la base de datos con exito"})
                     return response
