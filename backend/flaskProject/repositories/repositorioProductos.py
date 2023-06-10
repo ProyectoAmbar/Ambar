@@ -9,13 +9,13 @@ class RepositorioProductos(interfaceRepositorio[Producto]):
         if response:
             return True
         else:
-            return False
+            return None
 
     def getByNombre(self, nombre):
         collection = self.db[self.collection]
         response = collection.find_one({"nombre": nombre})
         if response:
-            return True
+            return response
         else:
-            return False
+            return None
     pass

@@ -8,16 +8,11 @@ class ProductoController():
 
     def create(self, infoProducto):
         try:
-            print(infoProducto)
-            print(infoProducto['nombre'])
-            print(infoProducto['referencia'])
-            print(infoProducto['imagenProducto'])
             if infoProducto['nombre'] and infoProducto['referencia'] and infoProducto['imagenProducto'] and infoProducto['cantidadTallaS'] and infoProducto['cantidadTallaM'] and infoProducto['cantidadTallaL']:
                 theProduct = Producto(infoProducto)
                 print(theProduct)
                 productoPorReferencia = self.RepositorioProductos.getByReferencia(theProduct.referencia)
                 productoPorNombre = self.RepositorioProductos.getByNombre(theProduct.nombre)
-                print(productoPorNombre)
                 if not productoPorNombre and not productoPorReferencia:
                     response = self.RepositorioProductos.save(theProduct)
                     response.append({"status": True, "code": 200, "message": "El producto fue agregado a la base de datos con exito"})
