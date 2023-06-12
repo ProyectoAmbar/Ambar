@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface UserGeneralRepository extends MongoRepository<userGeneral,String>{
     @Query("{correo: ?0}")
-    public userGeneral getUerGeneralByCorreo(String correo);
+    public userGeneral getUserGeneralByCorreo(String correo);
 }

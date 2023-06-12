@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ambar.springbootusers.Repositories.UserGeneralRepository;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.sound.midi.MidiUnavailableException;
 import java.io.IOException;
 import java.util.List;
 import java.security.MessageDigest;
@@ -24,10 +25,12 @@ public class userController {
     @Autowired
     private rolRepository myRolRepo;
 
+
+    //CREAR UN NUEVO USUARIO
     @PostMapping
     public userGeneral createUser(@RequestBody userGeneral usuario){
         if(usuario.isValid()){
-            userGeneral usuarioActual = this.myUserRepo.getUerGeneralByCorreo(usuario.getCorreo());
+            userGeneral usuarioActual = this.myUserRepo.getUserGeneralByCorreo(usuario.getCorreo());
             if(usuarioActual == null){
                 usuario.setPassword(convertirSHA256(usuario.getPassword()));
                 rol defaultRol = this.myRolRepo.findById("64869b530152eb1976abcee4").orElse(null);
@@ -42,6 +45,8 @@ public class userController {
         }
     }
 
+
+    //OBTENER TODOS LOS USUARIOS
     @GetMapping
     public List<userGeneral> getAllUser(){
         List<userGeneral> usuarios = this.myUserRepo.findAll();
@@ -51,6 +56,8 @@ public class userController {
         throw new ResponseStatusException(HttpStatus.OK);
     }
 
+
+    //OBTENER UN USUARIO POR SU ID
     @GetMapping("{id}")
     public userGeneral getById(@PathVariable String id){
         userGeneral usuarioActual = this.myUserRepo.findById(id).orElse(null);
@@ -59,27 +66,56 @@ public class userController {
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se encontron ningun usuario con el id: " + id);
     }
 
+
+    //VALIDAR LAS CREDENCIALES DE UN USUARIO
     @PostMapping("/validar")
     public userGeneral validar(@RequestBody userGeneral usuarioValidar) {
-        userGeneral usuarioActual = this.myUserRepo.getUerGeneralByCorreo(usuarioValidar.getCorreo());
+        userGeneral usuarioActual = this.myUserRepo.getUserGeneralByCorreo(usuarioValidar.getCorreo());
         if(usuarioActual != null && usuarioActual.getPassword().equals(convertirSHA256(usuarioValidar.getPassword()))) {
             throw new ResponseStatusException(HttpStatus.ACCEPTED);
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
     }
 
+
+    //  ACTUALIZAR USUARIO
     @PutMapping("{id}")
     public userGeneral updateUser(@PathVariable String id ,@RequestBody userGeneral usuario){
         if(usuario.isValid()){
-            userGeneral Validacion = this.myUserRepo.getUerGeneralByCorreo(usuario.getCorreo());
-            if (Validacion == null || Validacion.get_id() == id){
-                Validacion = usuario;
-                return Validacion;
+            userGeneral Validacion = this.myUserRepo.findById(id).orElse(null);
+            if (Validacion != null ){
+                userGeneral validarCorreo = this.myUserRepo.getUserGeneralByCorreo(usuario.getCorreo());
+                if (validarCorreo == null || validarCorreo.get_id() == id){
+                    Validacion.setNombreApellido(usuario.getNombreApellido());
+                    Validacion.setPassword(convertirSHA256(usuario.getPassword()));
+                    Validacion.setCorreo(usuario.getCorreo());
+                    Validacion.setNumeroCelular(usuario.getNumeroCelular());
+                    return this.myUserRepo.save(Validacion);
+                }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ya existe un usuario con el correo: "+ usuario.getCorreo());
             }else{
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "el correo ya tiene un usuario asignado");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se encontro ningun usuario con el id: " + id);
             }
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se tiene la información necesaria para actualizar al usuario");
+    }
+    //ASIGNAR ROL
+    @PutMapping("/asignarRol/{idUsuario}/rol/{idRol}")
+    public userGeneral asignarRol(@PathVariable String idUsuario, @PathVariable String idRol){
+        rol rolAAsignar = this.myRolRepo.findById(idRol).orElse(null);
+        userGeneral usuarioActual = this.myUserRepo.findById(idUsuario).orElse(null);
+        if(rolAAsignar != null && usuarioActual != null){
+            usuarioActual.setRol(rolAAsignar);
+            return usuarioActual;
+        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No ha sido posible encontrar el usuario o el Id");
+    }
+    // ELIMINAR UN USUARIO
+    @DeleteMapping("{id}")
+    public userGeneral deleteUser(@PathVariable String id){
+        userGeneral userToDelete = this.myUserRepo.findById(id).orElse(null);
+        if(userToDelete != null) {
+            this.myUserRepo.deleteById(id);
+            throw new ResponseStatusException(HttpStatus.ACCEPTED, "El usuario con id: " + id + " fue eliminado");
+        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existe ningun usuario con el id :" + id );
     }
 
 
