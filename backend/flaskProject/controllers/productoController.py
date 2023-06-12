@@ -44,8 +44,10 @@ class ProductoController():
                 return {"status": False, "Code": 400, "message": "hace falta información o el id no fue encontrado"}
 
 
-    def deleteProducto(self,_id):
+    def deleteProducto(self, _id):
         print("eliminar un producto")
-        return self.deleteProducto(id)
+
+
+        return self.RepositorioProductos.delete(_id)
 
 

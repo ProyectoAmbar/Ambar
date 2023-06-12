@@ -38,6 +38,11 @@ def getById(id):
     json = product.getById(id)
     return jsonify(json)
 
+@app.route('/productos/<string:id>',methods = ['DELETE'])
+def Delete(id):
+    json = product.deleteProducto(id);
+    return jsonify(json)
+
 
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
