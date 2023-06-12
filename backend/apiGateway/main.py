@@ -14,19 +14,24 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
 
+def loadFileConfig():
+    with open('config.json') as f:
+        data = json.load(f)
+    return data
 
+
+dataConfig = loadFileConfig()
 app = Flask(__name__)
 cors = CORS(app)
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Cambiar por el que se conveniente
+app.config["JWT_SECRET_KEY"] = dataConfig["key"]
 jwt = JWTManager(app)
-
 
 
 @app.route("/login", methods=['POST'])
 def createToken():
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-users"]+'/user/validar'
+    url = dataConfig["url-backend-users"] + '/user/validar'
     response = requests.post(url, json=data, headers=headers)
     if response.status_code == 200:
         user = response.json()
@@ -34,10 +39,10 @@ def createToken():
         expires = datetime.timedelta(seconds=60 * 60 * 24)
         token = create_access_token(identity=user, expires_delta=expires)
         return jsonify({
-                "accesToken": token,
-                "userId": user["_id"],
-                "rol": user["rol"]["_id"]
-            })
+            "accesToken": token,
+            "userId": user["_id"],
+            "rol": user["rol"]["_id"]
+        })
     else:
         json = []
         json.append({"message": "Por favor revise sus credenciales"})
@@ -46,13 +51,6 @@ def createToken():
         return jsonify(json)
 
 
-def loadFileConfig():
-    with open('config.json') as f:
-        data = json.load(f)
-    return data
-
-
 if __name__ == '__main__':
-    dataConfig = loadFileConfig()
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
     serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
