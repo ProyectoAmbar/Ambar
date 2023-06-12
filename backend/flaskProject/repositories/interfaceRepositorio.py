@@ -9,7 +9,7 @@ class interfaceRepositorio(Generic[T]):
     def __init__(self):
         ca = certifi.where()
         dataconfig = self.loadConfig()
-        client = pymongo.MongoClient(dataconfig["data-db-connection"],tlsCAFile=ca)
+        client = pymongo.MongoClient(dataconfig["data-db-connection"], tlsCAFile=ca)
         self.db = client[dataconfig["name-db"]]
         theClass = get_args(self.__orig_bases__[0])
         self.collection = theClass[0].__name__

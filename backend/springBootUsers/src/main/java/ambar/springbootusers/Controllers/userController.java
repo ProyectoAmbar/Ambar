@@ -72,7 +72,7 @@ public class userController {
     public userGeneral validar(@RequestBody userGeneral usuarioValidar) {
         userGeneral usuarioActual = this.myUserRepo.getUserGeneralByCorreo(usuarioValidar.getCorreo());
         if(usuarioActual != null && usuarioActual.getPassword().equals(convertirSHA256(usuarioValidar.getPassword()))) {
-            throw new ResponseStatusException(HttpStatus.ACCEPTED);
+            return  usuarioActual;
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
     }

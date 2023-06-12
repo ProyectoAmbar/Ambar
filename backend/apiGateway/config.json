@@ -1,0 +1,6 @@
+{
+  "url-backend": "127.0.0.1",
+  "port": 7777,
+  "url-backend-users": "http://127.0.0.1:8080",
+  "url-backend-result": "http://127.0.0.1:5000"
+}
