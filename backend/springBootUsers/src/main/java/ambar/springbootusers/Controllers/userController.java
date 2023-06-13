@@ -112,9 +112,10 @@ public class userController {
     @DeleteMapping("{id}")
     public userGeneral deleteUser(@PathVariable String id){
         userGeneral userToDelete = this.myUserRepo.findById(id).orElse(null);
+        System.out.println(userToDelete.getCorreo());
         if(userToDelete != null) {
             this.myUserRepo.deleteById(id);
-            throw new ResponseStatusException(HttpStatus.ACCEPTED, "El usuario con id: " + id + " fue eliminado");
+            return userToDelete;
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existe ningun usuario con el id :" + id );
     }
 
