@@ -3,7 +3,9 @@ import ambar.springbootusers.Modelos.empleado;
 import ambar.springbootusers.Modelos.userGeneral;
 import ambar.springbootusers.Repositories.rolRepository;
 import ambar.springbootusers.Repositories.empleadoRepository;
+import ambar.springbootusers.Repositories.UserGeneralRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,13 +22,16 @@ public class empleadoController{
     rolRepository rolRepo;
     @Autowired
     empleadoRepository empleadoRepository;
+    @Autowired
+    UserGeneralRepository myUserRepo;
+
 
     @PostMapping
     public empleado createEmpleado(@RequestBody empleado empleadoActual){
-
         if(empleadoActual.isValid() && empleadoActual.getIdentificacion() != null && empleadoActual.getSede() != null){
+            userGeneral usuarioGen = this.myUserRepo.getUserGeneralByCorreo(empleadoActual.getCorreo());
             empleado searched = this.empleadoRepository.getempleadoByCorreoIdentificacion(empleadoActual.getCorreo(),empleadoActual.getIdentificacion());
-            if(searched == null){
+            if(searched == null && usuarioGen == null){
                 empleadoActual.setPassword(convertirSHA256(empleadoActual.getPassword()));
                 return this.empleadoRepository.save(empleadoActual);
             }else{ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "el empleado ya existe");
@@ -54,12 +59,13 @@ public class empleadoController{
     }
 
     @PutMapping("{id}")
-    public empleado updateUser(@PathVariable String id ,@RequestBody empleado usuario){
+    public empleado updateEmpleado(@PathVariable String id ,@RequestBody empleado usuario){
         if(usuario.isValid()){
             empleado Validacion = this.empleadoRepository.findById(id).orElse(null);
             if (Validacion != null ){
+                userGeneral usuarioGen = this.myUserRepo.getUserGeneralByCorreo(usuario.getCorreo());
                 empleado validarCorreo = this.empleadoRepository.getempleadoByCorreo(usuario.getCorreo());
-                if (validarCorreo == null || validarCorreo.get_id() == id){
+                if ((validarCorreo == null || validarCorreo.get_id() == id) && usuarioGen == null){
                     Validacion.setNombreApellido(usuario.getNombreApellido());
                     Validacion.setPassword(convertirSHA256(usuario.getPassword()));
                     Validacion.setCorreo(usuario.getCorreo());

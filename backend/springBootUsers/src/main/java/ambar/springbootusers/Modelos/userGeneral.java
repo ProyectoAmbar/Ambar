@@ -10,7 +10,7 @@ import java.util.List;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 @Data
-@Document()
+@Document
 public class userGeneral {
     @Id
     private String _id;
@@ -83,5 +83,12 @@ public class userGeneral {
         this.rol = rol;
     }
 
+    public userGeneral() {
+        this._id = null;
+        this.nombreApellido = null;
+        this.correo = null;
+        this.numeroCelular = null;
+        this.rol = null;
+    }
 
 }
