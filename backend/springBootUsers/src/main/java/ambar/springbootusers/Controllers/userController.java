@@ -1,4 +1,5 @@
 package ambar.springbootusers.Controllers;
+import ambar.springbootusers.Modelos.empleado;
 import ambar.springbootusers.Modelos.userGeneral;
 import ambar.springbootusers.Modelos.rol;
 import ambar.springbootusers.Repositories.rolRepository;
@@ -74,7 +75,6 @@ public class userController {
         if(usuarioActual != null && usuarioActual.getPassword().equals(convertirSHA256(usuarioValidar.getPassword()))) {
             return  usuarioActual;
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-
     }
 
 
