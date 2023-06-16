@@ -7,6 +7,6 @@ public interface empleadoRepository extends MongoRepository<empleado,String>{
 
     @Query("{'correo': ?0}")
     public empleado getempleadoByCorreo(String correo);
-    @Query("[{'correo':  ?0},{'indentificacion': ?1}]")
+    @Query(" {$and:  [{'correo':  ?0},{'indentificacion': ?1}]}")
     public empleado getempleadoByCorreoIdentificacion(String correo, String identificacion);
 }

@@ -42,5 +42,23 @@ public class permisosController {
         }
     }
 
-    
+    @PutMapping("{id}")
+    public permiso updatePermiso(@PathVariable String id, @RequestBody permiso updatePermiso){
+        permiso search = this.permisosRepo.findById(id).orElse(null);
+        if(search != null){
+            permiso validar = this.permisosRepo.getpermisoByUrlAndMetodo(updatePermiso.getUrl(), updatePermiso.getMetodo());
+            if(validar == null){
+                search.setUrl(updatePermiso.getUrl());
+                search.setMetodo(updatePermiso.getMetodo());
+                return this.permisosRepo.save(search);
+            }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Ya existe un permiso con los mismos atributos");
+        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se ha encontrado ningun permiso con el id" + id);
+    }
+
+    @DeleteMapping("{id}")
+    public permiso deletePermiso(@PathVariable String id){
+        this.permisosRepo.deleteById(id);
+        throw new ResponseStatusException(HttpStatus.OK, "El permiso fue eliminado correctamente");
+    }
+
 }
