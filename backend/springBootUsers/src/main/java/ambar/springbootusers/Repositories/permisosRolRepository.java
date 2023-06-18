@@ -9,5 +9,5 @@ public interface permisosRolRepository extends MongoRepository<PermisosRol, Stri
     @Query("{'rol':?0}")
     public List<PermisosRol> getAllByRol(String rolId);
     @Query("{$and : [{'rol': {$eq :?0}},{'permiso': {$eq: ?1}}]}")
-    public permisosRepository getPermisosRolByPermisoAndRol();
+    public PermisosRol getPermisosRolByPermisoAndRol(String idPermiso, String idRol);
 }

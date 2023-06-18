@@ -8,7 +8,7 @@ import datetime
 import requests
 import re
 
-from flask_jwt_extended import create_access_token, verify_jwt_in_request
+from flask_jwt_extended import create_access_token, verify_jwt_in_request, get_jwt, unset_jwt_cookies, set_access_cookies
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
@@ -26,6 +26,54 @@ cors = CORS(app)
 app.config["JWT_SECRET_KEY"] = dataConfig["key"]
 jwt = JWTManager(app)
 
+@app.before_request
+def before_request_callback():
+    endPoint = limpiarURL(request.path)
+    print(endPoint)
+    excludedRoutes = ["/login",]
+    if excludedRoutes.__contains__(request.path):
+        pass
+    elif verify_jwt_in_request():
+        usuario = get_jwt_identity()
+        print(usuario)
+        if usuario["rol"] is not None:
+            tienePersmiso = validarPermiso(endPoint, request.method, usuario["rol"]["_id"])
+            print(tienePersmiso)
+            if not tienePersmiso:
+                return jsonify({"message": "Permission denied"}), 401
+        else:
+            return jsonify({"message": "Permission denied"}), 401
+
+
+def limpiarURL(url):
+    print("valida url")
+    partes = url.split("/")
+    for laParte in partes:
+        if re.search('\\d', laParte):
+            url = url.replace(laParte, "?")
+    return url
+
+
+def validarPermiso(endPoint, metodo, idRol):
+    print(metodo)
+    url = dataConfig["url-backend-users"] + "/PermisosRol/validar-permiso/rol/" + str(idRol)
+    tienePermiso = False
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    body = {
+        "url": endPoint,
+        "metodo": metodo
+    }
+    response = requests.get(url, json=body, headers=headers)
+
+    try:
+        data = response.json()
+        if "_id" in data:
+            tienePermiso = True
+        else:
+            tienePermiso = False
+    except:
+        pass
+    return tienePermiso
 
 # --------------RUTAS DE USUARIOS-------------- #
 @app.route("/user", methods=['POST'])
@@ -58,6 +106,17 @@ def Login():
         json.append(response.json())
 
         return jsonify(json)
+
+
+@app.route("/logout", methods=['POST'])
+@jwt_required(verify_type=False)
+def logout():
+    res = jsonify({
+        "status": 200,
+        "msg": "token successfully revoked"
+    })
+    unset_jwt_cookies(res)
+    return res
 
 @app.route("/user", methods=['GET'])
 def getAllUser():

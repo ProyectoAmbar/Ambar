@@ -1,5 +1,6 @@
 package ambar.springbootusers.Controllers;
 import ambar.springbootusers.Modelos.empleado;
+import ambar.springbootusers.Modelos.rol;
 import ambar.springbootusers.Modelos.userGeneral;
 import ambar.springbootusers.Repositories.rolRepository;
 import ambar.springbootusers.Repositories.empleadoRepository;
@@ -29,7 +30,7 @@ public class empleadoController{
     @PostMapping
     public empleado createEmpleado(@RequestBody empleado empleadoActual){
         if(empleadoActual.isValid() && empleadoActual.getIdentificacion() != null && empleadoActual.getSede() != null){
-            userGeneral usuarioGen = this.myUserRepo.getUserGeneralByCorreo(empleadoActual.getCorreo());
+            empleado usuarioGen = this.empleadoRepository.getempleadoByCorreo(empleadoActual.getCorreo());
             empleado searched = this.empleadoRepository.getempleadoByCorreoIdentificacion(empleadoActual.getCorreo(),empleadoActual.getIdentificacion());
             if(searched == null && usuarioGen == null){
                 empleadoActual.setPassword(convertirSHA256(empleadoActual.getPassword()));
@@ -39,6 +40,20 @@ public class empleadoController{
         }else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hace falta información para crear el empleado");
         }
+    }
+
+    @PutMapping("/asignarRol/{idUsuario}/rol/{idRol}")
+    public userGeneral asignarRol(@PathVariable String idUsuario, @PathVariable String idRol){
+        System.out.println(idRol);
+        System.out.println(idUsuario);
+        rol rolAAsignar = this.rolRepo.findById(idRol).orElse(null);
+        System.out.println(rolAAsignar);
+        empleado usuarioActual = this.empleadoRepository.findById(idUsuario).orElse(null);
+        System.out.println(usuarioActual);
+        if(rolAAsignar != null && usuarioActual != null){
+            usuarioActual.setRol(rolAAsignar);
+            return usuarioActual;
+        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No ha sido posible encontrar el usuario o el Id");
     }
 
     @GetMapping

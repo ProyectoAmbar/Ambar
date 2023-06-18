@@ -24,6 +24,8 @@ public class PermisosRol {
         this.permiso = permiso;
     }
 
+    public PermisosRol (){}
+
 
     public String get_id() {
         return _id;

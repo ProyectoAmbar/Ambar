@@ -8,15 +8,14 @@ import ambar.springbootusers.Repositories.rolRepository;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpRange;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin
 @RestController
-@RequestMapping("PermisosrRol")
+@RequestMapping("PermisosRol")
 public class permisosRolController {
 
     @Autowired
@@ -30,54 +29,50 @@ public class permisosRolController {
         return this.myPermisosRolRepo.findAll();
     }
 
-    @GetMapping("[id")
-    public PermisosRol getPermisoById(@PathVariable String _id){
-        PermisosRol search = this.myPermisosRolRepo.findById(_id).orElse(null);
+    @GetMapping("{id}")
+    public PermisosRol getPermisoById(@PathVariable String id){
+        PermisosRol search = this.myPermisosRolRepo.findById(id).orElse(null);
         if(search != null){
             return search;
         }else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se encontro el Permisos Rol con el id" + _id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se encontro el Permisos Rol con el id" + id);
         }
     }
 
-    @PostMapping
-    public PermisosRol createPermisosRol(@RequestBody PermisosRol permisosRolInfo){
-        if (permisosRolInfo.getRol() != null && permisosRolInfo.getPermiso()!= null){
-            return this.myPermisosRolRepo.save(permisosRolInfo);
-        }else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se posee la infomración necesaria");
-        }
+    @PostMapping("/permiso/{idPermiso}/rol/{idRol}")
+    public PermisosRol createPermisosRol(@PathVariable String idPermiso, @PathVariable String idRol){
+        PermisosRol validacion = this.myPermisosRolRepo.getPermisosRolByPermisoAndRol(idPermiso,idRol);
+        if(validacion == null){
+            rol rolAsignar = this.myRolRepository.findById(idRol).orElse(null);
+            System.out.println(rolAsignar);
+            permiso permisoAsignar = this.myPermisosRepo.findById(idPermiso).orElse(null);
+            System.out.println(permisoAsignar);
+            if(rolAsignar != null && permisoAsignar != null){
+                PermisosRol nuevoPermisoRol = new PermisosRol();
+                nuevoPermisoRol.setRol(rolAsignar);
+                nuevoPermisoRol.setPermiso(permisoAsignar);
+                return this.myPermisosRolRepo.save(nuevoPermisoRol);
+            }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se encontro el permiso o el rol a asignar");
+        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ya existe un PermisoRol con los mismos atributos");
     }
 
     @GetMapping("/validar-permiso/rol/{id}")
     public PermisosRol validate(@PathVariable String id,@RequestBody  permiso permiso){
-
-
         List<PermisosRol> permisosRoles = this.myPermisosRolRepo.getAllByRol(id);
-
-        System.out.println(permiso);
-
         PermisosRol tienePermiso= null;
-
-        for( int i=0;i<permisosRoles.size();i++){
-            if(permisosRoles.get(i).getPermiso().getMetodo().equals(permiso.getMetodo()) & permisosRoles.get(i).getPermiso().getUrl().equals(permiso.getUrl())){
-
-                tienePermiso=permisosRoles.get(i);
-
+        for (PermisosRol permisosRole : permisosRoles) {
+            if (permisosRole.getPermiso().getMetodo().equals(permiso.getMetodo()) & permisosRole.getPermiso().getUrl().equals(permiso.getUrl())) {
+                tienePermiso = permisosRole;
                 break;
             }
         }
-
-        System.out.println(permisosRoles);
-
-        System.out.println(tienePermiso);
         return tienePermiso;
     }
 
 
-    @PutMapping("{Id}/rolID/{idRol}/permisoId/{idPermiso}")
-    public PermisosRol updatePermisoRol(@PathVariable String _id, @PathVariable String idRol, @PathVariable String idPermiso){
-        PermisosRol search = this.myPermisosRolRepo.findById(_id).orElse(null);
+    @PutMapping("{Id}/permiso/{idPermiso}/rol/{idRol}")
+    public PermisosRol updatePermisoRol(@PathVariable String Id, @PathVariable String idRol, @PathVariable String idPermiso){
+        PermisosRol search = this.myPermisosRolRepo.findById(Id).orElse(null);
         rol rolupdate = this.myRolRepository.findById(idRol).orElse(null);
         permiso permisoUpdate = this.myPermisosRepo.findById(idPermiso).orElse(null);
         if(search != null && rolupdate != null && permisoUpdate != null){
@@ -88,10 +83,10 @@ public class permisosRolController {
     }
 
     @DeleteMapping("{id}")
-    public permisosRolRepository deletePermisosRoles(@PathVariable String _id){
-        PermisosRol search = this.myPermisosRolRepo.findById(_id).orElse(null);
+    public permisosRolRepository deletePermisosRoles(@PathVariable String id) throws ResponseStatusException {
+        PermisosRol search = this.myPermisosRolRepo.findById(id).orElse(null);
         if(search != null){
-            this.myPermisosRolRepo.deleteById(_id);
+            this.myPermisosRolRepo.deleteById(id);
             throw new ResponseStatusException(HttpStatus.OK, "el usuario a sido eliminado");
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se ha encontrado el permisoRol con id");
     }
