@@ -75,11 +75,12 @@ public class userGeneral {
         this.rol = rol;
     }
 
-    public userGeneral(String _id, String nombreApellido, String correo, String numeroCelular, ambar.springbootusers.Modelos.rol rol) {
+    public userGeneral(String _id, String nombreApellido, String correo, String numeroCelular, String password, rol rol) {
         this._id = _id;
         this.nombreApellido = nombreApellido;
         this.correo = correo;
         this.numeroCelular = numeroCelular;
+        this.password = password;
         this.rol = rol;
     }
 

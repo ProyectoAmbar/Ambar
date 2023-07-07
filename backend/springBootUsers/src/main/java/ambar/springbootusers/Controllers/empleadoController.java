@@ -1,5 +1,6 @@
 package ambar.springbootusers.Controllers;
 import ambar.springbootusers.Modelos.empleado;
+import ambar.springbootusers.Modelos.infoEmpleado;
 import ambar.springbootusers.Modelos.rol;
 import ambar.springbootusers.Modelos.userGeneral;
 import ambar.springbootusers.Repositories.rolRepository;
@@ -28,13 +29,17 @@ public class empleadoController{
 
 
     @PostMapping
-    public empleado createEmpleado(@RequestBody empleado empleadoActual){
-        if(empleadoActual.isValid() && empleadoActual.getIdentificacion() != null && empleadoActual.getSede() != null){
-            empleado usuarioGen = this.empleadoRepository.getempleadoByCorreo(empleadoActual.getCorreo());
-            empleado searched = this.empleadoRepository.getempleadoByCorreoIdentificacion(empleadoActual.getCorreo(),empleadoActual.getIdentificacion());
+    public empleado createEmpleado(@RequestBody infoEmpleado empleadoActual){
+        userGeneral usuario = new userGeneral(empleadoActual.getIdEmpleado(),empleadoActual.getNombreApellido(),empleadoActual.getCorreo(),empleadoActual.getNumeroCelular(),empleadoActual.getPassword(),empleadoActual.getRol());
+        empleado nuevoEmpleado = new empleado(empleadoActual.getIdEmpleado(),usuario, empleadoActual.getIdentificacion(),empleadoActual.getSede());
+        if(nuevoEmpleado.getUsuario().isValid() && nuevoEmpleado.getIdentificacion() != null && nuevoEmpleado.getSede() != null){
+            userGeneral usuarioGen = this.myUserRepo.getUserGeneralByCorreo(nuevoEmpleado.getUsuario().getCorreo());
+            empleado searched = this.empleadoRepository.getempleadoByIdentificacion(nuevoEmpleado.getIdentificacion());
             if(searched == null && usuarioGen == null){
-                empleadoActual.setPassword(convertirSHA256(empleadoActual.getPassword()));
-                return this.empleadoRepository.save(empleadoActual);
+                nuevoEmpleado.getUsuario().setPassword(convertirSHA256(nuevoEmpleado.getUsuario().getPassword()));
+                userGeneral response = this.myUserRepo.save(nuevoEmpleado.getUsuario());
+                nuevoEmpleado.setUsuario(response);
+                return this.empleadoRepository.save(nuevoEmpleado);
             }else{ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "el empleado ya existe");
             }
         }else{
@@ -42,28 +47,12 @@ public class empleadoController{
         }
     }
 
-    @PutMapping("/asignarRol/{idUsuario}/rol/{idRol}")
-    public userGeneral asignarRol(@PathVariable String idUsuario, @PathVariable String idRol){
-        System.out.println(idRol);
-        System.out.println(idUsuario);
-        rol rolAAsignar = this.rolRepo.findById(idRol).orElse(null);
-        System.out.println(rolAAsignar);
-        empleado usuarioActual = this.empleadoRepository.findById(idUsuario).orElse(null);
-        System.out.println(usuarioActual);
-        if(rolAAsignar != null && usuarioActual != null){
-            usuarioActual.setRol(rolAAsignar);
-            return usuarioActual;
-        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No ha sido posible encontrar el usuario o el Id");
-    }
-
     @GetMapping
     public List<empleado> getAllEmpleado(){
         List<empleado> usuarios = this.empleadoRepository.findAll();
-        if(usuarios != null){
-            return usuarios;
-        }
-        throw new ResponseStatusException(HttpStatus.OK);
+        return usuarios;
     }
+
 
     @GetMapping("{id}")
     public empleado getById(@PathVariable String id){
@@ -74,20 +63,19 @@ public class empleadoController{
     }
 
     @PutMapping("{id}")
-    public empleado updateEmpleado(@PathVariable String id ,@RequestBody empleado usuario){
-        if(usuario.isValid()){
+    public empleado updateEmpleado(@PathVariable String id ,@RequestBody infoEmpleado informacionEmpleado){
+        if(informacionEmpleado.getCorreo() != null && informacionEmpleado.getPassword()  != null && informacionEmpleado.getNumeroCelular() != null && informacionEmpleado.getSede() != null){
             empleado Validacion = this.empleadoRepository.findById(id).orElse(null);
             if (Validacion != null ){
-                userGeneral usuarioGen = this.myUserRepo.getUserGeneralByCorreo(usuario.getCorreo());
-                empleado validarCorreo = this.empleadoRepository.getempleadoByCorreo(usuario.getCorreo());
-                if ((validarCorreo == null || validarCorreo.get_id() == id) && usuarioGen == null){
-                    Validacion.setNombreApellido(usuario.getNombreApellido());
-                    Validacion.setPassword(convertirSHA256(usuario.getPassword()));
-                    Validacion.setCorreo(usuario.getCorreo());
-                    Validacion.setNumeroCelular(usuario.getNumeroCelular());
-                    Validacion.setSede(usuario.getSede());
+                userGeneral usuario = this.myUserRepo.getUserGeneralByCorreo(informacionEmpleado.getCorreo());
+                if (usuario == null || Validacion.getUsuario().get_id() == usuario.get_id()){
+                    Validacion.getUsuario().setNombreApellido(informacionEmpleado.getNombreApellido());
+                    Validacion.getUsuario().setPassword(convertirSHA256(informacionEmpleado.getPassword()));
+                    Validacion.getUsuario().setCorreo(informacionEmpleado.getCorreo());
+                    Validacion.getUsuario().setNumeroCelular(informacionEmpleado.getNumeroCelular());
+                    Validacion.setSede(informacionEmpleado.getSede());
                     return this.empleadoRepository.save(Validacion);
-                }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ya existe un empleado con el correo: "+ usuario.getCorreo());
+                }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ya existe un empleado con el correo: "+ informacionEmpleado.getCorreo());
             }else{
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se encontro ningun empleado con el id: " + id);
             }
@@ -95,20 +83,12 @@ public class empleadoController{
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se tiene la información necesaria para actualizar al empleado");
     }
 
-    //VALIDAR LAS CREDENCIALES DE UN USUARIO
-    @PostMapping("/validar")
-    public empleado validar(@RequestBody empleado usuarioValidar) {
-        empleado usuarioActual = this.empleadoRepository.getempleadoByCorreo(usuarioValidar.getCorreo());
-        if(usuarioActual != null && usuarioActual.getPassword().equals(convertirSHA256(usuarioValidar.getPassword()))) {
-            return  usuarioActual;
-        }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-    }
-
     @DeleteMapping("{id}")
     public empleado deleteUser(@PathVariable String id){
         empleado userToDelete = this.empleadoRepository.findById(id).orElse(null);
-        System.out.println(userToDelete.getCorreo());
+
         if(userToDelete != null) {
+            this.myUserRepo.deleteById(userToDelete.getUsuario().get_id());
             this.empleadoRepository.deleteById(id);
             return userToDelete;
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No existe ningun empleado con el id :" + id );

@@ -105,7 +105,7 @@ public class userController {
         userGeneral usuarioActual = this.myUserRepo.findById(idUsuario).orElse(null);
         if(rolAAsignar != null && usuarioActual != null){
             usuarioActual.setRol(rolAAsignar);
-            return usuarioActual;
+            return this.myUserRepo.save(usuarioActual);
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No ha sido posible encontrar el usuario o el Id");
     }
     // ELIMINAR UN USUARIO
