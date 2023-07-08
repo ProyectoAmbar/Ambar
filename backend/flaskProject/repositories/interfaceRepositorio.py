@@ -76,8 +76,8 @@ class interfaceRepositorio(Generic[T]):
             "code": 202
         }]
         collection = self.db[self.collection]
-        delCandidate = collection.delete_one({'_id':ObjectId(id)}).deleted_count
-        dict.append({"deleted_count":delCandidate})
+        delObject = collection.delete_one({'_id':ObjectId(id)}).deleted_count
+        dict.append({"deleted_count": delObject})
         return dict
 
     def query(self, theQuery):

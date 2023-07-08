@@ -26,6 +26,27 @@ class formularioAlquilerController():
         else:
             return {"status": False, "code": 400, "message": "el formulario no pudo ser creado"}
 
+    def getAllFormularios(self):
+        print("get all Formularios Alquileres")
+        return self.repositorioAlquiler.getAll()
+
+    def getFormulariosAlquilerById(self, id):
+        print("get formularios Alquiler By Id")
+        return self.repositorioAlquiler.getById(id)
+
+    def UpdateFormularioAlquiler(self, id, infoUpdate):
+        print("actualizar Productos")
+        if(self.isValid(infoUpdate)):
+            response = self.repositorioAlquiler.update(id,formatoAlquiler(infoUpdate))
+            response.append({"status": True , "code": 200, "message": "El fomulario fue actualizado de manera exitosa"})
+            return response
+        else:
+            return {"status": False, "code": 400, "message": "Hace falta informacion para actualizar el formulario de Alquiler"}
+
+    def Delete(self, id):
+        print("actualizar productos")
+        return self.repositorioAlquiler.delete(id)
+
 
 
     def isValid(self, infoAlquiler):

@@ -44,23 +44,71 @@ def getById(id):
 
 @app.route('/productos/<string:id>',methods = ['DELETE'])
 def Delete(id):
-    json = product.deleteProducto(id);
+    json = product.deleteProducto(id)
     return jsonify(json)
 
-#formulario alquiler
+###----------formulario alquiler----------------##
+
 @app.route('/alquiler',methods=['POST'])
 def CreateFormularioAlquiler():
     data = request.get_json()
     json = formAlquiler.create(data)
-
     return jsonify(json)
 
-#tareas
+@app.route('/alquiler/<string:id>', methods = ['GET'])
+def getFormatoAlquilerById(id):
+    json = formAlquiler.Delete(id)
+    return jsonify(json)
+
+@app.route('/alquiler',methods=['GET'])
+def getAllFormatosAlquiler():
+    json = formAlquiler.getAllFormularios()
+    return jsonify(json)
+
+@app.route('alquiler/<string: id>', methods = ['PUT'])
+def updateFormularioAlquiler(id):
+    data = request.get_json()
+    json = formAlquiler.UpdateFormularioAlquiler(id, data)
+    return jsonify(json)
+@app.route('alquiler/<string: id>', methods = ['DELETE'])
+def DeleteAlquiler(id):
+    json = formAlquiler.Delete(id)
+    return jsonify(json)
+
+
+###------------tareas---------------###
+
+
 @app.route('/tarea', methods=['POST'])
 def CreateTarea():
     infoTarea = request.get_json()
     json = tareasController.Create(infoTarea)
     return jsonify(json)
+
+@app.route('/tarea/<string:id>', methods=['GET'])
+def getTareaById(id):
+    json = tareasController.getById(id)
+    return jsonify(json)
+
+@app.route('/tarea')
+def getAllTareas():
+    json = tareasController.getAllTareas()
+    return jsonify(json)
+
+@app.route('/tarea/<string:id>', methods=['PUT'])
+def updateTarea(id):
+    data = request.get_json()
+    json = tareasController.Update(id, data)
+    return jsonify(json)
+
+@app.route('/tarea/<string:id>', methods=['DELETE'])
+def DeleteTarea(id):
+    json = tareasController.Delete(id)
+    return jsonify(json)
+
+
+
+
 
 
 

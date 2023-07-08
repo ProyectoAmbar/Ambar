@@ -19,4 +19,73 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
         response['Cliente'] = str(response['Cliente'])
         dict.append(response)
         return dict
-    pass
+
+    def getAll(self):
+        dict = []
+        allItems = []
+        collection = self.db[self.collection]
+        response = collection.find()
+        for i in response:
+            i['_id'] = str(i['_id'])
+            i['asesor'] = str(i['asesor'])
+            i['Producto'] = str(i['Producto'])
+            i['Cliente'] = str(i['Cliente'])
+            allItems.append(i)
+        dict.append(allItems)
+        return dict
+
+    def getById(self, id):
+        dict = []
+        collection = self.db[self.collection]
+        response = collection.find_one({"_id": ObjectId(id)})
+        response['_id'] = str(response['_id'])
+        response['asesor'] = str(response['asesor'])
+        response['Producto'] = str(response['Producto'])
+        response['Cliente'] = str(response['Cliente'])
+        dict.append(response)
+        return dict
+
+    def update(self, id, infoTarea):
+        try:
+            dict = []
+            collection = self.db[self.collection]
+            infoTarea = infoTarea.__dict__
+            print(id)
+            collection.update_one({"_id": ObjectId(id)}, {"$set": infoTarea})
+            response = collection.find_one({"_id": ObjectId(id)})
+            response['_id'] = str(response['_id'])
+            response['asesor'] = str(response['asesor'])
+            response['Producto'] = str(response['Producto'])
+            response['Cliente'] = str(response['Cliente'])
+            dict.append(response)
+            return dict
+        except:
+            dict = [{
+                "status": False,
+                "code": 403,
+                "message": "La tarea con id " + id + " no ha sido encontrada"
+            }]
+            return dict
+
+    def delete(self, id):
+        dict = [{
+            "status": True,
+            "code": 202
+        }]
+        collection = self.db[self.collection]
+        delObject = collection.delete_one({'_id': ObjectId(id)}).deleted_count
+        dict.append({"deleted_count": delObject})
+        return dict
+
+    def query(self, theQuery):
+        laColeccion = self.baseDatos[self.coleccion]
+        data = []
+        for x in laColeccion.find(theQuery):
+            x["_id"] = x["_id"].__str__()
+            x['asesor'] = str(x['asesor'])
+            x['Producto'] = str(x['Producto'])
+            x['Cliente'] = str(x['Cliente'])
+        x = self.transformObjectIds(x)
+        x = self.getValuesDBRef(x)
+        data.append(x)
+        return data
