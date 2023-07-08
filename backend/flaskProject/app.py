@@ -8,10 +8,14 @@ import json
 from waitress import serve
 
 from controllers.productoController import ProductoController
+from controllers.formularioAlquiler import formularioAlquilerController
+from controllers.TareaController import tareaController
 
 app = Flask(__name__)
 cors = CORS(app)
 product = ProductoController()
+formAlquiler = formularioAlquilerController()
+tareasController = tareaController()
 
 
 #-----------------RUTAS DE PRODUCTOS-----------------#
@@ -43,6 +47,22 @@ def Delete(id):
     json = product.deleteProducto(id);
     return jsonify(json)
 
+#formulario alquiler
+@app.route('/alquiler',methods=['POST'])
+def CreateFormularioAlquiler():
+    data = request.get_json()
+    json = formAlquiler.create(data)
+
+    return jsonify(json)
+
+#tareas
+@app.route('/tarea', methods=['POST'])
+def CreateTarea():
+    infoTarea = request.get_json()
+    json = tareasController.Create(infoTarea)
+    return jsonify(json)
+
+
 
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
@@ -58,6 +78,8 @@ def test():
         "port": 5000
     }
     return jsonify(json)
+
+
 
 
 

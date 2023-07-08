@@ -112,7 +112,6 @@ public class userController {
     @DeleteMapping("{id}")
     public userGeneral deleteUser(@PathVariable String id){
         userGeneral userToDelete = this.myUserRepo.findById(id).orElse(null);
-        System.out.println(userToDelete.getCorreo());
         if(userToDelete != null) {
             this.myUserRepo.deleteById(id);
             return userToDelete;

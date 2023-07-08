@@ -197,6 +197,18 @@ def deleteRol(id):
     print(response)
     return jsonify(response.json())
 
+#formulario
+@app.route('/Alquiler',methods=['POST'])
+def CreateFormularioAlquiler():
+    data = request.get_json()
+    asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idAsesor'])
+    cliente = requests.get(url=dataConfig["url-backend-users"]+'/user/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    clienteJson = cliente.json()
+    asesorJson = asesor.json()
+    if(clienteJson['correo'] and asesorJson['identificacion']):
+        alquiler = request.post()
+
+
 
 
 
