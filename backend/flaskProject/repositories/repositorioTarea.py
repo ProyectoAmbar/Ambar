@@ -3,7 +3,7 @@ from models.Tarea import Tarea
 from bson.objectid import ObjectId
 
 
-class repositorioTareas():
+class repositorioTareas(interfaceRepositorio[Tarea]):
     def save(self, infoTarea, estado):
         dict = []
         print(infoTarea.estado)

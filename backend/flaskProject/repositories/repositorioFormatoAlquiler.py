@@ -35,18 +35,20 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
         return dict
 
     def getById(self, id):
-        dict = []
-        collection = self.db[self.collection]
-        response = collection.find_one({"_id": ObjectId(id)})
-        response['_id'] = str(response['_id'])
-        response['asesor'] = str(response['asesor'])
-        response['Producto'] = str(response['Producto'])
-        response['Cliente'] = str(response['Cliente'])
-        dict.append(response)
-        return dict
+        try:
+            dict = []
+            collection = self.db[self.collection]
+            response = collection.find_one({"_id": ObjectId(id)})
+            response['_id'] = str(response['_id'])
+            response['asesor'] = str(response['asesor'])
+            response['Producto'] = str(response['Producto'])
+            response['Cliente'] = str(response['Cliente'])
+            dict.append(response)
+            return dict
+        except:
+            return {"status": False , "code": 400, "message": "no se encontro el id " + id}
 
     def update(self, id, infoTarea):
-        try:
             dict = []
             collection = self.db[self.collection]
             infoTarea = infoTarea.__dict__
@@ -59,13 +61,7 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
             response['Cliente'] = str(response['Cliente'])
             dict.append(response)
             return dict
-        except:
-            dict = [{
-                "status": False,
-                "code": 403,
-                "message": "La tarea con id " + id + " no ha sido encontrada"
-            }]
-            return dict
+
 
     def delete(self, id):
         dict = [{

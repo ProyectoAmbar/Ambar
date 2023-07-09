@@ -57,7 +57,7 @@ def CreateFormularioAlquiler():
 
 @app.route('/alquiler/<string:id>', methods = ['GET'])
 def getFormatoAlquilerById(id):
-    json = formAlquiler.Delete(id)
+    json = formAlquiler.getFormulariosAlquilerById(id)
     return jsonify(json)
 
 @app.route('/alquiler',methods=['GET'])
@@ -65,12 +65,12 @@ def getAllFormatosAlquiler():
     json = formAlquiler.getAllFormularios()
     return jsonify(json)
 
-@app.route('alquiler/<string: id>', methods = ['PUT'])
+@app.route('/alquiler/<string:id>', methods = ['PUT'])
 def updateFormularioAlquiler(id):
     data = request.get_json()
     json = formAlquiler.UpdateFormularioAlquiler(id, data)
     return jsonify(json)
-@app.route('alquiler/<string: id>', methods = ['DELETE'])
+@app.route('/alquiler/<string:id>', methods = ['DELETE'])
 def DeleteAlquiler(id):
     json = formAlquiler.Delete(id)
     return jsonify(json)

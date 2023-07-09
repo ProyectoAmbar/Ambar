@@ -23,7 +23,7 @@ class tareaController():
     def Update(self, id, infoUpdate):
         print("actualizar Tarea")
         if infoUpdate['idAsesor'] != None and infoUpdate['idProducto'] != None and infoUpdate['estado'] != None:
-            response = self.repositorioTareas.update(id, Tarea(infoUpdate))
+            response = self.repositorioTareas.update(id, Tarea(infoUpdate['idAsesor'], infoUpdate['idEmpleado'], infoUpdate['idProducto'], infoUpdate['mensaje'], infoUpdate['estado'], infoUpdate['observaciones']))
             response.append({"status": True, "code": 200, "message": "La tarea fue actualizada"})
             return response
         else:

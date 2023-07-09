@@ -32,12 +32,16 @@ class formularioAlquilerController():
 
     def getFormulariosAlquilerById(self, id):
         print("get formularios Alquiler By Id")
-        return self.repositorioAlquiler.getById(id)
+        response = self.repositorioAlquiler.getById(id)
+        if response != None:
+            return response
+        else:
+            return {"status": False , "code": 400, "message": "No se encontro el id" + id}
 
     def UpdateFormularioAlquiler(self, id, infoUpdate):
         print("actualizar Productos")
         if(self.isValid(infoUpdate)):
-            response = self.repositorioAlquiler.update(id,formatoAlquiler(infoUpdate))
+            response = self.repositorioAlquiler.update(id, infoUpdate)
             response.append({"status": True , "code": 200, "message": "El fomulario fue actualizado de manera exitosa"})
             return response
         else:

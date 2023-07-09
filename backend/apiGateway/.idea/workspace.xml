@@ -9,14 +9,8 @@
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquiler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +88,7 @@
       <workItem from="1687634908023" duration="4000" />
       <workItem from="1688762705251" duration="2711000" />
       <workItem from="1688849551656" duration="1019000" />
+      <workItem from="1688859389473" duration="658000" />
     </task>
     <servers />
   </component>
