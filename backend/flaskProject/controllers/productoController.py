@@ -22,14 +22,26 @@ class ProductoController():
         except:
             return {"status": False, "code": 400, "message": "el producto no pudo ser creado"}
 
-
     def getAllProducts(self):
         print("get all products")
         return self.RepositorioProductos.getAll()
 
     def getById(self,id):
         print("mostrando producto con : ", id)
-        return self.RepositorioProductos.getById(id)
+        response =  self.RepositorioProductos.getById(id)
+        if response[0] != None:
+            return response
+        else:
+            return {"status": False , "code": 400, "message": "No se encontro el producto con id: " + id}
+
+    def getByRef(self,referencia):
+        print("mostrando prodcuto con referencia: "+ referencia)
+        response = self.RepositorioProductos.getByReferencia(referencia)
+        if response != None:
+            return response
+        else:
+            return {"status": False, "code": 400, "message": "No se encontro el producto con referencia: " + referencia}
+
 
     def updateProduct(self, _id, infoProducto):
         print("actualizando un producto")

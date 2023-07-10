@@ -47,7 +47,8 @@ class interfaceRepositorio(Generic[T]):
         dict = []
         collection = self.db[self.collection]
         response = collection.find_one({"_id":ObjectId(id)})
-        response['_id'] = str(response['_id'])
+        if response != None:
+            response['_id'] = str(response['_id'])
         dict.append(response)
         return dict
     def update(self,id , item:T):
@@ -60,7 +61,7 @@ class interfaceRepositorio(Generic[T]):
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
             dict.append(response)
-            return dict
+            return response
         except:
             dict = [{
                 "status": False,

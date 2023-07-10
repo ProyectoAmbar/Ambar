@@ -36,7 +36,7 @@ class formularioAlquilerController():
         if response != None:
             return response
         else:
-            return {"status": False , "code": 400, "message": "No se encontro el id" + id}
+            return {"status": False , "code": 400, "message": "No se encontro el formulario de Alquiler con id: " + id}
 
     def UpdateFormularioAlquiler(self, id, infoUpdate):
         print("actualizar Productos")

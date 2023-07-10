@@ -4,9 +4,12 @@ from models.producto import Producto
 
 class RepositorioProductos(interfaceRepositorio[Producto]):
     def getByReferencia(self, ref):
+        print(ref)
+        dict = []
         collection = self.db[self.collection]
-        response = collection.find_one({"referencia": ref})
-        if response:
+        response = collection.find_one({"referencia": int(ref)})
+        if response != None:
+            response['_id'] = str(response['_id'])
             return response
         else:
             return None

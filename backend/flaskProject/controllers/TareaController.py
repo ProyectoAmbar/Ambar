@@ -18,7 +18,11 @@ class tareaController():
 
     def getById(self,_id):
         print("get producto by id")
-        return self.repositorioTareas.getById(_id)
+        response =  self.repositorioTareas.getById(_id)
+        if response != None:
+            return response
+        else:
+            return {"status": False, "code": 400, "message": "No se encontro la tarea con id: " + id}
 
     def Update(self, id, infoUpdate):
         print("actualizar Tarea")

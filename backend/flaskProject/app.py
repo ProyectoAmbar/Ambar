@@ -43,6 +43,10 @@ def getById(id):
     print(json)
     return jsonify(json)
 
+@app.route('/productos/getReferencia/<string:referencia>', methods=['GET'])
+def getByReferencia(referencia):
+    json = product.getByRef(referencia)
+    return jsonify(json)
 @app.route('/productos/<string:id>',methods = ['DELETE'])
 def Delete(id):
     json = product.deleteProducto(id)

@@ -6,12 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquiler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/Tarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/Tarea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/productoController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/productoController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioProductos.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioProductos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +97,7 @@
       <workItem from="1688859389473" duration="658000" />
       <workItem from="1688880743661" duration="599000" />
       <workItem from="1688946339308" duration="13799000" />
+      <workItem from="1689009081949" duration="622000" />
     </task>
     <servers />
   </component>
