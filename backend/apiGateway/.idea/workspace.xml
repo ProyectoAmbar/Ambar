@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquiler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/Tarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/Tarea.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +90,8 @@
       <workItem from="1688762705251" duration="2711000" />
       <workItem from="1688849551656" duration="1019000" />
       <workItem from="1688859389473" duration="658000" />
+      <workItem from="1688880743661" duration="599000" />
+      <workItem from="1688946339308" duration="13799000" />
     </task>
     <servers />
   </component>
@@ -106,8 +109,29 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>250</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>251</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/apiGateway$main.coverage" NAME="apiGateway Coverage Results" MODIFIED="1686605407796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1687120316932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1688963724720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -32,14 +32,15 @@ def actualizarProducto(id):
     json = product.updateProduct(id,data)
     return jsonify(json)
 
-@app.route('/productos/getAll' , methods=['GET'])
+@app.route('/productos' , methods=['GET'])
 def getAllProducto():
     json = product.getAllProducts()
     return jsonify(json)
 
-@app.route('/productos/getById/<string:id>', methods = ['GET'])
+@app.route('/productos/<string:id>', methods = ['GET'])
 def getById(id):
     json = product.getById(id)
+    print(json)
     return jsonify(json)
 
 @app.route('/productos/<string:id>',methods = ['DELETE'])

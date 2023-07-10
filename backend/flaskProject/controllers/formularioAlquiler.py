@@ -41,7 +41,9 @@ class formularioAlquilerController():
     def UpdateFormularioAlquiler(self, id, infoUpdate):
         print("actualizar Productos")
         if(self.isValid(infoUpdate)):
-            response = self.repositorioAlquiler.update(id, infoUpdate)
+            response = self.repositorioAlquiler.update(id, formatoAlquiler(infoUpdate['idAsesor'] , infoUpdate['idProducto'] , infoUpdate['idCliente'] , infoUpdate['identificacion'] , infoUpdate['AñoFactura'] , infoUpdate['MesFactura'] ,
+            infoUpdate['DiaFactura'] , infoUpdate['NumeroDeFactura'] , infoUpdate['accesorio'] , infoUpdate['corbatin'] , infoUpdate['velo']  , infoUpdate['aro'] , infoUpdate['total'] ,
+            infoUpdate['metodoDePago'] , infoUpdate['Abono'] , infoUpdate['Saldo'] , infoUpdate['Deposito'] , infoUpdate['AñoCitaMedidas'] , infoUpdate['MesCitaMedidas'] , infoUpdate['DiaCitaMedidas']))
             response.append({"status": True , "code": 200, "message": "El fomulario fue actualizado de manera exitosa"})
             return response
         else:

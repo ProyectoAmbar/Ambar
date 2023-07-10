@@ -48,12 +48,12 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
         except:
             return {"status": False , "code": 400, "message": "no se encontro el id " + id}
 
-    def update(self, id, infoTarea):
+    def update(self, id, infoUpdate):
             dict = []
             collection = self.db[self.collection]
-            infoTarea = infoTarea.__dict__
+            infoUpdate = infoUpdate.__dict__
             print(id)
-            collection.update_one({"_id": ObjectId(id)}, {"$set": infoTarea})
+            collection.update_one({"_id": ObjectId(id)}, {"$set": infoUpdate})
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
             response['asesor'] = str(response['asesor'])

@@ -72,6 +72,7 @@ public class userController {
     @PostMapping("/validar")
     public userGeneral validar(@RequestBody userGeneral usuarioValidar) {
         userGeneral usuarioActual = this.myUserRepo.getUserGeneralByCorreo(usuarioValidar.getCorreo());
+        System.out.println(usuarioActual);
         if(usuarioActual != null && usuarioActual.getPassword().equals(convertirSHA256(usuarioValidar.getPassword()))) {
             return  usuarioActual;
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
