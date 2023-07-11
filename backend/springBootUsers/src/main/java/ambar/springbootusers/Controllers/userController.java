@@ -34,7 +34,7 @@ public class userController {
             userGeneral usuarioActual = this.myUserRepo.getUserGeneralByCorreo(usuario.getCorreo());
             if(usuarioActual == null){
                 usuario.setPassword(convertirSHA256(usuario.getPassword()));
-                rol defaultRol = this.myRolRepo.findById("64869b530152eb1976abcee4").orElse(null);
+                rol defaultRol = this.myRolRepo.findById("64ada40b4858ec4ec0aecf7b").orElse(null);
                 usuario.setRol(defaultRol);
                 return this.myUserRepo.save(usuario);
             }else{
