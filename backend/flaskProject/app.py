@@ -43,8 +43,9 @@ def getById(id):
     print(json)
     return jsonify(json)
 
-@app.route('/productos/getReferencia/<string:referencia>', methods=['GET'])
+@app.route('/productos/getReferencia/<int:referencia>', methods=['GET'])
 def getByReferencia(referencia):
+    print(type(int(referencia)))
     json = product.getByRef(referencia)
     return jsonify(json)
 @app.route('/productos/<string:id>',methods = ['DELETE'])
@@ -110,6 +111,26 @@ def updateTarea(id):
 def DeleteTarea(id):
     json = tareasController.Delete(id)
     return jsonify(json)
+
+@app.route('/tarea/answer/<string:id>',methods=['PUT'])
+def responderTarea(id):
+    data = request.get_json()
+    json = tareasController.responderTarea(id,data)
+    return jsonify(json)
+
+
+@app.route('/tarea/asignar/<string:id>',methods=['PUT'])
+def asignarTarea(id):
+    data = request.get_json()
+    json = tareasController.asignarTarea(id,data)
+    return jsonify(json)
+
+@app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
+def verTareasPendientes(idEmpleado):
+    json = tareasController.verTareasPendientes(idEmpleado)
+    return jsonify(json)
+
+
 
 
 

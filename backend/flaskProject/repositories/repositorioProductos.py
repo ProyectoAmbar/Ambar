@@ -7,7 +7,7 @@ class RepositorioProductos(interfaceRepositorio[Producto]):
         print(ref)
         dict = []
         collection = self.db[self.collection]
-        response = collection.find_one({"referencia": int(ref)})
+        response = collection.find_one({"referencia": ref})
         if response != None:
             response['_id'] = str(response['_id'])
             return response

@@ -35,7 +35,7 @@ class ProductoController():
             return {"status": False , "code": 400, "message": "No se encontro el producto con id: " + id}
 
     def getByRef(self,referencia):
-        print("mostrando prodcuto con referencia: "+ referencia)
+        print("mostrando prodcuto con referencia: "+ str(referencia))
         response = self.RepositorioProductos.getByReferencia(referencia)
         if response != None:
             return response

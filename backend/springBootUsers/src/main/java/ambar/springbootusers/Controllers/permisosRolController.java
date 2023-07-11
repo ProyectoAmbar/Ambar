@@ -6,7 +6,11 @@ import ambar.springbootusers.Repositories.permisosRolRepository;
 import ambar.springbootusers.Repositories.permisosRepository;
 import ambar.springbootusers.Repositories.rolRepository;
 
+
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -57,17 +61,32 @@ public class permisosRolController {
     }
 
     @GetMapping("/validar-permiso/rol/{id}")
-    public PermisosRol validate(@PathVariable String id,@RequestBody  permiso permiso){
+    public PermisosRol validate(@PathVariable String id,@RequestBody  permiso permiso, final HttpServletResponse response )throws IOException{
         List<PermisosRol> permisosRoles = this.myPermisosRolRepo.getAllByRol(id);
+
+        System.out.println(permiso);
+
         PermisosRol tienePermiso= null;
-        for (PermisosRol permisosRole : permisosRoles) {
-            if (permisosRole.getPermiso().getMetodo().equals(permiso.getMetodo()) & permisosRole.getPermiso().getUrl().equals(permiso.getUrl())) {
-                tienePermiso = permisosRole;
-                break;
+
+        for( int i=0;i<permisosRoles.size();i++){
+            System.out.println();
+            if(permisosRoles.get(i) != null && permisosRoles.get(i) != null){
+                if(permisosRoles.get(i).getPermiso().getMetodo().equals(permiso.getMetodo()) & permisosRoles.get(i).getPermiso().getUrl().equals(permiso.getUrl())){
+
+                    tienePermiso=permisosRoles.get(i);
+
+                    break;
+                }
             }
+
         }
+
+        System.out.println(permisosRoles);
+
+        System.out.println(tienePermiso);
         return tienePermiso;
     }
+
 
 
     @PutMapping("{Id}/permiso/{idPermiso}/rol/{idRol}")
@@ -87,7 +106,7 @@ public class permisosRolController {
         PermisosRol search = this.myPermisosRolRepo.findById(id).orElse(null);
         if(search != null){
             this.myPermisosRolRepo.deleteById(id);
-            throw new ResponseStatusException(HttpStatus.OK, "el usuario a sido eliminado");
+            throw new ResponseStatusException(HttpStatus.OK, "PermisoRol a sido eliminado");
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no se ha encontrado el permisoRol con id");
     }
 

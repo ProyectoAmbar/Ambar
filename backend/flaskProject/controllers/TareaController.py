@@ -22,7 +22,7 @@ class tareaController():
         if response != None:
             return response
         else:
-            return {"status": False, "code": 400, "message": "No se encontro la tarea con id: " + id}
+            return {"status": False, "code": 400, "message": "No se encontro la tarea con id: " + _id}
 
     def Update(self, id, infoUpdate):
         print("actualizar Tarea")
@@ -32,6 +32,45 @@ class tareaController():
             return response
         else:
             return {"status": False, "code": 400, "message": "Hace falta informacion para actualizar el producto"}
+
+    def responderTarea(self, id, infoUpdate):
+        search = self.repositorioTareas.getById(id)
+        if (search is not None and (infoUpdate['estado'] != None and infoUpdate['observaciones'])):
+            search['estado'] = infoUpdate['estado']
+            search['observaciones'] = infoUpdate['observaciones']
+            TAREA = Tarea(search['asesor'], search['empleado'], search['producto'], search['mensaje'], search['estado'], search['observaciones'])
+            response = self.repositorioTareas.update(id,TAREA)
+            return response
+        elif infoUpdate['observaciones'] is None and infoUpdate['estado']!= None:
+            search['observaciones'] = ""
+            TAREA = Tarea(search['asesor'], search['empleado'], search['producto'], search['mensaje'], search['estado'],search['observaciones'])
+            response = self.repositorioTareas.update(id,TAREA)
+            return response
+        else:
+            return {"status": False, "code": 400, "message": "Hace falta informacion para responder la tarea"}
+
+
+    def asignarTarea(self, id, infoTarea):
+        search = self.repositorioTareas.getById(id)
+        if search != None and infoTarea['empleado'] != None and infoTarea['mensaje'] != None:
+            search['empleado'] = infoTarea['empleado']
+            search['mensaje'] = infoTarea['mensaje']
+            TAREA = Tarea(search['asesor'], search['empleado'], search['producto'], search['mensaje'], search['estado'],search['observaciones'])
+            response = self.repositorioTareas.update(id, TAREA)
+            return response
+        else:
+            return {"status": False, "code": 400, "message": "Hace falta infomracion para asignar la tarea"}
+
+    def verTareasPendientes(self, id):
+        search = self.repositorioTareas.getTareasPendientes(id)
+        return search
+
+
+
+
+
+
+
 
     def Delete(self, id):
         print("eliminar un producto")

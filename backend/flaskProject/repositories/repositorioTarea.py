@@ -42,13 +42,29 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         dict = []
         collection = self.db[self.collection]
         response = collection.find_one({"_id": ObjectId(id)})
-        response['_id'] = str(response['_id'])
-        response['asesor'] = str(response['asesor'])
-        response['producto'] = str(response['producto'])
-        if response['empleado'] != None:
-            response['empleado'] = str(response['empleado'])
-        dict.append(response)
-        return dict
+        if response is not None:
+            response['_id'] = str(response['_id'])
+            response['asesor'] = str(response['asesor'])
+            response['producto'] = str(response['producto'])
+            if response['empleado'] != None:
+                response['empleado'] = str(response['empleado'])
+        return response
+
+    ##ID DE EMPLEADO##
+    def getTareasPendientes(self,id):
+        allItems = []
+        collection = self.db[self.collection]
+        query = {"$and": [{"empleado": ObjectId(id)}, {"estado": False}]}
+        response = collection.find(query)
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['asesor'] = str(item['asesor'])
+                item['producto'] = str(item['producto'])
+                item['empleado'] = str(item['empleado'])
+                allItems.append(item)
+        return allItems
+
 
     def update(self, id, infoTarea):
         try:

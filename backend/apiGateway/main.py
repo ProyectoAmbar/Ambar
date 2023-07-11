@@ -26,6 +26,8 @@ cors = CORS(app)
 app.config["JWT_SECRET_KEY"] = dataConfig["key"]
 jwt = JWTManager(app)
 
+
+###-------VALIDACIÓN DE PERMISOS-------###
 @app.before_request
 def before_request_callback():
     endPoint = limpiarURL(request.path)
@@ -157,8 +159,7 @@ def deleteUser(id):
     return jsonify(response.json())
 
 
-# --------------RUTAS DE ROLES-------------- #
-
+###--------------RUTAS DE ROLES--------------###
 @app.route("/rol", methods=['POST'])
 def createRol():
     print("createRol")
@@ -198,7 +199,27 @@ def deleteRol(id):
     print(response)
     return jsonify(response.json())
 
-#formulario
+
+###-------RUTAS PERMISOS-ROLES
+
+
+
+
+###--------------RUTAS DE EMPLEADOS--------------###
+
+
+
+
+###--------------RUTAS DE PRODUCTOS--------------###
+@app.route('/productos',methods=['GET'])
+def getAllProductos():
+    print("get all productos")
+    response = requests.get(url=dataConfig["url-backend-productos"]+"/productos", headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+#@app.route('/productos/<string:id>',methods=['GET'])
+#@app.route('/productos',methods=['GET'])
+
+###--------------RUTAS DE FOMULARIO ALQUILER--------------###
 @app.route('/alquiler',methods=['POST'])
 def CreateFormularioAlquiler():
     data = request.get_json()
@@ -246,7 +267,9 @@ def updateFormularioAlquiler(id):
 def deleteFormularioAlquiler(id):
     response = requests.delete(url=dataConfig['url-backend-productos']+"/alquiler/"+id, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
-###---------TAREAS---------###
+
+
+###--------------RUTAS DE TAREAS--------------###
 @app.route('/tarea',methods=['GET'])
 def GetAllTareas():
     response = requests.get(url=dataConfig['url-backend-productos']+"/tarea", headers={"Content-Type": "application/json; charset=utf-8"})
@@ -281,10 +304,27 @@ def CreateTarea():
     else:
         return {"status": False, "Code": 400, "message": "no se encontro el empleado, el asesor o producto"}
 
-
 @app.route('/tarea/<string:id>', methods=['DELETE'])
 def deleteTarea(id):
     response = requests.delete(url=dataConfig["url-backend-productos"] + "/tarea/"+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/tarea/answer/<string:id>',methods=['PUT'])
+def responderTarea(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tarea/answer/"+id,json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/tarea/asignar/<string:id>',methods=['PUT'])
+def asignarTarea(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tarea/asignar/" + id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+
+@app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
+def verTareasPendientes(idEmpleado):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tarea/verPendientes/" + idEmpleado, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 
