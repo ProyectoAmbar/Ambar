@@ -36,15 +36,16 @@ class fomMedidasController():
             return {"status": False, "code": 400, "message": "hace falta información para actualizar el formato de medidas"}
 
     def responderFormMedidas(self,id,infoMedidas):
-        search = self.repoMedidas.getById(id)
+        search = self.repoMedidas.getByIdToUpdate(id)
         arreglos = search['arreglos']
         for i in range(len(arreglos)):
+            print(i)
             print(arreglos[i]["precio"])
             search['arreglos'][i]["precio"] = infoMedidas["arreglos"][i]["precio"]
             print(search)
-            form = formatoMedidas(str(search['asesor']), str(search['formulario']), str(search['producto']),
-            search['arreglos'], search['estadoCita'], True)
-            return self.repoMedidas.update(id,form)
+        form = formatoMedidas(str(search['asesor']), str(search['formulario']), str(search['producto']),
+        search['arreglos'], search['estadoCita'], True)
+        return self.repoMedidas.update(id,form)
 
 
 
