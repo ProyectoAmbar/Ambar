@@ -1,18 +1,18 @@
 from datetime import date
-from bson.objectid import ObjectId
+from bson import ObjectId, DBRef
 import pymongo
 
 class formatoAlquiler():
-    def __init__(self, idAsesor, idProducto, idCliente, identificacion, AñoFactura,MesFactura,DiaFactura, NumeroDeFactura, accesorio, corbatin, velo, aro, total, metodoDePago, Abono, Saldo, Deposito, AñoCitaMedidas, MesCitaMedidas,DiaCitaMedidas):
-        self.asesor = ObjectId(idAsesor)
-        self.Producto = ObjectId(idProducto)
-        self.Cliente = ObjectId(idCliente)
+    def __init__(self, idAsesor, idProducto, identificacion, AñoEntrega, MesEntrega, DiaEntrega, NumeroDeFactura, accesorio, corbatin, velo, aro, total, metodoDePago, Abono, Saldo, Deposito, AñoCitaMedidas, MesCitaMedidas,DiaCitaMedidas):
+        self.asesor = DBRef("empleado", ObjectId(idAsesor))
+        self.Producto = DBRef("producto", ObjectId(idProducto))
         self.identificacion = identificacion
-        self.fechaDeFactura = str(date(AñoFactura, MesFactura, DiaFactura))
+        self.fechaDeFactura = str(date.today())
+        self.fechaDeEntreta = str(date(AñoEntrega, MesEntrega, DiaEntrega))
         self.numeroFactura = NumeroDeFactura
         self.accesorio = accesorio
         self.corbatin = corbatin
-        self.velo =  velo
+        self.velo = velo
         self. aro = aro
         self.total = total
         self.metodoDePago = metodoDePago

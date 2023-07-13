@@ -8,14 +8,17 @@ import json
 from waitress import serve
 
 from controllers.productoController import ProductoController
-from controllers.formularioAlquiler import formularioAlquilerController
+from controllers.formularioAlquilerController import formularioAlquilerController
 from controllers.TareaController import tareaController
+from controllers.formMedidasController import fomMedidasController
 
 app = Flask(__name__)
 cors = CORS(app)
 product = ProductoController()
 formAlquiler = formularioAlquilerController()
 tareasController = tareaController()
+formMedidas = fomMedidasController()
+
 
 
 #-----------------RUTAS DE PRODUCTOS-----------------#
@@ -118,24 +121,44 @@ def responderTarea(id):
     json = tareasController.responderTarea(id,data)
     return jsonify(json)
 
-
-@app.route('/tarea/asignar/<string:id>',methods=['PUT'])
-def asignarTarea(id):
-    data = request.get_json()
-    json = tareasController.asignarTarea(id,data)
-    return jsonify(json)
-
 @app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
 def verTareasPendientes(idEmpleado):
     json = tareasController.verTareasPendientes(idEmpleado)
     return jsonify(json)
 
+###------------FOMRATO MEDIDAS---------------##
+@app.route('/formMedidas',methods=['POST'])
+def crearFormMedidas():
+    data = request.get_json()
+    json = formMedidas.create(data)
+    return jsonify(json)
 
+@app.route('/formMedidas',methods=['GET'])
+def getAllFormMedidas():
+    json = formMedidas.getAll()
+    return jsonify(json)
 
+@app.route('/formMedidas/<string:id>', methods=['GET'])
+def getFormMedidasById(id):
+    json = formMedidas.getById(id)
+    return jsonify(json)
 
+@app.route('/formMedidas/<string:id>',methods=['PUT'])
+def updateFormMedidas(id):
+    data = request.get_json()
+    json = formMedidas.UpdateForm(id,data)
+    return jsonify(json)
 
+@app.route('/formMedidas/<string:id>',methods=['DELETE'])
+def deleteFormMedidas(id):
+    json = formMedidas.deleteForm(id)
+    return jsonify(json)
 
-
+@app.route('/formMedidas/responder/<string:id>',methods=['PUT'])
+def responderFormMedidas(id):
+    data = request.get_json()
+    json = formMedidas.responderFormMedidas(id, data)
+    return jsonify(json)
 
 
 # -----------CONFIG AND MAIN ROOT-----------#
@@ -152,10 +175,6 @@ def test():
         "port": 5000
     }
     return jsonify(json)
-
-
-
-
 
 
 if __name__ == '__main__':

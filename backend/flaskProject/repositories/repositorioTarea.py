@@ -16,10 +16,9 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         response = collection.find_one({"_id": ObjectId(id)})
         print(response)
         response['_id'] = str(response['_id'])
+        response['formulario'] = str(response['formulario'])
         response['asesor'] = str(response['asesor'])
         response['producto'] = str(response['producto'])
-        if response['empleado'] != None:
-            response['empleado'] = str(response['empleado'])
         dict.append(response)
         return dict
 
@@ -30,10 +29,9 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         response = collection.find()
         for i in response:
             i['_id'] = str(i['_id'])
+            i['formulario'] = str(i['formulario'])
             i['asesor'] = str(i['asesor'])
             i['producto'] = str(i['producto'])
-            if i['empleado'] != None:
-                i['empleado'] = str(i['empleado'])
             allItems.append(i)
         dict.append(allItems)
         return dict
@@ -44,10 +42,9 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         response = collection.find_one({"_id": ObjectId(id)})
         if response is not None:
             response['_id'] = str(response['_id'])
+            response['formulario'] = str(response['formulario'])
             response['asesor'] = str(response['asesor'])
             response['producto'] = str(response['producto'])
-            if response['empleado'] != None:
-                response['empleado'] = str(response['empleado'])
         return response
 
     ##ID DE EMPLEADO##
@@ -59,9 +56,9 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         for item in response:
             if item is not None:
                 item['_id'] = str(item['_id'])
+                response['formulario'] = str(response['formulario'])
                 item['asesor'] = str(item['asesor'])
                 item['producto'] = str(item['producto'])
-                item['empleado'] = str(item['empleado'])
                 allItems.append(item)
         return allItems
 
@@ -75,10 +72,9 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
             collection.update_one({"_id": ObjectId(id)}, {"$set": infoTarea})
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
+            response['formulario'] = str(response['formulario'])
             response['asesor'] = str(response['asesor'])
             response['producto'] = str(response['producto'])
-            if response['empleado'] is not None:
-                response['empleado'] = str(response['empleado'])
             dict.append(response)
             return dict
         except:

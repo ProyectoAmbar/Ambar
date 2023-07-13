@@ -1,15 +1,10 @@
-from bson.objectid import ObjectId
+from bson import ObjectId, DBRef
+
 class Tarea():
-    def __init__(self, idAsesor, idEmpleado,idProducto,mensaje,estado,observaciones):
-        self.asesor = ObjectId(idAsesor)
-        if idEmpleado is not None:
-            self.empleado = ObjectId(idEmpleado)
-        else:
-            self.empleado = idEmpleado
-        self.producto = ObjectId(idProducto)
-        self.mensaje = mensaje
+    def __init__(self,idFormulario:str, idAsesor:str ,idProducto:str , fechaCitaDeMedidas:str, necesitaModista:bool ,estado:bool):
+        self.formulario = DBRef('formatoAlquiler', ObjectId(idFormulario))
+        self.asesor = DBRef('empleado', ObjectId(idAsesor))
+        self.producto = DBRef('producto', ObjectId(idProducto))
+        self.fechaCitaDeMedidas = fechaCitaDeMedidas
+        self.necesitaModista = necesitaModista
         self.estado = estado
-        self.observaciones = observaciones
-
-
-
