@@ -8,12 +8,12 @@ class formatoAlquiler():
         self.Producto = DBRef("producto", ObjectId(idProducto))
         self.identificacion = identificacion
         self.fechaDeFactura = str(date.today())
-        self.fechaDeEntreta = str(date(AñoEntrega, MesEntrega, DiaEntrega))
+        self.fechaDeEntrega = str(date(AñoEntrega, MesEntrega, DiaEntrega))
         self.numeroFactura = NumeroDeFactura
         self.accesorio = accesorio
         self.corbatin = corbatin
         self.velo = velo
-        self. aro = aro
+        self.aro = aro
         self.total = total
         self.metodoDePago = metodoDePago
         self.abono = Abono

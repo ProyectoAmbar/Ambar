@@ -6,5 +6,20 @@ class Tarea():
         self.asesor = DBRef('empleado', ObjectId(idAsesor))
         self.producto = DBRef('producto', ObjectId(idProducto))
         self.fechaCitaDeMedidas = fechaCitaDeMedidas
-        self.necesitaModista = necesitaModista
         self.estado = estado
+        if estado is False:
+            self.necesitaModista = False
+        else:
+            self.necesitaModista = necesitaModista
+
+
+    def __init__(self,idFormulario:DBRef, idAsesor:DBRef ,idProducto:DBRef , fechaCitaDeMedidas:str, necesitaModista:bool ,estado:bool):
+        self.formulario = idFormulario
+        self.asesor = idAsesor
+        self.producto = idProducto
+        self.fechaCitaDeMedidas = fechaCitaDeMedidas
+        self.estado = estado
+        if estado is False:
+            self.necesitaModista = False
+        else:
+            self.necesitaModista = necesitaModista

@@ -1,9 +1,9 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
-from bson.objectid import ObjectId
-from models.FormatoMedidas import formatoMedidas
+from models.tareaModisteria import tareaModisteria
+from bson import ObjectId,DBRef
 
-class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
-    def save(self, item: formatoMedidas):
+class repoTareaModista(interfaceRepositorio[tareaModisteria]):
+    def save(self, item: tareaModisteria):
         print("def save")
         collection = self.db[self.collection]
         inserted = collection.insert_one(item.__dict__)
@@ -11,9 +11,10 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
         print(id)
         response = collection.find_one({"_id": ObjectId(id)})
         response['_id'] = str(response['_id'])
-        response['asesor'] = str(response['asesor'])
+        response['formMedidas'] = str(response['formMedidas'])
         response['producto'] = str(response['producto'])
-        response['formulario'] = str(response['formulario'])
+        if response['modista'] is not None:
+            response['modista'] = str(response['modista'])
         return response
 
 
@@ -24,9 +25,9 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
         response = collection.find()
         for i in response:
             i['_id'] =str(i['_id'])
-            i['asesor'] = str(i['asesor'])
+            i['formMedidas'] = str(i['formMedidas'])
+            i['modista'] = str(i['modista'])
             i['producto'] = str(i['producto'])
-            i['formulario'] = str(i['formulario'])
             allItems.append(i)
         dict.append(allItems)
         return dict
@@ -36,16 +37,16 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
         response = collection.find_one({"_id":ObjectId(id)})
         if response != None:
             response['_id'] = str(response['_id'])
-            response['asesor'] = str(response['asesor'])
+            response['formMedidas'] = str(response['formMedidas'])
+            response['modista'] = str(response['modista'])
             response['producto'] = str(response['producto'])
-            response['formulario'] = str(response['formulario'])
         return response
 
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]
-        response = collection.find_one({"_id": ObjectId(id)})
+        response = collection.find_one({"_id":ObjectId(id)})
         return response
-    def update(self,id , item:formatoMedidas):
+    def update(self,id , item:tareaModisteria):
         try:
             dict = []
             collection = self.db[self.collection]
@@ -54,10 +55,9 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
             collection.update_one({"_id":ObjectId(id)},{"$set":item})
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
-            response['asesor'] = str(response['asesor'])
+            response['formMedidas'] = str(response['formMedidas'])
+            response['modista'] = str(response['modista'])
             response['producto'] = str(response['producto'])
-            response['formulario'] = str(response['formulario'])
-
             dict.append(response)
             return response
         except:
@@ -78,3 +78,29 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
         delObject = collection.delete_one({'_id':ObjectId(id)}).deleted_count
         dict.append({"deleted_count": delObject})
         return dict
+
+    def getTareasPendientes(self,idModista):
+        allItems = []
+        collection = self.db[self.collection]
+        query = {"$and": [{"modista": DBRef("empleado", ObjectId(idModista))},{"completado": False}]}
+        response = collection.find(query)
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['formMedidas'] = str(item['formMedidas'])
+                item['modista'] = str(item['modista'])
+                item['producto'] = str(item['producto'])
+                allItems.append(item)
+        return allItems
+
+    def getTareasSinAsignar(self):
+        allItems = []
+        collection = self.db[self.collection]
+        response = collection.find({"modista":None})
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['formMedidas'] = str(item['formMedidas'])
+                item['producto'] = str(item['producto'])
+                allItems.append(item)
+        return allItems

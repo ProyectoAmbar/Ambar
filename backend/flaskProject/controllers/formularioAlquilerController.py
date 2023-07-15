@@ -2,6 +2,7 @@ from models.FormatoAlquiler import formatoAlquiler
 from models.Tarea import Tarea
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from repositories.repositorioTarea import repositorioTareas
+from bson import DBRef, ObjectId
 
 class formularioAlquilerController():
     def __init__(self):
@@ -16,17 +17,12 @@ class formularioAlquilerController():
             print(formulario)
             dict = []
             response = self.repositorioAlquiler.save(formulario)
-            print(response)
+            print(response['_id'])
+            infoTarea = self.repositorioAlquiler.getByIdToUpdate(response['_id'])
+            tarea = Tarea(DBRef('formulario',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'],infoTarea['fechaDeEntrega'],False,False)
+            responseTarea = self.repoTareas.save(tarea,False)
             dict.append(response)
-
-
-
-
-
-
-
-
-
+            dict.append(responseTarea)
             return dict
         else:
             return {"status": False, "code": 400, "message": "el formulario no pudo ser creado"}
@@ -52,6 +48,7 @@ class formularioAlquilerController():
             infoUpdate['velo'], infoUpdate['aro'], infoUpdate['total'], infoUpdate['metodoDePago'], infoUpdate['Abono'], infoUpdate['Saldo'],
             infoUpdate['Deposito'], infoUpdate['AñoCitaMedidas'], infoUpdate['MesCitaMedidas'], infoUpdate['DiaCitaMedidas'])
             response = self.repositorioAlquiler.update(id,form)
+            dict.append(response)
             dict.append({"status": True , "code": 200, "message": "El fomulario fue actualizado de manera exitosa"})
             return dict
         else:

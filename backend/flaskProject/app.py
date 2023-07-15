@@ -11,6 +11,7 @@ from controllers.productoController import ProductoController
 from controllers.formularioAlquilerController import formularioAlquilerController
 from controllers.TareaController import tareaController
 from controllers.formMedidasController import fomMedidasController
+from controllers.tareaModistaController import tareaModisteriaController
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -18,6 +19,7 @@ product = ProductoController()
 formAlquiler = formularioAlquilerController()
 tareasController = tareaController()
 formMedidas = fomMedidasController()
+tareaModista = tareaModisteriaController()
 
 
 
@@ -118,7 +120,7 @@ def DeleteTarea(id):
 @app.route('/tarea/answer/<string:id>',methods=['PUT'])
 def responderTarea(id):
     data = request.get_json()
-    json = tareasController.responderTarea(id,data)
+    json = tareasController.responderTareaC(id, data, data['estado'])
     return jsonify(json)
 
 @app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
@@ -158,6 +160,56 @@ def deleteFormMedidas(id):
 def responderFormMedidas(id):
     data = request.get_json()
     json = formMedidas.responderFormMedidas(id, data)
+    return jsonify(json)
+
+###------------Tarea Modisteria---------------##
+@app.route('/tareaModista',methods=['POST'])
+def createTareaModista():
+    data = request.get_json()
+    json = tareaModista.Create(data)
+    return jsonify(json)
+
+@app.route('/tareaModista',methods=['GET'])
+def getAllTareaModista():
+    json = tareaModista.getAllTareaModista()
+    return jsonify(json)
+
+@app.route('/tareaModista/<string:id>',methods=['GET'])
+def getTareaModistaById(id):
+    json = tareaModista.getTareaModistaById(id)
+    return jsonify(json)
+
+@app.route('/tareaModista/<string:id>',methods=['PUT'])
+def updateTareaModista(id):
+    data = request.get_json()
+    json = tareaModista.updateTareaModista(id,data)
+    return jsonify(json)
+
+@app.route('/tareaModista/<string:id>',methods=['DELETE'])
+def deleteTareaModista(id):
+    json = tareaModista.deleteTareaModista(id)
+    return jsonify(json)
+
+@app.route('/tareaModista/asignar/<string:id>',methods=['PUT'])
+def asignarModista(id):
+    data = request.get_json()
+    json = tareaModista.AsignarTareaModista(id,data)
+    return jsonify(json)
+
+@app.route('/tareaModista/responder/<string:id>',methods=['PUT'])
+def responderTareaModista(id):
+    data = request.get_json()
+    json = tareaModista.responderTareaModista(id,data)
+    return jsonify(json)
+
+@app.route('/tareaModista/sinasignar',methods=['GET'])
+def getTareaModistaSinAsignar():
+    json = tareaModista.getTareaModistaSinAsignar()
+    return jsonify(json)
+
+@app.route('/tareaModista/pendientes/<string:idModista>',methods=['GET'])
+def getTareasModistaPendiente(idModista):
+    json = tareaModista.getTareaModistaPendiente(idModista)
     return jsonify(json)
 
 

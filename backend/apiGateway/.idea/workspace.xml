@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formMedidasController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formMedidasController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/FormatoMedidas.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/FormatoMedidas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/FormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/FormatoAlquiler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/Tarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/Tarea.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormMedidas.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormMedidas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +104,7 @@
       <workItem from="1689205562347" duration="890000" />
       <workItem from="1689267960805" duration="635000" />
       <workItem from="1689269846906" duration="599000" />
+      <workItem from="1689364602638" duration="1539000" />
     </task>
     <servers />
   </component>

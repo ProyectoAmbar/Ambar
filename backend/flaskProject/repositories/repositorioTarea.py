@@ -1,11 +1,10 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
 from models.Tarea import Tarea
-from bson.objectid import ObjectId
+from bson import ObjectId,DBRef
 
 
 class repositorioTareas(interfaceRepositorio[Tarea]):
     def save(self, infoTarea, estado):
-        dict = []
         print(infoTarea.estado)
         infoTarea.estado = estado
         print("def save")
@@ -19,8 +18,8 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         response['formulario'] = str(response['formulario'])
         response['asesor'] = str(response['asesor'])
         response['producto'] = str(response['producto'])
-        dict.append(response)
-        return dict
+
+        return response
 
     def getAll(self):
         dict = []
@@ -37,7 +36,6 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         return dict
 
     def getById(self, id):
-        dict = []
         collection = self.db[self.collection]
         response = collection.find_one({"_id": ObjectId(id)})
         if response is not None:
@@ -51,12 +49,12 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
     def getTareasPendientes(self,id):
         allItems = []
         collection = self.db[self.collection]
-        query = {"$and": [{"empleado": ObjectId(id)}, {"estado": False}]}
+        query = {"$and": [{"asesor": DBRef("empleado",ObjectId(id))}, {"estado": False}]}
         response = collection.find(query)
         for item in response:
             if item is not None:
                 item['_id'] = str(item['_id'])
-                response['formulario'] = str(response['formulario'])
+                item['formulario'] = str(item['formulario'])
                 item['asesor'] = str(item['asesor'])
                 item['producto'] = str(item['producto'])
                 allItems.append(item)
@@ -65,7 +63,6 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
 
     def update(self, id, infoTarea):
         try:
-            dict = []
             collection = self.db[self.collection]
             infoTarea = infoTarea.__dict__
             print(id)
@@ -75,15 +72,14 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
             response['formulario'] = str(response['formulario'])
             response['asesor'] = str(response['asesor'])
             response['producto'] = str(response['producto'])
-            dict.append(response)
-            return dict
+            return response
         except:
-            dict = [{
-                "status": False,
-                "code": 403,
-                "message": "La tarea con id " + id + " no ha sido encontrada"
-            }]
-            return dict
+            return {"status": False,"code": 403,"message": "La tarea con id " + id + " no ha sido encontrada"}
+
+    def getByIdToUpdate(self, id):
+        collection = self.db[self.collection]
+        response = collection.find_one({"_id": ObjectId(id)})
+        return response
 
     def delete(self, id):
         dict = [{
