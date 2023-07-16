@@ -53,7 +53,7 @@ class tareaModisteriaController():
     def AsignarTareaModista(self,id, infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
         if search is not None:
-            tareaModista = tareaModisteria(search['formMedidas'],DBRef('empleado',ObjectId(infoTareaModisteria['modista'])),search['producto'],
+            tareaModista = tareaModisteria(search['formMedidas'],search['modista'],search['producto'],
                             search['preciosCompletado'], search['completado'])
             return self.repoModista.update(id,tareaModista)
         else:

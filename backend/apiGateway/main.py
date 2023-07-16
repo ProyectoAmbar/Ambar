@@ -226,33 +226,37 @@ def getProductoById(id):
 
 @app.route('/productos',methods=['POST'])
 def CreateProductos():
+    print("crear productos")
     data = request.get_json()
     response = requests.post(url=dataConfig["url-backend-productos"]+"/productos",json = data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/productos/<string:id>', methods=['PUT'])
 def uptadeProductos(id):
+    print("update productos")
     data = request.get_json()
     response = requests.put(url=dataConfig["url-backend-productos"]+"/productos/"+id,json = data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/productos/<string:id>',methods=['DELETE'])
 def deleteProducto(id):
+    print("delete Productos")
     response = requests.delete(url=dataConfig["url-backend-productos"]+"/productos/"+id, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/productos/getReferencia/<string:referencia>')
 def getByReferencia(referencia):
+    print("get Productos By Referencia")
     response = requests.get(url=dataConfig["url-backend-productos"]+"/productos/getReferencia/"+referencia, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 ###--------------RUTAS DE FOMULARIO ALQUILER--------------###
 @app.route('/alquiler',methods=['POST'])
 def CreateFormularioAlquiler():
+    print("crear formulario de alquiler")
     data = request.get_json()
     asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idAsesor'], headers={"Content-Type": "application/json; charset=utf-8"})
-    cliente = requests.get(url=dataConfig["url-backend-users"]+'/user/'+data['idCliente'], headers={"Content-Type": "application/json; charset=utf-8"})
     producto = requests.get(url=dataConfig["url-backend-productos"]+"/productos/"+data['idProducto'], headers={"Content-Type": "application/json; charset=utf-8"})
-    if asesor.status_code == 200 and cliente.status_code == 200 and producto.status_code == 200:
+    if asesor.status_code == 200 and producto.status_code == 200:
         alquiler = requests.post(url=dataConfig["url-backend-productos"]+"/alquiler", json=data, headers={"Content-Type": "application/json; charset=utf-8"})
         print(alquiler)
         return jsonify(alquiler.json())
@@ -261,26 +265,28 @@ def CreateFormularioAlquiler():
 
 @app.route('/alquiler',methods=['GET'])
 def GetAllFormularioAlquiler():
+    print("get all formulario de alquiler")
     response = requests.get(url=dataConfig['url-backend-productos']+"/alquiler",headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/alquiler/<string:id>',methods=['GET'])
 def getFormularioAlquilerById(id):
+    print("get by id formulario de alquiler")
     response = requests.get(url=dataConfig['url-backend-productos']+"/alquiler/"+id ,headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/alquiler/<string:id>',methods=['PUT'])
 def updateFormularioAlquiler(id):
+    print("update formulario de alquiler")
     data = request.get_json()
     asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idAsesor'], headers={"Content-Type": "application/json; charset=utf-8"})
-    cliente = requests.get(url=dataConfig["url-backend-users"] + '/user/' + data['idCliente'], headers={"Content-Type": "application/json; charset=utf-8"})
     producto = requests.get(url=dataConfig["url-backend-productos"] + "/productos/" + data['idProducto'], headers={"Content-Type": "application/json; charset=utf-8"})
     print(producto.json())
     productoJson = producto.json()
-    clienteJson = cliente.json()
+
     asesorJson = asesor.json()
 
-    if clienteJson['_id'] and asesorJson['id'] and productoJson[0]['_id']:
+    if asesorJson['id'] and productoJson[0]['_id']:
         response = requests.put(url=dataConfig['url-backend-productos']+"/alquiler/"+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
         return jsonify(response.json())
     else:
@@ -288,6 +294,7 @@ def updateFormularioAlquiler(id):
 
 @app.route('/alquiler/<string:id>',methods=['DELETE'])
 def deleteFormularioAlquiler(id):
+    print("delete formulario de alquiler")
     response = requests.delete(url=dataConfig['url-backend-productos']+"/alquiler/"+id, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
@@ -295,79 +302,175 @@ def deleteFormularioAlquiler(id):
 ###--------------RUTAS DE TAREAS--------------###
 @app.route('/tarea',methods=['GET'])
 def GetAllTareas():
+    print("get all tareas de asesor")
     response = requests.get(url=dataConfig['url-backend-productos']+"/tarea", headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/tarea/<string:id>',methods=['GET'])
 def GetTareaById(id):
+    print("get all tareas de asesor")
     response = requests.get(url=dataConfig['url-backend-productos']+"/tarea/"+id, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/tarea',methods=['POST'])
 def CreateTarea():
+    print("crear tarea de asesor")
     dict = []
-    empleadoBool = True
+    empleadoBool = False
     data = request.get_json()
     asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idAsesor'],headers={"Content-Type": "application/json; charset=utf-8"})
     asesorJson = asesor.json()
     producto = requests.get(url=dataConfig["url-backend-productos"] + "/productos/" + data['idProducto'],headers={"Content-Type": "application/json; charset=utf-8"})
     productoJson = producto.json()
-    if data['idEmpleado'] is not None:
-        empleado = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idEmpleado'],headers={"Content-Type": "application/json; charset=utf-8"})
-        if empleado.status_code != 200:
-            empleadoBool = False
     if asesorJson['id'] and productoJson[0]['_id'] and empleadoBool:
         response = requests.post(url=dataConfig["url-backend-productos"] + "/tarea", json=data,headers={"Content-Type": "application/json; charset=utf-8"})
         dict.append(response.json())
         dict.append(asesorJson)
         dict.append(productoJson)
-        if empleadoBool:
-            dict.append(empleado.json())
         return jsonify(dict)
     else:
         return {"status": False, "Code": 400, "message": "no se encontro el empleado, el asesor o producto"}
 
 @app.route('/tarea/<string:id>', methods=['DELETE'])
 def deleteTarea(id):
+    print("delete TArea de asesor")
     response = requests.delete(url=dataConfig["url-backend-productos"] + "/tarea/"+id, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 @app.route('/tarea/answer/<string:id>',methods=['PUT'])
 def responderTarea(id):
+    print("responder tarea de asesor")
     data = request.get_json()
     response = requests.put(url=dataConfig["url-backend-productos"] + "/tarea/answer/"+id,json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
-@app.route('/tarea/asignar/<string:id>',methods=['PUT'])
-def asignarTarea(id):
-    data = request.get_json()
-    print(data['empleado'])
-    empleado = requests.get(url = dataConfig["url-backend-users"]+"/empleado/"+data['empleado'],headers={"Content-Type": "application/json; charset=utf-8"})
-    if empleado.status_code == 200:
-        response = requests.put(url=dataConfig["url-backend-productos"] + "/tarea/asignar/" + id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
-        return jsonify(response.json())
-    else:
-        return jsonify(empleado.json())
-
-
 @app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
 def verTareasPendientes(idEmpleado):
+    print("ver Tareas pendientes")
     response = requests.get(url=dataConfig["url-backend-productos"] + "/tarea/verPendientes/" + idEmpleado, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+###--------------RUTAS FORMULARIO DE MEDIDAS--------------###
+
+@app.route('/formMedidas',methods=['POST'])
+def crearFormMedidas():
+    print("crear fomulario de medidas")
+    data = request.get_json()
+    formulario = requests.get(url=dataConfig['url-backend-productos']+"/alquiler/"+ data['formulario'] ,headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['asesor'],headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    producto = requests.get(url=dataConfig["url-backend-productos"]+"/productos/"+data['producto'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    if (formulario['status'] and asesor['status'] and producto['status']):
+        response = requests.post(url=dataConfig["url-backend-productos"] +'/formMedidas',json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+        return jsonify(response.json())
+    else:
+        return {"status":False, "code":400, "message":"no se encontro, el formulario, el asesor, o el producto"}
+
+@app.route('/formMedidas',methods=['GET'])
+def getAllFormMedidas():
+    print("get all formulario de medidas")
+    response = requests.get(url=dataConfig["url-backend-productos"] +'/formMedidas',headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/formMedidas/<string:id>',methods=['GET'])
+def getFormMedidasById(id):
+    print("get by id formulario de medidas")
+    response = requests.get(url=dataConfig["url-backend-productos"] +'/formMedidas/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/formMedidas/<string:id>',methods=['PUT'])
+def updateFormularioMedidas(id):
+    data = request.get_json()
+    response  = requests.put(url=dataConfig["url-backend-productos"] +'/formMedidas/'+id,json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/formMedidas/<string:id>',methods=['DELETE'])
+def deleteFormularioMedidas(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"] +'/formMedidas/'+id,headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/formMedidas/responder/<string:id>', methods=['PUT'])
+def responderFormMedidas(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] +'/formMedidas/responder/'+id,json = data,headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 
 
+###--------------RUTAS FORMULARIO DE MEDIDAS--------------###
+@app.route('/tareaModista',methods=['POST'])
+def createTareaModista():
+    data = request.get_json()
+    formMedidas = requests.get(url=dataConfig['url-backend-productos'] + "/alquiler/" + data['formMedidas'],
+                              headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    modista = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['modista'],
+                          headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    producto = requests.get(url=dataConfig["url-backend-productos"] + "/productos/" + data['producto'],
+                            headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    try:
+        if (formMedidas['_id'] and modista['id'] and producto['_id']):
+            response = requests.post(url=dataConfig['url-backend-productos']+'/tareaModista', json = data, headers={"Content-Type": "application/json; charset=utf-8"})
+            return jsonify(response.json())
+    except:
+        return {"status": False, "code":400, "message": "No se encontro el formMedidas, el modista o el producto"}
 
+@app.route('/tareaModista',methods=['GET'])
+def getAllTareaModista():
+    response = requests.get(url=dataConfig['url-backend-productos']+'/tareaModista', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/tareaModista/<string:id>',methods=['GET'])
+def getTareaModistaById(id):
+    response = requests.get(url=dataConfig['url-backend-productos']+'/tareaModista/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/tareaModista/<string:id>',methods=['PUT'])
+def updateTareaModista(id):
+    data = request.get_json()
+    formMedidas = requests.get(url=dataConfig['url-backend-productos'] + "/alquiler/" + data['formMedidas'],
+                              headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    modista = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['modista'],
+                           headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    producto = requests.get(url=dataConfig["url-backend-productos"] + "/productos/" + data['producto'],
+                            headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    try:
+        if (formMedidas['_id'] and modista['id'] and producto['_id']):
+            response = requests.put(url=dataConfig['url-backend-productos']+'/tareaModista/'+id, json = data,headers={"Content-Type": "application/json; charset=utf-8"})
+            return jsonify(response.json())
+    except:
+        return {"status": False, "code":400, "message": "No se encontro el formMedidas, el modista o el producto"}
 
+@app.route('/tareaModista/<string:id>',methods=['DELETE'])
+def deleteTareaModista(id):
+    response = requests.delete(url=dataConfig['url-backend-productos']+'/tareaModista/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return  jsonify(response.json())
 
+@app.route('/tareaModista/sinAsignar',methods=['GET'])
+def GetTareaModistaSinAsignar():
+    response = requests.get(url=dataConfig['url-backend-productos']+'/tareaModista/sinAsignar', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/tareaModista/asignar/<string:id>',methods=['PUT'])
+def asignarModista(id):
+    data = request.get_json()
+    modista = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['modista'],
+                           headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    try:
+        if modista['id']:
+            response = requests.put(url=dataConfig["url-backend-productos"] + '/tareaModista/asignar/'+id, json = data, headers={"Content-Type": "application/json; charset=utf-8"})
+            return jsonify(response.json())
+    except:
+        return {"status": False, "code": 400, "message": "No fue posible encontrar el modista"}
 
+@app.route('/tareaModista/responder/<string:id>',methods=['PUT'])
+def responderTareaModisteria(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + '/tareaModista/responder/' + id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
-
-
-
+@app.route('/tareaModista/pendientes/<string:idModista>',methods=['GET'])
+def getTareasPendientes(idModista):
+    response = requests.get(url=dataConfig["url-backend-productos"] +'/tareaModista/pendientes/'+idModista, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
 
 

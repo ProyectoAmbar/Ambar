@@ -27,7 +27,7 @@ class fomMedidasController():
         if self.isValid(infoMedidas) and search is not None:
             if infoMedidas['necesitaArreglos'] is True:
                 for arreglo in infoMedidas['arreglos']:
-                    if (arreglo['mensaje'] is None  or arreglo['cm'] is None or arreglo):
+                    if (arreglo['mensaje'] is None  or arreglo['cm'] is None):
                         return {"status": False, "code": 400, "message": "se necesitan los arreglos"}
             form = formatoMedidas(infoMedidas['asesor'],infoMedidas['formulario'],infoMedidas['producto'],
             infoMedidas['arreglos'],infoMedidas['estadoCita'],infoMedidas['necesitaArreglos'])
@@ -38,14 +38,17 @@ class fomMedidasController():
     def responderFormMedidas(self,id,infoMedidas):
         search = self.repoMedidas.getByIdToUpdate(id)
         arreglos = search['arreglos']
-        for i in range(len(arreglos)):
-            print(i)
-            print(arreglos[i]["precio"])
-            search['arreglos'][i]["precio"] = infoMedidas["arreglos"][i]["precio"]
-            print(search)
-        form = formatoMedidas(str(search['asesor']), str(search['formulario']), str(search['producto']),
-        search['arreglos'], search['estadoCita'], True)
-        return self.repoMedidas.update(id,form)
+        if len(arreglos) == len(infoMedidas['arreglos']):
+            for i in range(len(arreglos)):
+                print(i)
+                print(arreglos[i]["precio"])
+                search['arreglos'][i]["precio"] = infoMedidas["arreglos"][i]["precio"]
+                print(search)
+            form = formatoMedidas(str(search['asesor']), str(search['formulario']), str(search['producto']),
+            search['arreglos'], search['estadoCita'], True)
+            return self.repoMedidas.update(id,form)
+        else:
+            return {"status":False, "code": 400, "message":"hacen falta arreglos por proporcionar"}
 
 
 

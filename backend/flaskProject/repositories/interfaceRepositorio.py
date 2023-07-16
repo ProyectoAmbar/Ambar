@@ -44,23 +44,19 @@ class interfaceRepositorio(Generic[T]):
         return dict
 
     def getById(self, id):
-        dict = []
         collection = self.db[self.collection]
         response = collection.find_one({"_id":ObjectId(id)})
         if response != None:
             response['_id'] = str(response['_id'])
-        dict.append(response)
-        return dict
+        return response
     def update(self,id , item:T):
         try:
-            dict = []
             collection = self.db[self.collection]
             item = item.__dict__
             print(id)
             collection.update_one({"_id":ObjectId(id)},{"$set":item})
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
-            dict.append(response)
             return response
         except:
             dict = [{
@@ -83,10 +79,9 @@ class interfaceRepositorio(Generic[T]):
 
     def query(self, theQuery):
         laColeccion = self.baseDatos[self.coleccion]
-        data = []
         for x in laColeccion.find(theQuery):
             x["_id"] = x["_id"].__str__()
         x = self.transformObjectIds(x)
         x = self.getValuesDBRef(x)
-        data.append(x)
-        return data
+
+        return x

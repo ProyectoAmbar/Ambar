@@ -88,8 +88,6 @@ def DeleteAlquiler(id):
 
 
 ###------------tareas---------------###
-
-
 @app.route('/tarea', methods=['POST'])
 def CreateTarea():
     infoTarea = request.get_json()
@@ -101,7 +99,7 @@ def getTareaById(id):
     json = tareasController.getById(id)
     return jsonify(json)
 
-@app.route('/tarea')
+@app.route('/tarea',methods=['GET'])
 def getAllTareas():
     json = tareasController.getAllTareas()
     return jsonify(json)
@@ -202,7 +200,7 @@ def responderTareaModista(id):
     json = tareaModista.responderTareaModista(id,data)
     return jsonify(json)
 
-@app.route('/tareaModista/sinasignar',methods=['GET'])
+@app.route('/tareaModista/sinAsignar',methods=['GET'])
 def getTareaModistaSinAsignar():
     json = tareaModista.getTareaModistaSinAsignar()
     return jsonify(json)

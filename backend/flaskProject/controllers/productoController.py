@@ -29,7 +29,7 @@ class ProductoController():
     def getById(self,id):
         print("mostrando producto con : ", id)
         response =  self.RepositorioProductos.getById(id)
-        if response[0] != None:
+        if response != None:
             return response
         else:
             return {"status": False , "code": 400, "message": "No se encontro el producto con id: " + id}
