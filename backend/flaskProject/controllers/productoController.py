@@ -8,7 +8,7 @@ class ProductoController():
 
     def create(self, infoProducto):
         try:
-            if infoProducto['nombre'] and infoProducto['referencia'] and infoProducto['imagenProducto'] and infoProducto['cantidadTallaS'] and infoProducto['cantidadTallaM'] and infoProducto['cantidadTallaL']:
+            if infoProducto['nombre']!= None and infoProducto['referencia']!= None and infoProducto['imagenProducto']!= None and infoProducto['color']!= None and infoProducto['disponible'] != None:
                 theProduct = Producto(infoProducto)
                 print(theProduct)
                 productoPorReferencia = self.RepositorioProductos.getByReferencia(theProduct.referencia)
@@ -57,6 +57,39 @@ class ProductoController():
             else:
                 return {"status": False, "Code": 400, "message": "hace falta información o el id no fue encontrado"}
 
+    def bloquearProducto(self,id):
+        search = self.RepositorioProductos.getById(id)
+        try:
+            if search['disponible'] is True:
+                productoUpdate = {
+                    "nombre": search['nombre'],
+                    "referencia": search['referencia'],
+                    "imagenProducto": search['imagenProducto'],
+                    "color": search['color'],
+                    "disponible": False
+                }
+                return self.RepositorioProductos.update(id,Producto(productoUpdate))
+            else:
+                return {"status":False, "code":400, "message": "el producto ya esta bloqueado"}
+        except:
+            return {"status": False, "code": 400, "message": "No se encontro el producto de id"+id}
+
+    def desbloquearProducto(self,id):
+        search = self.RepositorioProductos.getById(id)
+        try:
+            if search['disponible'] is False:
+                productoUpdate = {
+                    "nombre": search['nombre'],
+                    "referencia": search['referencia'],
+                    "imagenProducto": search['imagenProducto'],
+                    "color": search['color'],
+                    "disponible": True
+                }
+                return self.RepositorioProductos.update(id, Producto(productoUpdate))
+            else:
+                return {"status": False, "code": 400, "message": "el producto ya esta desbloqueado"}
+        except:
+            return {"status": False, "code": 400, "message": "No se encontro el producto de id" + id}
 
     def deleteProducto(self, _id):
         print("eliminar un producto")

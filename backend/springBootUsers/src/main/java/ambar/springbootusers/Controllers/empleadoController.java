@@ -61,7 +61,11 @@ public class empleadoController{
         if(usuarioActual != null){
             return usuarioActual;
         }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se encontron ningun empleado con el id: " + id);
+    }    @GetMapping("/getByUser/{idUser}")
+    public empleado getEmpleadoByIdUser(@PathVariable String idUser){
+        return this.empleadoRepository.getempleadoByUser(idUser);
     }
+
 
     @PutMapping("{id}")
     public empleado updateEmpleado(@PathVariable String id ,@RequestBody infoEmpleado informacionEmpleado){

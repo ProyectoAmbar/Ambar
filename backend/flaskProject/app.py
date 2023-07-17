@@ -48,6 +48,17 @@ def getById(id):
     print(json)
     return jsonify(json)
 
+@app.route('/productos/bloquear/<string:id>',methods=['PUT'])
+def bloquear(id):
+    json = product.bloquearProducto(id)
+    return jsonify(json)
+
+@app.route('/productos/desbloquear/<string:id>',methods=['PUT'])
+def desbloquear(id):
+    json = product.desbloquearProducto(id)
+    return jsonify(json)
+
+
 @app.route('/productos/getReferencia/<int:referencia>', methods=['GET'])
 def getByReferencia(referencia):
     print(type(int(referencia)))
