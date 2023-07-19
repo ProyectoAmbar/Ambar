@@ -45,6 +45,25 @@ public class userController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "al usuario le hace falta información");
         }
     }
+    @PostMapping("/rol/{idRol}")
+    public userGeneral createUderwWithRol(@RequestBody userGeneral usuario, @PathVariable String idRol){
+        if(usuario.isValid()){
+            userGeneral usuarioActual = this.myUserRepo.getUserGeneralByCorreo(usuario.getCorreo());
+            if(usuarioActual == null){
+                usuario.setPassword(convertirSHA256(usuario.getPassword()));
+                rol Rol = this.myRolRepo.findById(idRol).orElse(null);
+                if(Rol != null){
+                    usuario.setRol(Rol);
+                }
+                return this.myUserRepo.save(usuario);
+            }else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Ya existe un usuario con el correo: " + usuario.getCorreo() );
+            }
+
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "al usuario le hace falta información");
+        }
+    }
 
 
     //OBTENER TODOS LOS USUARIOS

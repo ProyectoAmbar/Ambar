@@ -12,6 +12,12 @@ from controllers.formularioAlquilerController import formularioAlquilerControlle
 from controllers.TareaController import tareaController
 from controllers.formMedidasController import fomMedidasController
 from controllers.tareaModistaController import tareaModisteriaController
+from repositories.repositorioProductos import RepositorioProductos
+from models.producto import Producto
+from datetime import datetime, timedelta
+from apscheduler.schedulers.background import BackgroundScheduler
+from bson import ObjectId
+
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -20,8 +26,53 @@ formAlquiler = formularioAlquilerController()
 tareasController = tareaController()
 formMedidas = fomMedidasController()
 tareaModista = tareaModisteriaController()
+scheduler = BackgroundScheduler()
+scheduler.start()
+repoDb = RepositorioProductos()
 
 
+
+def desbloquearProducto( id, idTarea):
+    print("disparo ;))")
+    job = repoDb.getDb()['jobs']
+    search = repoDb.getById(id)
+    try:
+        if search['disponible'] is False:
+            productoUpdate = {
+                "nombre": search['nombre'],
+                "referencia": search['referencia'],
+                "imagenProducto": search['imagenProducto'],
+                "color": search['color'],
+                "disponible": False
+            }
+            repoDb.update(id, Producto(productoUpdate))
+        print(job.delete_one({'_id':ObjectId(idTarea)}).deleted_count)
+
+
+    except:
+        pass
+
+@app.before_request
+def consultarEIniciarTareas():
+    db = repoDb.getDb()
+    tareas = db['jobs'].find()
+    for tarea in tareas:
+        fun = globals()[tarea['fun']]
+        if tarea['fecha'] < str(datetime.now()):
+            print("menor jaja lol")
+            fun(tarea['producto'],tarea['_id'])
+        elif tarea['creada'] is False:
+            item = {
+                "fun": tarea['fun'],
+                "trigger": tarea['trigger'],
+                "fecha": tarea['fecha'],
+                "producto": tarea['producto'],
+                "creada": True
+            }
+            db['jobs'].update_one({'_id': ObjectId(tarea['_id'])},{"$set": item})
+            scheduler.add_job(fun, tarea['trigger'], next_run_time=tarea['fecha'],args=[tarea['producto'],tarea['_id']])
+
+scheduler.add_job(consultarEIniciarTareas, 'interval' ,seconds=6)
 
 #-----------------RUTAS DE PRODUCTOS-----------------#
 @app.route('/productos' , methods=['POST'])
@@ -231,6 +282,7 @@ def loadFileConfig():
 
 @app.route('/', methods=['GET'])
 def test():
+    consultarEIniciarTareas()
     json = {
         "message": "server is running",
         "port": 5000

@@ -90,3 +90,5 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         delObject = collection.delete_one({'_id': ObjectId(id)}).deleted_count
         dict.append({"deleted_count": delObject})
         return dict
+
+    pass

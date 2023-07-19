@@ -78,3 +78,5 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
         delObject = collection.delete_one({'_id':ObjectId(id)}).deleted_count
         dict.append({"deleted_count": delObject})
         return dict
+
+    pass

@@ -85,3 +85,5 @@ class interfaceRepositorio(Generic[T]):
         x = self.getValuesDBRef(x)
 
         return x
+    def getDb(self):
+        return self.db

@@ -81,3 +81,4 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
         x = self.getValuesDBRef(x)
         data.append(x)
         return data
+    pass

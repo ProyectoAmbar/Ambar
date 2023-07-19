@@ -1,9 +1,25 @@
 from repositories.repositorioTarea import repositorioTareas
+from models.producto import Producto
 from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioTareaModista import repoTareaModista
 from models.Tarea import Tarea
 from models.FormatoMedidas import formatoMedidas
 from models.tareaModisteria import tareaModisteria
+
+
+def desbloquearProducto(self, id):
+    search = self.RepositorioProductos.getById(id)
+    try:
+        if search['disponible'] is False:
+            productoUpdate = {
+                "nombre": search['nombre'],
+                "referencia": search['referencia'],
+                "imagenProducto": search['imagenProducto'],
+                "color": search['color'],
+                "disponible": True
+            }
+    except:
+        return {"status": False, "code": 400, "message": "No se encontro el producto de id" + id}
 
 
 class tareaController():

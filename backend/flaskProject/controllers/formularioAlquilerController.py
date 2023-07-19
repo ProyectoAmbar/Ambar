@@ -1,20 +1,40 @@
+import calendar
+
 from models.FormatoAlquiler import formatoAlquiler
 from models.Tarea import Tarea
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from repositories.repositorioTarea import repositorioTareas
+from controllers.productoController import ProductoController
+
 from bson import DBRef, ObjectId
+from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime, timedelta
 
 class formularioAlquilerController():
     def __init__(self):
         self.repositorioAlquiler = repositorioFormatoAlquiler()
         self.repoTareas = repositorioTareas()
+        self.controllerProduct = ProductoController()
 
     def create(self, infoAlquiler):
         if self.isValid(infoAlquiler):
+            db = self.repositorioAlquiler.getDb()
+            job = db['jobs']
+            fechaEntrega = datetime(infoAlquiler['AñoEntrega'],infoAlquiler['MesEntrega'], infoAlquiler['DiaEntrega'],23,59,0) + timedelta(days=5)
+            if fechaEntrega.weekday() == calendar.SUNDAY:
+                fechaEntrega += timedelta(days=1)
+            job.insert_one({
+                "fun": "desbloquearProducto",
+                "trigger": "date",
+                "fecha": str(fechaEntrega),
+                "producto": infoAlquiler['idProducto'],
+                "creada": False
+            })
             formulario = formatoAlquiler(infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
             infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
             print(formulario)
+
             dict = []
             response = self.repositorioAlquiler.save(formulario)
             print(response['_id'])

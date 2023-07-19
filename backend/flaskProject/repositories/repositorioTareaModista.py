@@ -104,3 +104,5 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
                 item['producto'] = str(item['producto'])
                 allItems.append(item)
         return allItems
+
+    pass

@@ -28,7 +28,7 @@ jwt = JWTManager(app)
 
 
 ###-------VALIDACIÓN DE PERMISOS-------###
-@app.before_request
+
 def before_request_callback():
     endPoint = limpiarURL(request.path)
     print(endPoint)
@@ -85,6 +85,15 @@ def createUser():
     response = requests.post(url=dataConfig["url-backend-users"]+'/user', json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     print(response)
     return jsonify(response.json())
+
+@app.route("/user/create/<string:id>",methods=['POST'])
+def createUserWithRol(id):
+    print("create user with rol")
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-users"] + '/user/rol/'+id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+    print(response.json())
+    return jsonify(response.json())
+
 
 @app.route("/login", methods=['POST'])
 def Login():
