@@ -86,9 +86,12 @@ class tareaController():
         else:
             return {"status": False, "code": 400, "message": "No se encontro la tarea a responder"}
 
-    def verTareasPendientes(self, id):
-        search = self.repositorioTareas.getTareasPendientes(id)
+    def verTareasPendientesPorAsesor(self, id):
+        search = self.repositorioTareas.getTareasPendientesPorAsesor(id)
         return search
+
+    def getAllTareasPendientes(self):
+        return self.repositorioTareas.getAllTareasPendientes()
 
     def Delete(self, id):
         print("eliminar un producto")

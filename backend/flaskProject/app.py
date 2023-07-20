@@ -52,7 +52,6 @@ def desbloquearProducto( id, idTarea):
     except:
         pass
 
-@app.before_request
 def consultarEIniciarTareas():
     db = repoDb.getDb()
     tareas = db['jobs'].find()
@@ -148,6 +147,11 @@ def DeleteAlquiler(id):
     json = formAlquiler.Delete(id)
     return jsonify(json)
 
+@app.route('/alquiler/getEntregas',methods=['GET'])
+def getEntregas():
+    json = formAlquiler.getFormPorEntregar()
+    return jsonify(json)
+
 
 ###------------tareas---------------###
 @app.route('/tarea', methods=['POST'])
@@ -185,8 +189,14 @@ def responderTarea(id):
 
 @app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
 def verTareasPendientes(idEmpleado):
-    json = tareasController.verTareasPendientes(idEmpleado)
+    json = tareasController.verTareasPendientesPorAsesor(idEmpleado)
     return jsonify(json)
+
+@app.route('/tarea/getAllPendientes',methods=['GET'])
+def getAllPendientes():
+    json = tareasController.getAllTareasPendientes()
+    return jsonify(json)
+
 
 ###------------FOMRATO MEDIDAS---------------##
 @app.route('/formMedidas',methods=['POST'])

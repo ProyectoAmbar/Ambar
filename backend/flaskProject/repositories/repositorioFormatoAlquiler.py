@@ -1,6 +1,7 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
 from models.FormatoAlquiler import formatoAlquiler
 from bson.objectid import ObjectId
+from datetime import date
 
 
 class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
@@ -81,4 +82,23 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
         x = self.getValuesDBRef(x)
         data.append(x)
         return data
+
+    def getEntregaDeProductos(self):
+        collection = self.db[self.collection]
+        allItems = []
+        query = {"fechaDeEntrega": {"$gte": str(date.today())}}
+        response = collection.find(query).sort("fechaDeEntrega",1)
+        for item in response:
+            task = {
+                "formulario": str(item['_id']),
+                "Producto": str(item['Producto']),
+                "asesor": str(item['asesor']),
+                "identificacionCliente": item['identificacion'],
+                "fechaDeEntrega": item['fechaDeEntrega']
+            }
+            allItems.append(task)
+        return allItems
+
+
+
     pass

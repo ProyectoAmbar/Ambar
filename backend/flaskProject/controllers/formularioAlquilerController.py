@@ -78,6 +78,9 @@ class formularioAlquilerController():
         print("actualizar productos")
         return self.repositorioAlquiler.delete(id)
 
+    def getFormPorEntregar(self):
+        print("getFormPorEntregar")
+        return self.repositorioAlquiler.getEntregaDeProductos()
 
 
     def isValid(self, infoAlquiler):

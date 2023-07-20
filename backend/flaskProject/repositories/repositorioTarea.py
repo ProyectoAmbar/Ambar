@@ -1,6 +1,7 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
 from models.Tarea import Tarea
 from bson import ObjectId,DBRef
+from datetime import date
 
 
 class repositorioTareas(interfaceRepositorio[Tarea]):
@@ -46,11 +47,11 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         return response
 
     ##ID DE EMPLEADO##
-    def getTareasPendientes(self,id):
+    def getTareasPendientesPorAsesor(self,id):
         allItems = []
         collection = self.db[self.collection]
-        query = {"$and": [{"asesor": DBRef("empleado",ObjectId(id))}, {"estado": False}]}
-        response = collection.find(query)
+        query = {"$and": [{"asesor": DBRef("empleado",ObjectId(id))}, {"estado": False},{"fechaCitaDeMedidas": {"$gte": str(date.today())}}]}
+        response = collection.find(query).sort("fechaCitaDeMedidas",1)
         for item in response:
             if item is not None:
                 item['_id'] = str(item['_id'])
@@ -60,6 +61,20 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
                 allItems.append(item)
         return allItems
 
+    def getAllTareasPendientes(self):
+        print("getAllTareasPendientes")
+        allItems = []
+        collection = self.db[self.collection]
+        query = {"$and": [{"estado": False}, {"fechaCitaDeMedidas": {"$gte": str(date.today())}}]}
+        response = collection.find(query).sort("fechaCitaDeMedidas", 1)
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['formulario'] = str(item['formulario'])
+                item['asesor'] = str(item['asesor'])
+                item['producto'] = str(item['producto'])
+                allItems.append(item)
+        return allItems
 
     def update(self, id, infoTarea):
         try:
