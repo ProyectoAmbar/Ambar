@@ -28,7 +28,7 @@ jwt = JWTManager(app)
 
 
 ###-------VALIDACIÓN DE PERMISOS-------###
-
+@app.before_request
 def before_request_callback():
     endPoint = limpiarURL(request.path)
     print(endPoint)
@@ -211,12 +211,67 @@ def deleteRol(id):
 
 ###-------RUTAS PERMISOS-ROLES--------------###
 
+@app.route('/PermisosRol',methods=['GET'])
+def getAllPermisosRoles():
+    response = requests.get(url=dataConfig["url-backend-users"]+'/PermisosRol', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+@app.route('/PermisosRol/<string:id>',methods=['GET'])
+def getPermisosRolById(id):
+    response = requests.get(url=dataConfig["url-backend-users"]+'/PermisosRol/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/PermisosRol/permiso/<string:idPermiso>/rol/<string:idRol>')
+def createPermisosRol(idPermiso, idRol):
+    response = requests.post(url=dataConfig["url-backend-users"]+'/PermisosRol/permiso/'+idPermiso+'/rol/'+idRol, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/PermisosRol/<string:id>/permiso/<string:idPermiso>/rol/<string:rol>',methods=['PUT'])
+def updatePermisosRol(id, idPermiso,rol):
+    response = requests.put(url=dataConfig["url-backend-users"]+'/PermisosRol/'+id+'/permiso/'+idPermiso+'/rol/'+rol, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/PermisosRol/<string:id>',methods=['DELETE'])
+def deletePermisosRol(id):
+    response = requests.delete(url=dataConfig["url-backend-users"]+'/PermisosRol/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 ###--------------RUTAS DE EMPLEADOS--------------###
 
+@app.route('/empleado',methods=['POST'])
+def createEmpleado():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-users"]+'/empleado', json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/empleado',mehtods=['GET'])
+def getAllEmpleado():
+    response = requests.get(url=dataConfig["url-backend-users"]+'/empleado', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/empleado/rol/<string:idRol>',methods=['POST'])
+def createEmpleadoWithRol(id):
+    data = request.get_json()
+    rol = requests.get(url=dataConfig["url-backend-users"]+'/rol/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    if(rol.json() != None):
+        response = requests.post(url=dataConfig["url-backend-users"]+'empleado/rol/'+id,    json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+        return jsonify(response.json())
+    else:
+        return {"status": 400, "code": False, "message": "no se encontro el rol a asígnar, por favor ingrese correctamente el id"}
+
+@app.route('/empleado/<string:id>',methods=['GET'])
+def getEmpleadoById(id):
+    response = requests.get(url=dataConfig["url-backend-users"]+'/empleado/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/empleado/<string:id>',methods=['PUT'])
+def updateEmpleado(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-users"]+'/empleado/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/empleado/<string:id>',methods=['DELETE'])
+def deleteEmpleado(id):
+    response = requests.delete(url=dataConfig["url-backend-users"]+'/empleado/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
 
 ###--------------RUTAS DE PRODUCTOS--------------###
