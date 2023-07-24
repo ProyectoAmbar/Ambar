@@ -242,7 +242,7 @@ def createEmpleado():
     response = requests.post(url=dataConfig["url-backend-users"]+'/empleado', json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
-@app.route('/empleado',mehtods=['GET'])
+@app.route('/empleado',methods=['GET'])
 def getAllEmpleado():
     response = requests.get(url=dataConfig["url-backend-users"]+'/empleado', headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
@@ -481,7 +481,7 @@ def responderFormMedidas(id):
 @app.route('/tareaModista',methods=['POST'])
 def createTareaModista():
     data = request.get_json()
-    formMedidas = requests.get(url=dataConfig['url-backend-productos'] + "/alquiler/" + data['formMedidas'],
+    formMedidas = requests.get(url=dataConfig['url-backend-productos'] + "/formMedidas/" + data['formMedidas'],
                               headers={"Content-Type": "application/json; charset=utf-8"}).json()
     modista = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['modista'],
                           headers={"Content-Type": "application/json; charset=utf-8"}).json()
@@ -507,7 +507,7 @@ def getTareaModistaById(id):
 @app.route('/tareaModista/<string:id>',methods=['PUT'])
 def updateTareaModista(id):
     data = request.get_json()
-    formMedidas = requests.get(url=dataConfig['url-backend-productos'] + "/alquiler/" + data['formMedidas'],
+    formMedidas = requests.get(url=dataConfig['url-backend-productos'] + "/formMedidas/" + data['formMedidas'],
                               headers={"Content-Type": "application/json; charset=utf-8"}).json()
     modista = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['modista'],
                            headers={"Content-Type": "application/json; charset=utf-8"}).json()

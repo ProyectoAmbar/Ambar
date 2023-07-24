@@ -71,7 +71,7 @@ class tareaModisteriaController():
             preciosCompletado = all(arr["precio"] is not None for arr in comprobarPrecios['arreglos'])
             if preciosCompletado is True:
                 tareaModista = tareaModisteria(search['formMedidas'],search['modista'],
-                            search['producto'],True, infoTareaModisteria['completado'])
+                            search['producto'],True, infoTareaModisteria['completado'],search['fecha'])
                 return self.repoModista.update(id, tareaModista)
             else:
                 return {"status": False, "message": "no se han colocado los precios al formato de medidas"}
