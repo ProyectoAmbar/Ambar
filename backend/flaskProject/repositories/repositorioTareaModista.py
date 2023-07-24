@@ -84,7 +84,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
         allItems = []
         collection = self.db[self.collection]
         query = {"$and": [{"completado": False}, {"fecha": {"$gte": str(date.today())}},{"modista": DBRef('empleado', ObjectId(idModista))}]}
-        response = collection.find(query)
+        response = collection.find(query).sort("fecha",1)
         for item in response:
             if item is not None:
                 item['_id'] = str(item['_id'])
