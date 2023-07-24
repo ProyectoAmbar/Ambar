@@ -2,9 +2,11 @@ from repositories.repositorioTarea import repositorioTareas
 from models.producto import Producto
 from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioTareaModista import repoTareaModista
+from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from models.Tarea import Tarea
 from models.FormatoMedidas import formatoMedidas
 from models.tareaModisteria import tareaModisteria
+from datetime import datetime,timedelta
 
 
 def desbloquearProducto(self, id):
@@ -27,6 +29,7 @@ class tareaController():
         self.repositorioTareas = repositorioTareas()
         self.repoModista = repoTareaModista()
         self.repoFormMedidas = repositorioFormMedidas()
+        self.repoAlquiler = repositorioFormatoAlquiler()
 
     def Create(self, infoTarea):
         print("crear tarea")
@@ -67,15 +70,17 @@ class tareaController():
         dict = []
         search = self.repositorioTareas.getByIdToUpdate(id)
         if search is not None and (infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is True):
+            fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
+            fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=4)).strftime("%Y-%m-%d"))
             tarea = Tarea(search['formulario'],search['asesor'], search['producto'], search['fechaCitaDeMedidas'],True,True)
             if infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0:
                 response = self.repositorioTareas.update(id, tarea)
                 formMedida = formatoMedidas(search['asesor'],search['formulario'],search['producto'],infoUpdate['arreglos'],True,True)
                 responseFormMedida = self.repoFormMedidas.save(formMedida)
-                tareaModista = tareaModisteria(responseFormMedida['_id'], None, search['producto'],False, False)
+
+                tareaModista = tareaModisteria(responseFormMedida['_id'], None, search['producto'],False, False, str(fechaTareaModista))
                 responseTareaModista = self.repoModista.save(tareaModista)
                 dict.append(response)
-                dict.append(responseFormMedida)
                 dict.append(responseTareaModista)
                 return dict
             else:

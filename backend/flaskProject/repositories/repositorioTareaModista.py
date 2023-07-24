@@ -1,6 +1,7 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
 from models.tareaModisteria import tareaModisteria
 from bson import ObjectId,DBRef
+from datetime import date
 
 class repoTareaModista(interfaceRepositorio[tareaModisteria]):
     def save(self, item: tareaModisteria):
@@ -82,7 +83,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
     def getTareasPendientes(self,idModista):
         allItems = []
         collection = self.db[self.collection]
-        query = {"$and": [{"modista": DBRef("empleado", ObjectId(idModista))},{"completado": False}]}
+        query = {"$and": [{"completado": False}, {"fecha": {"$gte": str(date.today())}},{"modista": DBRef('empleado', ObjectId(idModista))}]}
         response = collection.find(query)
         for item in response:
             if item is not None:

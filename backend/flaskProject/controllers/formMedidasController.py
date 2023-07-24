@@ -70,9 +70,10 @@ class fomMedidasController():
 
 
     def isValid(self, infoMedidas):
-        if (infoMedidas['asesor'] != None and infoMedidas['formulario'] != None and infoMedidas['producto']!= None
-        and infoMedidas['estadoCita'] != None and infoMedidas['necesitaArreglos'] != None):
-            return True
-        else:
+        try:
+            if (infoMedidas['asesor'] != None and infoMedidas['formulario'] != None and infoMedidas['producto']!= None
+            and infoMedidas['estadoCita'] != None and infoMedidas['necesitaArreglos'] != None):
+                return True
+        except:
             return False
 

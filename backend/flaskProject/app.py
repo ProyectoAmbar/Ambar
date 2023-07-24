@@ -282,6 +282,8 @@ def getTareasModistaPendiente(idModista):
     json = tareaModista.getTareaModistaPendiente(idModista)
     return jsonify(json)
 
+@app.route('/tareaModista/')
+
 
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
