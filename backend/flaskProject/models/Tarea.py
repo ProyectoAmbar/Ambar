@@ -4,7 +4,7 @@ class Tarea():
     def __init__(self,idFormulario:str, idAsesor:str ,idProducto:str , fechaCitaDeMedidas:str, necesitaModista:bool ,estado:bool):
         self.formulario = DBRef('formatoAlquiler', ObjectId(idFormulario))
         self.asesor = DBRef('empleado', ObjectId(idAsesor))
-        self.producto = DBRef('producto', ObjectId(idProducto))
+        self.producto = DBRef('Producto', ObjectId(idProducto))
         self.fechaCitaDeMedidas = fechaCitaDeMedidas
         self.estado = estado
         if estado is False:

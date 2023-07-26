@@ -1,5 +1,5 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
-from bson.objectid import ObjectId
+from bson import ObjectId, DBRef
 from models.FormatoMedidas import formatoMedidas
 
 class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
@@ -44,6 +44,11 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]
         response = collection.find_one({"_id": ObjectId(id)})
+        return response
+
+    def getFormMedidasByFormAlquiler(self, idFormAlquiler:str):
+        collection = self.db[self.collection]
+        response = collection.find_one({"formulario": DBRef('formatoAlquiler', ObjectId(idFormAlquiler))})
         return response
     def update(self,id , item:formatoMedidas):
         try:

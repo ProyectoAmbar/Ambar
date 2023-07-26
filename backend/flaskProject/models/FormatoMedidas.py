@@ -4,8 +4,8 @@ from bson import DBRef,ObjectId
 class formatoMedidas():
     def __init__(self,asesor:str,formulario:str,producto:str ,arreglos, estadoCita:bool, necesitaArreglos:bool):
         self.asesor = DBRef('empleado', ObjectId(asesor))
-        self.formulario = DBRef('formulario', ObjectId(formulario))
-        self.producto = DBRef('producto', ObjectId(producto))
+        self.formulario = DBRef('formatoAlquiler', ObjectId(formulario))
+        self.producto = DBRef('Producto', ObjectId(producto))
         self.estadoCita = estadoCita
         if necesitaArreglos is False:
             self.arreglos = None

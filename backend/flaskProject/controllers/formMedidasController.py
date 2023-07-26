@@ -22,6 +22,8 @@ class fomMedidasController():
     def getById(self, id):
         return self.repoMedidas.getById(id)
 
+    def getByFoorm(self, idFormularioAlquiler):
+        return self.repoMedidas.getFormMedidasByFormAlquiler(idFormularioAlquiler)
     def UpdateForm(self,id,infoMedidas):
         search = self.repoMedidas.getByIdToUpdate(id)
         if self.isValid(infoMedidas) and search is not None:
@@ -44,11 +46,12 @@ class fomMedidasController():
                 print(arreglos[i]["precio"])
                 search['arreglos'][i]["precio"] = infoMedidas["arreglos"][i]["precio"]
                 print(search)
-            form = formatoMedidas(str(search['asesor']), str(search['formulario']), str(search['producto']),
+            form = formatoMedidas(search['asesor'], search['formulario'], search['producto'],
             search['arreglos'], search['estadoCita'], True)
             return self.repoMedidas.update(id,form)
         else:
             return {"status":False, "code": 400, "message":"hacen falta arreglos por proporcionar"}
+
 
 
 

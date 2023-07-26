@@ -6,7 +6,8 @@ from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from models.Tarea import Tarea
 from models.FormatoMedidas import formatoMedidas
 from models.tareaModisteria import tareaModisteria
-from datetime import datetime,timedelta
+from bson import DBRef, ObjectId
+from datetime import datetime,timedelta,date
 
 
 def desbloquearProducto(self, id):
@@ -69,25 +70,66 @@ class tareaController():
     def responderTareaC(self, id, infoUpdate, estado):
         dict = []
         search = self.repositorioTareas.getByIdToUpdate(id)
-        if search is not None and (infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is True):
+        searchFormMed = self.repoFormMedidas.getFormMedidasByFormAlquiler((search['formulario'].id))
+        if search is not None and (infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is True and infoUpdate['nuevaCita'] is False):
             fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
-            fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=4)).strftime("%Y-%m-%d"))
+            fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=5)).strftime("%Y-%m-%d"))
             tarea = Tarea(search['formulario'],search['asesor'], search['producto'], search['fechaCitaDeMedidas'],True,True)
             if infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0:
                 response = self.repositorioTareas.update(id, tarea)
-                formMedida = formatoMedidas(search['asesor'],search['formulario'],search['producto'],infoUpdate['arreglos'],True,True)
-                responseFormMedida = self.repoFormMedidas.save(formMedida)
-
+                if searchFormMed is None:
+                    formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],infoUpdate['arreglos'], True, True)
+                    responseFormMedida = self.repoFormMedidas.save(formMedida)
+                else:
+                    for arreglo in infoUpdate['arreglos']:
+                        searchFormMed['arreglos'].append(arreglo)
+                    formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],searchFormMed['arreglos'], True, True)
+                    responseFormMedida = self.repoFormMedidas.update(searchFormMed['_id'], formMedida)
                 tareaModista = tareaModisteria(responseFormMedida['_id'], None, search['producto'],False, False, str(fechaTareaModista))
                 responseTareaModista = self.repoModista.save(tareaModista)
                 dict.append(response)
+                dict.append(responseFormMedida)
                 dict.append(responseTareaModista)
                 return dict
             else:
                 return {"status": False, "code": 400, "message": "Se necesitan los arreglos a realizar"}
-        elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None):
-            tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'], infoUpdate['necesitaModista'], infoUpdate['estado'])
-            return self.repositorioTareas.update(id,tarea)
+
+
+        elif search is not None and infoUpdate['nuevaCita'] is True:
+            if infoUpdate['necesitaModista'] is True and (infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0):
+                if searchFormMed is None:
+                    formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],infoUpdate['arreglos'], True, True)
+                    responseFormMedida = self.repoFormMedidas.save(formMedida)
+                else:
+                    for arreglo in infoUpdate['arreglos']:
+                        searchFormMed['arreglos'].append(arreglo)
+                    formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],searchFormMed['arreglos'], True, True)
+                    responseFormMedida = self.repoFormMedidas.update(searchFormMed['_id'], formMedida)
+
+                nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
+                tarea = Tarea(search['formulario'], search['asesor'], search['producto'],nuevaFecha, True, True)
+                response = self.repositorioTareas.update(id, tarea)
+                dict.append(response)
+                dict.append(responseFormMedida)
+                return dict
+            else:
+                nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
+                tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha, False, False)
+                return  self.repositorioTareas.update(id, tarea)
+        elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None and infoUpdate['nuevaCita'] is False):
+            tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'])
+            response = self.repositorioTareas.update(id,tarea)
+            if searchFormMed is not None:
+                fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
+                fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=5)).strftime("%Y-%m-%d"))
+                tareaModista = tareaModisteria(DBRef('formatoMedidas',searchFormMed['_id']),None,search['producto'],False, False, str(fechaTareaModista))
+                responseTareaModista = self.repoModista.save(tareaModista)
+                dict.append(responseTareaModista)
+                dict.append(self.repoFormMedidas.getById(str(searchFormMed['_id'])))
+                dict.append(response)
+                return dict
+            else:
+                return response
         else:
             return {"status": False, "code": 400, "message": "No se encontro la tarea a responder"}
 

@@ -5,7 +5,7 @@ import pymongo
 class formatoAlquiler():
     def __init__(self, idAsesor, idProducto, identificacion, AñoEntrega, MesEntrega, DiaEntrega, NumeroDeFactura, accesorio, corbatin, velo, aro, total, metodoDePago, Abono, Saldo, Deposito, AñoCitaMedidas, MesCitaMedidas,DiaCitaMedidas):
         self.asesor = DBRef("empleado", ObjectId(idAsesor))
-        self.Producto = DBRef("producto", ObjectId(idProducto))
+        self.Producto = DBRef("Producto", ObjectId(idProducto))
         self.identificacion = identificacion
         self.fechaDeFactura = str(date.today())
         self.fechaDeEntrega = str(date(AñoEntrega, MesEntrega, DiaEntrega))

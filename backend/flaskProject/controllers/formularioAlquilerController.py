@@ -39,7 +39,7 @@ class formularioAlquilerController():
             response = self.repositorioAlquiler.save(formulario)
             print(response['_id'])
             infoTarea = self.repositorioAlquiler.getByIdToUpdate(response['_id'])
-            tarea = Tarea(DBRef('formulario',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'],infoTarea['fechaDeEntrega'],False,False)
+            tarea = Tarea(DBRef('formatoAlquiler',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'], formulario.FechaCitaDeMedidas,False,False)
             responseTarea = self.repoTareas.save(tarea,False)
             dict.append(response)
             dict.append(responseTarea)

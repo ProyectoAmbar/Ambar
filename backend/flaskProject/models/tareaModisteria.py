@@ -3,7 +3,7 @@ from bson import DBRef, ObjectId
 class tareaModisteria():
     def __init__(self, formmedidas, modista, producto, preciosCompletado: bool, completado: bool, fecha:str):
         if isinstance(formmedidas, str):
-            self.formMedidas = DBRef('formatoAlquiler', ObjectId(formmedidas))
+            self.formMedidas = DBRef('formatoMedidas', ObjectId(formmedidas))
         else:
             self.formMedidas = formmedidas
 
