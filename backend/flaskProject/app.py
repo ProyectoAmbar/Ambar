@@ -31,7 +31,7 @@ scheduler.start()
 repoDb = RepositorioProductos()
 
 
-
+@app.before_request
 def desbloquearProducto( id, idTarea):
     print("disparo ;))")
     job = repoDb.getDb()['jobs']
@@ -51,6 +51,25 @@ def desbloquearProducto( id, idTarea):
 
     except:
         pass
+
+db = repoDb.getDb()
+tareas = db['jobs'].find()
+for tarea in tareas:
+    fun = globals()[tarea['fun']]
+    if tarea['fecha'] < str(datetime.now()):
+        print("menor jaja lol")
+        fun(tarea['producto'], tarea['_id'])
+    else:
+        item = {
+            "fun": tarea['fun'],
+            "trigger": tarea['trigger'],
+            "fecha": tarea['fecha'],
+            "producto": tarea['producto'],
+            "creada": True
+        }
+        db['jobs'].update_one({'_id': ObjectId(tarea['_id'])}, {"$set": item})
+        scheduler.add_job(fun, tarea['trigger'], next_run_time=tarea['fecha'], args=[tarea['producto'], tarea['_id']])
+
 
 def consultarEIniciarTareas():
     db = repoDb.getDb()

@@ -96,26 +96,33 @@ class tareaController():
 
 
         elif search is not None and infoUpdate['nuevaCita'] is True:
-            if infoUpdate['necesitaModista'] is True and (infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0):
-                if searchFormMed is None:
-                    formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],infoUpdate['arreglos'], True, True)
-                    responseFormMedida = self.repoFormMedidas.save(formMedida)
-                else:
-                    for arreglo in infoUpdate['arreglos']:
-                        searchFormMed['arreglos'].append(arreglo)
-                    formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],searchFormMed['arreglos'], True, True)
-                    responseFormMedida = self.repoFormMedidas.update(searchFormMed['_id'], formMedida)
+            try:
+                if infoUpdate['necesitaModista'] is True and (infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0):
+                    if searchFormMed is None:
+                        formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],infoUpdate['arreglos'], True, True)
+                        responseFormMedida = self.repoFormMedidas.save(formMedida)
+                    else:
 
-                nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
-                tarea = Tarea(search['formulario'], search['asesor'], search['producto'],nuevaFecha, True, True)
-                response = self.repositorioTareas.update(id, tarea)
-                dict.append(response)
-                dict.append(responseFormMedida)
-                return dict
-            else:
-                nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
-                tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha, False, False)
-                return  self.repositorioTareas.update(id, tarea)
+                        for arreglo in infoUpdate['arreglos']:
+                            searchFormMed['arreglos'].append(arreglo)
+                        formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],searchFormMed['arreglos'], True, True)
+                        responseFormMedida = self.repoFormMedidas.update(searchFormMed['_id'], formMedida)
+
+                    nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
+                    tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha,True, False)
+                    response = self.repositorioTareas.update(id, tarea)
+                    dict.append(response)
+                    dict.append(responseFormMedida)
+                    return dict
+                else:
+                    nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
+                    tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha, False, False)
+                    return  self.repositorioTareas.update(id, tarea)
+            except:
+                return{"status": False, "code": 400, "message": "hace falta ya sean arreglos o información para crear las tareas correspondientes"}
+
+        elif infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is False and infoUpdate['nuevaCita'] is False:
+            return {"message": "la tarea ya ha finalizado"}
         elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None and infoUpdate['nuevaCita'] is False):
             tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'])
             response = self.repositorioTareas.update(id,tarea)
