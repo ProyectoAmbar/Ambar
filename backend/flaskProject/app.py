@@ -13,6 +13,7 @@ from controllers.TareaController import tareaController
 from controllers.formMedidasController import fomMedidasController
 from controllers.tareaModistaController import tareaModisteriaController
 from repositories.repositorioProductos import RepositorioProductos
+from controllers.lavanderiaController import lavanderiaController
 from models.producto import Producto
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -21,11 +22,15 @@ from bson import ObjectId
 
 app = Flask(__name__)
 cors = CORS(app)
+
 product = ProductoController()
 formAlquiler = formularioAlquilerController()
 tareasController = tareaController()
 formMedidas = fomMedidasController()
 tareaModista = tareaModisteriaController()
+tareaLavanderia = lavanderiaController()
+
+
 scheduler = BackgroundScheduler()
 scheduler.start()
 repoDb = RepositorioProductos()
@@ -300,10 +305,40 @@ def getTareaModistaSinAsignar():
 def getTareasModistaPendiente(idModista):
     json = tareaModista.getTareaModistaPendiente(idModista)
     return jsonify(json)
+#-------TAREA LAVANDERIA-----#
 
-@app.route('/tareaModista/')
+@app.route('/lavanderia',methods=['POST'])
+def createTareaLavanderia():
+    data = request.get_json()
+    response = tareaLavanderia.createLavanderia(data)
+    return jsonify(response)
+
+@app.route('/lavanderia',methods=['GET'])
+def getAllTareaLavanderia():
+    response = tareaLavanderia.getAllTareaLavanderia()
+    return jsonify(response)
+
+@app.route('/lavanderia/<string:id>', methods=['GET'])
+def getTareaLavanderiaById(id):
+    response = tareaLavanderia.getTareaLavanderiaById(id)
+    return jsonify(response)
+
+@app.route('/lavanderia/<string:id>',methods=['PUT'])
+def updateLavanderia(id):
+    data = request.get_json()
+    response = tareaLavanderia.updateTarea(id, data)
+    return jsonify(response)
+
+@app.route('/lavanderia/<string:id>',methods=['DELETE'])
+def deleteLavanderia(id):
+    response = tareaLavanderia.deleteTareaLavanderia(id)
+    return jsonify(response)
 
 
+@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>')
+def asignarLavanderia(id, idLavanderia):
+    response = tareaLavanderia.asignarLavanderia(id,idLavanderia)
+    return jsonify(response)
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
     with open('config.json') as f:

@@ -1,9 +1,9 @@
 from interfaceRepositorio import interfaceRepositorio
 from bson import DBRef, ObjectId
-from models.tareaModisteria import tareaModisteria
+from models.tareaLavanderia import tareaLavanderia
 
-class repoLavanderia(interfaceRepositorio[tareaModisteria]):
-    def save(self, item: tareaModisteria):
+class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
+    def save(self, item: tareaLavanderia):
         dict = []
         print("def save")
         collection = self.db[self.collection]
@@ -44,7 +44,7 @@ class repoLavanderia(interfaceRepositorio[tareaModisteria]):
         collection = self.db[self.collection]
         response = collection.find_one({"_id": ObjectId(id)})
         return response
-    def update(self,id , item:tareaModisteria):
+    def update(self,id , item:tareaLavanderia):
         try:
             collection = self.db[self.collection]
             item = item.__dict__

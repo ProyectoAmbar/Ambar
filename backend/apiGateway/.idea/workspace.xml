@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +107,8 @@
       <workItem from="1690151557496" duration="652000" />
       <workItem from="1690315166486" duration="3590000" />
       <workItem from="1690396375076" duration="3303000" />
+      <workItem from="1690473392902" duration="599000" />
+      <workItem from="1690497091720" duration="1198000" />
     </task>
     <servers />
   </component>
