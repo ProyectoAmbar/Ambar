@@ -13,4 +13,4 @@ class tareaLavanderia:
             self.producto = idProducto
 
         self.fecha = fecha
-        self.completado = completado
+        self .completado = completado

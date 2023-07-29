@@ -14,6 +14,8 @@ from controllers.formMedidasController import fomMedidasController
 from controllers.tareaModistaController import tareaModisteriaController
 from repositories.repositorioProductos import RepositorioProductos
 from controllers.lavanderiaController import lavanderiaController
+from controllers.entregaDevolucionController import entregaDevolucionController
+
 from models.producto import Producto
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -29,6 +31,7 @@ tareasController = tareaController()
 formMedidas = fomMedidasController()
 tareaModista = tareaModisteriaController()
 tareaLavanderia = lavanderiaController()
+entregaDevolver = entregaDevolucionController()
 
 
 scheduler = BackgroundScheduler()
@@ -339,6 +342,46 @@ def deleteLavanderia(id):
 def asignarLavanderia(id, idLavanderia):
     response = tareaLavanderia.asignarLavanderia(id,idLavanderia)
     return jsonify(response)
+
+#---------ENTREGA Y DEVOLUCION--------#
+@app.route('/entregaDevolucion',mehtods=['POST'])
+def createEntregarDevolver():
+    data = request.get_json()
+    response = entregaDevolver.createEntregaDevolucion(data)
+    return jsonify(response)
+
+@app.route('/entregaDeolucion',mehods=['GET'])
+def getAllEntregaDevolucion():
+    response = entregaDevolver.getAllEntregaDevolucion()
+    return jsonify(response)
+
+@app.route('/entregaDevolucion/<string:id>',methods=['GET'])
+def getEntregaDevolucioById(id):
+    response = entregaDevolver.getByIdEntregaDevolucion(id)
+    return jsonify(response)
+
+@app.route('/entregaDevolucion/<string:id>',methods=['PUT'])
+def updateEntregaDevolucion(id):
+    data = request.get_json()
+    response = entregaDevolver.updateEntregaDevolucion(id,data)
+    return jsonify(response)
+
+@app.route('/entregaDevolucion/<string:id>',methods=['DELETE'])
+def deleteEntregaDevolucion(id):
+    response = entregaDevolver.deleteEntregaDevolucion(id)
+    return jsonify(response)
+
+@app.route('/entregaDevolucion/SinEntregar',methods=['GET'])
+def getEntregaDevolucionSinEntregar():
+    response = entregaDevolver.getSinEntregar()
+    return jsonify(response)
+
+@app.route('/entregaDevolucion/sinDevolver',methods=['DELETE'])
+def getEntregaDevolucionSinDeolver():
+    response = entregaDevolver.getSinDevolver()
+    return jsonify(response)
+
+
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
     with open('config.json') as f:
