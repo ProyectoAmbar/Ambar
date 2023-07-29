@@ -1,9 +1,11 @@
 from repositories.repoEntregaDevolucion import repoEntregaDevolucion
+from controllers.productoController import ProductoController
 from models.entregaDevolucion import entregaDevolucion
 
 class entregaDevolucionController():
     def __init__(self):
         self.repoEntrega = repoEntregaDevolucion()
+        self.productoControler = ProductoController()
 
     def createEntregaDevolucion(self,infoEntrega):
         try:
@@ -51,6 +53,7 @@ class entregaDevolucionController():
     def responderDevolucion(self, id, infoUpdate):
         search = self.repoEntrega.getByIdToUpdate(id)
         entrega = entregaDevolucion(search['producto'], search['asesor'], search['fechaEntrega'],search['entregaCompletado'],search['fechaDevolucion'],infoUpdate['devolucionCompletado'])
+        producto = self.productoControler.desbloquearProducto(str(search['producto'].id))
         return self.repoEntrega.update(id, entrega)
 
 
