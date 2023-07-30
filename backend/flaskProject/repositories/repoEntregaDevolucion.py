@@ -80,7 +80,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
             dict = [{
                 "status": False,
                 "code": 403,
-                "message": "El candidato con id "+id+" no ha sido encontrado"
+                "message": "no se encontro el id"
             }]
             return dict
 

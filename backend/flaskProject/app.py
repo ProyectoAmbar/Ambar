@@ -38,8 +38,6 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 repoDb = RepositorioProductos()
 
-
-@app.before_request
 def desbloquearProducto( id, idTarea):
     print("disparo ;))")
     job = repoDb.getDb()['jobs']
@@ -64,7 +62,7 @@ db = repoDb.getDb()
 tareas = db['jobs'].find()
 for tarea in tareas:
     fun = globals()[tarea['fun']]
-    if tarea['fecha'] < str(datetime.now()):
+    if tarea['fecha'] <= str(datetime.now()):
         print("menor jaja lol")
         fun(tarea['producto'], tarea['_id'])
     else:
@@ -78,7 +76,7 @@ for tarea in tareas:
         db['jobs'].update_one({'_id': ObjectId(tarea['_id'])}, {"$set": item})
         scheduler.add_job(fun, tarea['trigger'], next_run_time=tarea['fecha'], args=[tarea['producto'], tarea['_id']])
 
-
+@app.before_request
 def consultarEIniciarTareas():
     db = repoDb.getDb()
     tareas = db['jobs'].find()
@@ -326,6 +324,23 @@ def getTareaLavanderiaById(id):
     response = tareaLavanderia.getTareaLavanderiaById(id)
     return jsonify(response)
 
+@app.route('/lavanderia/sinAsignar',methods=['GET'])
+def getAllTareaLavanderiaSinAsignar():
+    response = tareaLavanderia.getSinAsignarLavanderia()
+    return jsonify(response)
+
+@app.route('/lavanderia/pendientes',methods=['GET'])
+def getAllPendientesLavanderia():
+    response = tareaLavanderia.getAllPendientes()
+    return jsonify(response)
+
+@app.route('/lavanderia/pendientes/<string:id>',methods=['GEt'])
+def getpendientesByEmpleado(id):
+    print("empleado")
+    response = tareaLavanderia.getAllPendientesLavanderia(id)
+    return jsonify(response)
+
+
 @app.route('/lavanderia/<string:id>',methods=['PUT'])
 def updateLavanderia(id):
     data = request.get_json()
@@ -338,25 +353,35 @@ def deleteLavanderia(id):
     return jsonify(response)
 
 
-@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>')
+@app.route('/lavanderia/answer/<string:id>',methods=['PUT'])
+def responderLavanderia(id):
+     data = request.get_json()
+     response = tareaLavanderia.responderTareaLavanderia(id,data)
+     return jsonify(response)
+
+
+
+
+@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>',methods=['PUT'])
 def asignarLavanderia(id, idLavanderia):
     response = tareaLavanderia.asignarLavanderia(id,idLavanderia)
     return jsonify(response)
 
 #---------ENTREGA Y DEVOLUCION--------#
-@app.route('/entregaDevolucion',mehtods=['POST'])
+@app.route('/entregaDevolucion',methods=['POST'])
 def createEntregarDevolver():
     data = request.get_json()
     response = entregaDevolver.createEntregaDevolucion(data)
     return jsonify(response)
 
-@app.route('/entregaDeolucion',mehods=['GET'])
+@app.route('/entregaDevolucion',methods=['GET'])
 def getAllEntregaDevolucion():
     response = entregaDevolver.getAllEntregaDevolucion()
     return jsonify(response)
 
 @app.route('/entregaDevolucion/<string:id>',methods=['GET'])
 def getEntregaDevolucioById(id):
+    print("byId")
     response = entregaDevolver.getByIdEntregaDevolucion(id)
     return jsonify(response)
 
@@ -376,12 +401,22 @@ def getEntregaDevolucionSinEntregar():
     response = entregaDevolver.getSinEntregar()
     return jsonify(response)
 
-@app.route('/entregaDevolucion/sinDevolver',methods=['DELETE'])
+@app.route('/entregaDevolucion/SinDevolver',methods=['GET'])
 def getEntregaDevolucionSinDeolver():
     response = entregaDevolver.getSinDevolver()
     return jsonify(response)
 
+@app.route('/entregaDevolucion/entrega/<string:id>',methods=['PUT'])
+def responderEntrega(id):
+    data = request.get_json()
+    response = entregaDevolver.responderEntrega(id,data)
+    return jsonify(response)
 
+@app.route('/entregaDevolucion/devolucion/<string:id>',methods=['PUT'])
+def responderDevolucion(id):
+    data = request.get_json()
+    response = entregaDevolver.responderDevolucion(id,data)
+    return jsonify(response)
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
     with open('config.json') as f:

@@ -1,13 +1,27 @@
 from models.tareaLavanderia import tareaLavanderia
 from repositories.repositorioLavanderia import repoLavanderia
+import re
+
+
+def validar_formato_fecha(fecha_str):
+    patron = r'^\d{4}-\d{2}-\d{2}$'
+    if re.match(patron, fecha_str):
+        return True
+    else:
+        return False
+
 class lavanderiaController():
     def __init__(self):
         self.repoLavanderia = repoLavanderia()
 
+
+
     def isValid( self, infoLavanderia):
         try:
-            if infoLavanderia['lavanderia'] != None and infoLavanderia['producto'] != None and infoLavanderia['fecha'] != None and infoLavanderia['completado'] != None:
+            if infoLavanderia['producto'] != None and infoLavanderia['fecha'] != None and validar_formato_fecha(infoLavanderia['fecha']) is True and infoLavanderia['completado'] != None:
                 return True
+            elif validar_formato_fecha(infoLavanderia['fecha']) is False:
+                return False
         except:
             return False
     def createLavanderia(self, infoLavanderia):
@@ -54,3 +68,11 @@ class lavanderiaController():
         else:
             return {"status": False, "code": 400, "message": "No ha sido encontrada la tarea"}
 
+    def getSinAsignarLavanderia(self):
+        return self.repoLavanderia.getTareasSinAsignar()
+
+    def getAllPendientes(self):
+        return self.repoLavanderia.getTareasAllPendientes()
+
+    def getAllPendientesLavanderia(self,idLavanderia):
+        return self.repoLavanderia.getAlltareasPendientesLavanderia(idLavanderia)

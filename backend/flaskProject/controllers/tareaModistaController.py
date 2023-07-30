@@ -2,7 +2,9 @@ from repositories.repositorioTareaModista import repoTareaModista
 from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from models.tareaModisteria import tareaModisteria
-from datetime import datetime, timedelta
+from models.tareaLavanderia import tareaLavanderia
+from repositories.repositorioLavanderia import repoLavanderia
+from datetime import date, timedelta
 from bson import DBRef, ObjectId
 import re
 
@@ -11,6 +13,7 @@ class tareaModisteriaController():
         self.repoModista = repoTareaModista()
         self.repoFormMedidas = repositorioFormMedidas()
         self.repoAlquiler = repositorioFormatoAlquiler()
+        self.repoLavanderia = repoLavanderia()
 
     def Create(self, infoTareaModisteria):
         print("crear Tarea Modisteria")
@@ -70,9 +73,15 @@ class tareaModisteriaController():
             comprobarPrecios = self.repoFormMedidas.getById(str(search['formMedidas'].id))
             preciosCompletado = all(arr["precio"] is not None for arr in comprobarPrecios['arreglos'])
             if preciosCompletado is True:
+                dict = []
+                fecha = date.today() + timedelta(days=1)
+                lavanderia= tareaLavanderia(None,search['producto'], str(fecha),False )
+                dict.append(lavanderia)
                 tareaModista = tareaModisteria(search['formMedidas'],search['modista'],
                             search['producto'],True, infoTareaModisteria['completado'],search['fecha'])
-                return self.repoModista.update(id, tareaModista)
+                response = self.repoModista.update(id, tareaModista)
+                dict.append(response)
+                return dict
             else:
                 return {"status": False, "message": "no se han colocado los precios al formato de medidas"}
         else:

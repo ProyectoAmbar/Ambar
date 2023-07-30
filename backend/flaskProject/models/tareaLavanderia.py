@@ -6,6 +6,8 @@ class tareaLavanderia:
             self.lavanderia = DBRef('empleado', ObjectId(idLavanderia))
         elif isinstance(idLavanderia,DBRef):
             self.lavanderia = idLavanderia
+        elif idLavanderia is None:
+            self.lavanderia = None
 
         if isinstance(idProducto, str):
             self.producto = DBRef('Producto', ObjectId(idProducto))
