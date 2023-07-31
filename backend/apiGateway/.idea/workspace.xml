@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repoEntregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repoEntregaDevolucion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +113,7 @@
       <workItem from="1690497091720" duration="1198000" />
       <workItem from="1690578945568" duration="1202000" />
       <workItem from="1690656789041" duration="1242000" />
+      <workItem from="1690752979086" duration="7573000" />
     </task>
     <servers />
   </component>

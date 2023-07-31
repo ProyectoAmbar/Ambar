@@ -2,47 +2,51 @@ import calendar
 
 from models.FormatoAlquiler import formatoAlquiler
 from models.Tarea import Tarea
+from models.entregaDevolucion import entregaDevolucion
+from repositories.repoEntregaDevolucion import repoEntregaDevolucion
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from repositories.repositorioTarea import repositorioTareas
 from controllers.productoController import ProductoController
 
 from bson import DBRef, ObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,date
 
 class formularioAlquilerController():
     def __init__(self):
         self.repositorioAlquiler = repositorioFormatoAlquiler()
         self.repoTareas = repositorioTareas()
         self.controllerProduct = ProductoController()
+        self.repoEntrega = repoEntregaDevolucion()
 
     def create(self, infoAlquiler):
         if self.isValid(infoAlquiler):
             db = self.repositorioAlquiler.getDb()
             job = db['jobs']
-            fechaEntrega = datetime(infoAlquiler['AñoEntrega'],infoAlquiler['MesEntrega'], infoAlquiler['DiaEntrega'],23,59,0) + timedelta(days=5)
-            if fechaEntrega.weekday() == calendar.SUNDAY:
-                fechaEntrega += timedelta(days=1)
+            fechaDevolucion = datetime(infoAlquiler['AñoEntrega'],infoAlquiler['MesEntrega'], infoAlquiler['DiaEntrega'],23,59,0) + timedelta(days=5)
+            if fechaDevolucion.weekday() == calendar.SUNDAY:
+                fechaDevolucion += timedelta(days=1)
             job.insert_one({
                 "fun": "desbloquearProducto",
                 "trigger": "date",
-                "fecha": str(fechaEntrega),
+                "fecha": str(fechaDevolucion),
                 "producto": infoAlquiler['idProducto'],
                 "creada": False
             })
             formulario = formatoAlquiler(infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
             infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
-            print(formulario)
 
             dict = []
             response = self.repositorioAlquiler.save(formulario)
-            print(response['_id'])
             infoTarea = self.repositorioAlquiler.getByIdToUpdate(response['_id'])
             tarea = Tarea(DBRef('formatoAlquiler',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'], formulario.FechaCitaDeMedidas,False,False)
             responseTarea = self.repoTareas.save(tarea,False)
+            entrega = entregaDevolucion(infoAlquiler['idProducto'], infoAlquiler['idAsesor'],str(date(infoAlquiler['AñoEntrega'], infoAlquiler['MesEntrega'],infoAlquiler['DiaEntrega'])), False, None, False)
+            responseEntrega = self.repoEntrega.save(entrega)
             dict.append(response)
             dict.append(responseTarea)
+            dict.append(responseEntrega)
             return dict
         else:
             return {"status": False, "code": 400, "message": "el formulario no pudo ser creado"}

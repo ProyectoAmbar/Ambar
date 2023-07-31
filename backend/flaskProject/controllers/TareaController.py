@@ -1,11 +1,12 @@
 from repositories.repositorioTarea import repositorioTareas
-from models.producto import Producto
 from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioTareaModista import repoTareaModista
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
+from repositories.repositorioLavanderia import repoLavanderia
 from models.Tarea import Tarea
 from models.FormatoMedidas import formatoMedidas
 from models.tareaModisteria import tareaModisteria
+from models.tareaLavanderia import tareaLavanderia
 from bson import DBRef, ObjectId
 from datetime import datetime,timedelta,date
 
@@ -31,6 +32,7 @@ class tareaController():
         self.repoModista = repoTareaModista()
         self.repoFormMedidas = repositorioFormMedidas()
         self.repoAlquiler = repositorioFormatoAlquiler()
+        self.repoLavanderia = repoLavanderia()
 
     def Create(self, infoTarea):
         print("crear tarea")
@@ -67,11 +69,13 @@ class tareaController():
         else:
             return {"status": False, "code": 400, "message": "Hace falta informacion para actualizar el producto"}
 
-    def responderTareaC(self, id, infoUpdate, estado):
+    def responderTareaC(self, id, infoUpdate):
         dict = []
         search = self.repositorioTareas.getByIdToUpdate(id)
         searchFormMed = self.repoFormMedidas.getFormMedidasByFormAlquiler((search['formulario'].id))
-        if search is not None and (infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is True and infoUpdate['nuevaCita'] is False):
+        if search['estado'] is True:
+            return {"message": "la tarea ya ha finalizado"}
+        elif search is not None and (infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is True and infoUpdate['nuevaCita'] is False):
             fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
             fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=5)).strftime("%Y-%m-%d"))
             tarea = Tarea(search['formulario'],search['asesor'], search['producto'], search['fechaCitaDeMedidas'],True,True)
@@ -121,11 +125,15 @@ class tareaController():
             except:
                 return{"status": False, "code": 400, "message": "hace falta ya sean arreglos o información para crear las tareas correspondientes"}
 
-        elif infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is False and infoUpdate['nuevaCita'] is False:
-            return {"message": "la tarea ya ha finalizado"}
+
+
         elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None and infoUpdate['nuevaCita'] is False):
             tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'])
             response = self.repositorioTareas.update(id,tarea)
+            lavanderia = tareaLavanderia(None,search['producto'], str(date.today() + timedelta(days=1)),False)
+            responseLavanderia = self.repoLavanderia.save(lavanderia)
+            dict.append(response)
+            dict.append(responseLavanderia)
             if searchFormMed is not None:
                 fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
                 fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=5)).strftime("%Y-%m-%d"))
@@ -133,10 +141,8 @@ class tareaController():
                 responseTareaModista = self.repoModista.save(tareaModista)
                 dict.append(responseTareaModista)
                 dict.append(self.repoFormMedidas.getById(str(searchFormMed['_id'])))
-                dict.append(response)
-                return dict
-            else:
-                return response
+            return dict
+
         else:
             return {"status": False, "code": 400, "message": "No se encontro la tarea a responder"}
 

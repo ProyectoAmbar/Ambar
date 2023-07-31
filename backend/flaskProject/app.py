@@ -49,7 +49,7 @@ def desbloquearProducto( id, idTarea):
                 "referencia": search['referencia'],
                 "imagenProducto": search['imagenProducto'],
                 "color": search['color'],
-                "disponible": False
+                "disponible": True
             }
             repoDb.update(id, Producto(productoUpdate))
         print(job.delete_one({'_id':ObjectId(idTarea)}).deleted_count)
@@ -336,7 +336,6 @@ def getAllPendientesLavanderia():
 
 @app.route('/lavanderia/pendientes/<string:id>',methods=['GEt'])
 def getpendientesByEmpleado(id):
-    print("empleado")
     response = tareaLavanderia.getAllPendientesLavanderia(id)
     return jsonify(response)
 
@@ -358,9 +357,6 @@ def responderLavanderia(id):
      data = request.get_json()
      response = tareaLavanderia.responderTareaLavanderia(id,data)
      return jsonify(response)
-
-
-
 
 @app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>',methods=['PUT'])
 def asignarLavanderia(id, idLavanderia):

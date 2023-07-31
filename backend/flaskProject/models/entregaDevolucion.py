@@ -1,7 +1,7 @@
 from bson import DBRef, ObjectId
 
 class entregaDevolucion:
-    def __init__(self, idProducto, idAsesor, fechaEntrega:str, entregaCompletado:bool, fechaDevolucion:str, devolucionCompletado:bool):
+    def __init__(self, idProducto, idAsesor, fechaEntrega:str, entregaCompletado:bool, fechaDevolucion, devolucionCompletado:bool):
         if isinstance(idAsesor, str):
             self.asesor = DBRef('empleado', ObjectId(idAsesor))
         elif isinstance(idAsesor, DBRef):

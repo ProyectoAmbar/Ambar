@@ -561,6 +561,113 @@ def getTareasPendientes(idModista):
     response = requests.get(url=dataConfig["url-backend-productos"] +'/tareaModista/pendientes/'+idModista, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
+#-----------TareaLavanderia-----------#
+@app.route('/lavanderia',methods=['POST'])
+def createTareaLavanderia():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-productos"]+'/lavanderia',json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia',methods=['GET'])
+def getAllTareaLavanderia():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/lavanderia', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/<string:id>',methods=['GET'])
+def getTareaLavanderiaByid(id):
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/sinAsignar',methods=['GET'])
+def getTareaLavanderiaSinAsignar():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/lavanderia/sinAsignar', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/pendientes',methods=['GET'])
+def getTareaLavanderiaPendientes():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/lavanderia/pendientes', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/pendientes/<string:id>',methods=['GET'])
+def getTareaLavanderiaPendienteByEmpleado(id):
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/<string:id>',methods=['PUT'])
+def updateTareaLavanderia(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id,json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/<string:id>',methods=['DELETE'])
+def deleteTareaLavanderia(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/lavanderia/answer/<string:id>',methods=['PUT'])
+def responderTareaLavanderia(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>',methods=['PUT'])
+def asignarLavanderia(id, idLavanderia):
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id+'/emlpeado/'+idLavanderia, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+#----------ENTREGA-DEVOLUCION----------#
+
+@app.route('/entregaDevolucion',methods=['POST'])
+def createEntregaDevolucion():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-productos"]+'/entregaDevolucion',json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/entregaDevolucion',methods=['GET'])
+def getAllEntregaDevolucion():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/entregaDevolucion', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/entregaDevolucion/<string:id>',methods=['GET'])
+def getEntregaDevolucionByid(id):
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+
+@app.route('/entregaDevolucion/<string:id>',methods=['PUT'])
+def updateEntregaDevolucion(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/'+id,json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/entregaDevolucion/<string:id>',methods=['DELETE'])
+def deleteEntregaDevolucion(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+
+@app.route('/entregaDevolucion/SinEntregar',methods=['GET'])
+def getEntregaDevolucionSinAsignar():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/SinEntregar', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/entregaDevolucion/SinDevolver',methods=['GET'])
+def getEntregaDevolucionPendientes():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/SinDevolver', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/entregaDevolucion/entrega/<string:id>',methods=['PUT'])
+def responderEntrega(id):
+    data = request.get_json()
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/entrega'+id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+
+@app.route('/entregaDevolucion/devolucion/<string:id>',methods=['PUT'])
+def responderDevolucion(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/devolucion'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
 
 
 

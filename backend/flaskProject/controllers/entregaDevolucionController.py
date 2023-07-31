@@ -1,16 +1,7 @@
 from repositories.repoEntregaDevolucion import repoEntregaDevolucion
 from controllers.productoController import ProductoController
 from models.entregaDevolucion import entregaDevolucion
-import re
 
-def validar_formato_fecha(fecha_str):
-    patron = r'^\d{4}-\d{2}-\d{2}$'
-    if re.match(patron, fecha_str):
-        return True
-    else:
-        return False
-
-    from datetime import datetime, timedelta
 
 
 from datetime import datetime
@@ -29,14 +20,6 @@ def validar_fecha_devolucion(fechaInicio_str, fechaDevolucion_str):
 
         return False
 
-
-# Ejemplo de uso:
-fechaInicio = "2023-07-23"
-fechaDevolucion = "2023-08-01"
-if validar_fecha_devolucion(fechaInicio, fechaDevolucion):
-    print("La fecha de devolución es válida (menor o igual a 8 días a partir de la fecha de inicio).")
-else:
-    print("La fecha de devolución NO cumple con los requisitos.")
 
 
 class entregaDevolucionController():
