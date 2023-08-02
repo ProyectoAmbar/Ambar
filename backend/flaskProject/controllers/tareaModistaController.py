@@ -68,7 +68,9 @@ class tareaModisteriaController():
 
     def responderTareaModista(self,id,infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
-        if search is not None and infoTareaModisteria['completado']!= None:
+        if search['completado'] is True:
+            return {"message": "la tarea ya ha finalizado"}
+        elif search is not None and infoTareaModisteria['completado']!= None:
             print(str(search['formMedidas'].id))
             comprobarPrecios = self.repoFormMedidas.getById(str(search['formMedidas'].id))
             preciosCompletado = all(arr["precio"] is not None for arr in comprobarPrecios['arreglos'])
@@ -76,11 +78,12 @@ class tareaModisteriaController():
                 dict = []
                 fecha = date.today() + timedelta(days=1)
                 lavanderia= tareaLavanderia(None,search['producto'], str(fecha),False )
-                dict.append(lavanderia)
+                responseLavanderia = self.repoLavanderia.save(lavanderia)
                 tareaModista = tareaModisteria(search['formMedidas'],search['modista'],
                             search['producto'],True, infoTareaModisteria['completado'],search['fecha'])
                 response = self.repoModista.update(id, tareaModista)
                 dict.append(response)
+                dict.append(responseLavanderia)
                 return dict
             else:
                 return {"status": False, "message": "no se han colocado los precios al formato de medidas"}

@@ -607,11 +607,11 @@ def deleteTareaLavanderia(id):
 @app.route('/lavanderia/answer/<string:id>',methods=['PUT'])
 def responderTareaLavanderia(id):
     data = request.get_json()
-    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/answer/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 @app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>',methods=['PUT'])
 def asignarLavanderia(id, idLavanderia):
-    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id+'/emlpeado/'+idLavanderia, headers={"Content-Type": "application/json; charset=utf-8"})
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id+'/empleado/'+idLavanderia, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 #----------ENTREGA-DEVOLUCION----------#
@@ -658,14 +658,14 @@ def getEntregaDevolucionPendientes():
 @app.route('/entregaDevolucion/entrega/<string:id>',methods=['PUT'])
 def responderEntrega(id):
     data = request.get_json()
-    response = requests.get(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/entrega'+id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/entrega/'+id, json=data,headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 
 @app.route('/entregaDevolucion/devolucion/<string:id>',methods=['PUT'])
 def responderDevolucion(id):
     data = request.get_json()
-    response = requests.put(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/devolucion'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    response = requests.put(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/devolucion/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
 

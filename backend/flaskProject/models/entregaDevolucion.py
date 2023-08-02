@@ -6,11 +6,15 @@ class entregaDevolucion:
             self.asesor = DBRef('empleado', ObjectId(idAsesor))
         elif isinstance(idAsesor, DBRef):
             self.asesor = idAsesor
+        else:
+            self.asesor = None
 
         if isinstance(idProducto, str):
             self.producto = DBRef('Producto', ObjectId(idProducto))
         elif isinstance((idProducto), DBRef):
             self.producto = idProducto
+        else:
+            self.producto = None
         self.fechaEntrega = fechaEntrega
         self.entregaCompletado = entregaCompletado
         self.fechaDevolucion = fechaDevolucion

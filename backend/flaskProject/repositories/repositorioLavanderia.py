@@ -26,7 +26,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
         response = collection.find()
         for i in response:
             i['_id'] =str(i['_id'])
-            if response['lavanderia'] is not None:
+            if i['lavanderia'] is not None:
                 i['lavanderia'] = str(i['lavanderia'])
             i['producto'] = str(i['producto'])
             allItems.append(i)

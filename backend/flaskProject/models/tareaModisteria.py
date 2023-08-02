@@ -11,6 +11,8 @@ class tareaModisteria():
             self.modista = DBRef('empleado', ObjectId(modista))
         elif isinstance(modista, DBRef):
             self.modista = modista
+        else:
+            self.modista = None
 
         if isinstance(producto, str):
             self.producto = DBRef('Producto', ObjectId(producto))

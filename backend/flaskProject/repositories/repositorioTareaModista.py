@@ -6,6 +6,7 @@ from datetime import date
 class repoTareaModista(interfaceRepositorio[tareaModisteria]):
     def save(self, item: tareaModisteria):
         print("def save")
+        print(item.modista)
         collection = self.db[self.collection]
         inserted = collection.insert_one(item.__dict__)
         id = inserted.inserted_id.__str__()
@@ -16,6 +17,8 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
         response['producto'] = str(response['producto'])
         if response['modista'] is not None:
             response['modista'] = str(response['modista'])
+        else:
+            response['modista'] = None
         return response
 
 

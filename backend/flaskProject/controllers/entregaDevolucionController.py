@@ -65,7 +65,9 @@ class entregaDevolucionController():
     def responderEntrega(self,id,infoUpdate):
         try:
             search = self.repoEntrega.getByIdToUpdate(id)
-            if infoUpdate['entregaCompletado'] is True:
+            if search['entregaCompletado'] is True:
+                return {"message": "la entrega ya se a realizado"}
+            elif infoUpdate['entregaCompletado'] is True:
                 if validar_fecha_devolucion(search['fechaEntrega'], infoUpdate['fechaDevolucion']):
                     entrega = entregaDevolucion(search['producto'], search['asesor'], search['fechaEntrega'],
                                                 infoUpdate['entregaCompletado'], infoUpdate['fechaDevolucion'], False)
@@ -79,9 +81,12 @@ class entregaDevolucionController():
 
     def responderDevolucion(self, id, infoUpdate):
         search = self.repoEntrega.getByIdToUpdate(id)
-        entrega = entregaDevolucion(search['producto'], search['asesor'], search['fechaEntrega'],search['entregaCompletado'],search['fechaDevolucion'],infoUpdate['devolucionCompletado'])
-        producto = self.productoControler.desbloquearProducto(str(search['producto'].id))
-        return self.repoEntrega.update(id, entrega)
+        if search['devolucionCompletado'] is True:
+            return {"message": "la tarea ya se ha completado"}
+        else:
+            entrega = entregaDevolucion(search['producto'], search['asesor'], search['fechaEntrega'],search['entregaCompletado'],search['fechaDevolucion'],infoUpdate['devolucionCompletado'])
+            producto = self.productoControler.desbloquearProducto(str(search['producto'].id))
+            return self.repoEntrega.update(id, entrega)
 
 
 

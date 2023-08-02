@@ -209,7 +209,7 @@ def DeleteTarea(id):
 @app.route('/tarea/answer/<string:id>',methods=['PUT'])
 def responderTarea(id):
     data = request.get_json()
-    json = tareasController.responderTareaC(id, data, data['estado'])
+    json = tareasController.responderTareaC(id, data)
     return jsonify(json)
 
 @app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
