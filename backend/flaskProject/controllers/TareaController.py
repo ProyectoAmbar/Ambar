@@ -151,7 +151,8 @@ class tareaController():
         return search
 
     def getAllTareasPendientes(self):
-        return self.repositorioTareas.getAllTareasPendientes()
+        response = self.repositorioTareas.getAllTareasPendientes()
+        return response
 
     def Delete(self, id):
         print("eliminar un producto")

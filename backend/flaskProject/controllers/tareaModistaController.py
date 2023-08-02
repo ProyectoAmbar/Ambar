@@ -56,7 +56,7 @@ class tareaModisteriaController():
         return self.repoModista.getTareasSinAsignar()
 
     def getTareaModistaPendiente(self,idEmpleado):
-        return self.repoModista.getTareasPendientes(idEmpleado)
+        return self.repoModista.getTareasPendientes(idEmpleado).sort("fecha",1)
     def AsignarTareaModista(self,id, infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
         if search is not None:
@@ -90,8 +90,8 @@ class tareaModisteriaController():
         else:
             return {"status": False, "code": 400, "message": "No ha sido encontrado la tarea de Modisteria con id" + id}
 
-    def tareasModistaPendiente(self, idModista):
-        return self.repoModista.getTareasPendientes(idModista)
+    def getAllTareasModistaPendientes(self):
+        return self.repoModista.getAllTareasPendientes()
 
 
     def isValid(self,infoTareaModisteria):

@@ -19,7 +19,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
     def getAllSinEntregar(self):
         allItems = []
         collection = self.db[self.collection]
-        response = collection.find({"entregaCompletado": False})
+        response = collection.find({"entregaCompletado": False}).sort("fechaEntrega",1)
         for i in response:
             i['_id'] = str(i['_id'])
             i['asesor'] = str(i['asesor'])
@@ -31,6 +31,31 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         allItems = []
         collection = self.db[self.collection]
         query = {"$and": [{"entregaCompletado": True}, {"devolucionCompletado": False}]}
+        response = collection.find(query).sort("fechaDevolucion",1)
+        for i in response:
+            i['_id'] = str(i['_id'])
+            i['asesor'] = str(i['asesor'])
+            i['producto'] = str(i['producto'])
+            allItems.append(i)
+        return allItems
+
+
+    def getAllSinEntregarByAsesor(self,idAsesor:str):
+        allItems = []
+        collection = self.db[self.collection]
+        query = {"$and":[{"entregaCompletado":False},{"asesor": DBRef('empleado', ObjectId(idAsesor))}]}
+        response = collection.find(query)
+        for i in response:
+            i['_id'] = str(i['_id'])
+            i['asesor'] = str(i['asesor'])
+            i['producto'] = str(i['producto'])
+            allItems.append(i)
+        return allItems
+
+    def getAllSinDevolverByAsesor(self,idAsesor:str):
+        allItems = []
+        collection = self.db[self.collection]
+        query = {"$and": [{"entregaCompletado": True}, {"devolucionCompletado": False}, {"asesor": DBRef('empleado', ObjectId(idAsesor))}]}
         response = collection.find(query)
         for i in response:
             i['_id'] = str(i['_id'])

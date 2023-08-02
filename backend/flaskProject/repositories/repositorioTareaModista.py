@@ -97,6 +97,22 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
                 allItems.append(item)
         return allItems
 
+    def getAllTareasPendientes(self):
+        allItems = []
+        collection = self.db[self.collection]
+        query = {"completado": False}
+        response = collection.find(query).sort("fecha",1)
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['formMedidas'] = str(item['formMedidas'])
+                item['modista'] = str(item['modista'])
+                item['producto'] = str(item['producto'])
+                allItems.append(item)
+        return allItems
+
+
+
     def getTareasSinAsignar(self):
         allItems = []
         collection = self.db[self.collection]

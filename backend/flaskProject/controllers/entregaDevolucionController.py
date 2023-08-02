@@ -62,6 +62,12 @@ class entregaDevolucionController():
     def getSinDevolver(self):
         return self.repoEntrega.getAllSinDevolver()
 
+    def getSinEntregarByAsesor(self,id):
+        return self.repoEntrega.getAllSinEntregarByAsesor(id)
+
+    def getSinDevolverByAsesor(self,id):
+        return self.repoEntrega.getAllSinDevolverByAsesor(id)
+
     def responderEntrega(self,id,infoUpdate):
         try:
             search = self.repoEntrega.getByIdToUpdate(id)

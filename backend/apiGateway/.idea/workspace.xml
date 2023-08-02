@@ -5,24 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../flaskProject/controllers/calendar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/calendar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/calendar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repoEntregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repoEntregaDevolucion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +117,7 @@
       <workItem from="1690752979086" duration="7573000" />
       <workItem from="1690933645767" duration="864000" />
       <workItem from="1690943160220" duration="7552000" />
+      <workItem from="1691007315668" duration="940000" />
     </task>
     <servers />
   </component>
@@ -187,6 +178,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/apiGateway$main.coverage" NAME="apiGateway Coverage Results" MODIFIED="1686605407796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1690962889820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1691007354263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

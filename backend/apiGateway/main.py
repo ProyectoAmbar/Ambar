@@ -668,7 +668,15 @@ def responderDevolucion(id):
     response = requests.put(url=dataConfig["url-backend-productos"]+'/entregaDevolucion/devolucion/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
+@app.route('/calendar',methods=['GET'])
+def calendarioAdmin():
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/calendar', headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
+@app.route('/calendar/<string:idAsesor>',methods=['GET'])
+def calendarioAdmin(idAsesor):
+    response = requests.get(url=dataConfig["url-backend-productos"]+'/calendar/'+idAsesor, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
 
 
 

@@ -15,6 +15,7 @@ from controllers.tareaModistaController import tareaModisteriaController
 from repositories.repositorioProductos import RepositorioProductos
 from controllers.lavanderiaController import lavanderiaController
 from controllers.entregaDevolucionController import entregaDevolucionController
+from controllers.calendar import calendar
 
 from models.producto import Producto
 from datetime import datetime, timedelta
@@ -32,11 +33,13 @@ formMedidas = fomMedidasController()
 tareaModista = tareaModisteriaController()
 tareaLavanderia = lavanderiaController()
 entregaDevolver = entregaDevolucionController()
-
+calendario = calendar()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
 repoDb = RepositorioProductos()
+
+
 
 def desbloquearProducto( id, idTarea):
     print("disparo ;))")
@@ -306,6 +309,11 @@ def getTareaModistaSinAsignar():
 def getTareasModistaPendiente(idModista):
     json = tareaModista.getTareaModistaPendiente(idModista)
     return jsonify(json)
+
+@app.route('/tareaModista/pendientes',methods=['GET'])
+def getAllPendientesModisteria():
+    json = tareaModista.getAllTareasModistaPendientes()
+    return jsonify(json)
 #-------TAREA LAVANDERIA-----#
 
 @app.route('/lavanderia',methods=['POST'])
@@ -413,6 +421,17 @@ def responderDevolucion(id):
     data = request.get_json()
     response = entregaDevolver.responderDevolucion(id,data)
     return jsonify(response)
+
+#------------CALENDARIO------------#
+@app.route('/calendar',methods=['GET'])
+def calendar():
+    json = calendario.tareasEnOrdenPorFecha()
+    return jsonify(json)
+
+@app.route('/calendar/<string:idAsesor>', methods=['GET'])
+def calendarAsesor(idAsesor):
+    json = calendario.calendarAsesor(idAsesor)
+    return jsonify(json)
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
     with open('config.json') as f:
