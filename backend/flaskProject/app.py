@@ -180,6 +180,11 @@ def getEntregas():
     json = formAlquiler.getFormPorEntregar()
     return jsonify(json)
 
+@app.route('/alquiler/factura/<string:factura>',methods=['GET'])
+def getByFactura(factura):
+    json = formAlquiler.getByFactura(factura)
+    return jsonify(json)
+
 
 ###------------tareas---------------###
 @app.route('/tarea', methods=['POST'])
@@ -218,6 +223,11 @@ def responderTarea(id):
 @app.route('/tarea/verPendientes/<string:idEmpleado>',methods=['GET'])
 def verTareasPendientes(idEmpleado):
     json = tareasController.verTareasPendientesPorAsesor(idEmpleado)
+    return jsonify(json)
+
+@app.route('/tarea/formulario/<string:formulario>')
+def getByFormulario(formulario):
+    json = tareasController.getByFormulario(formulario)
     return jsonify(json)
 
 @app.route('/tarea/getAllPendientes',methods=['GET'])
@@ -275,6 +285,10 @@ def getAllTareaModista():
 @app.route('/tareaModista/<string:id>',methods=['GET'])
 def getTareaModistaById(id):
     json = tareaModista.getTareaModistaById(id)
+    return jsonify(json)
+@app.route('/tareaModista/formulario/<string:formulario>')
+def getTareaModistaByFormulario(formulario):
+    json = tareaModista.getTareaModisteriaByFormulario(formulario)
     return jsonify(json)
 
 @app.route('/tareaModista/<string:id>',methods=['PUT'])

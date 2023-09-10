@@ -11,10 +11,10 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         print(id)
         response = collection.find_one({"_id": ObjectId(id)})
         response['_id'] = str(response['_id'])
+        response['formulario'] = str(response['formulario'])
         response['asesor'] = str(response['asesor'])
         response['producto'] = str(response['producto'])
-        dict.append(response)
-        return dict
+        return response
 
     def getAllSinEntregar(self):
         allItems = []
@@ -23,6 +23,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         for i in response:
             i['_id'] = str(i['_id'])
             i['asesor'] = str(i['asesor'])
+            i['formulario'] = str(i['formulario'])
             i['producto'] = str(i['producto'])
             allItems.append(i)
         return allItems
@@ -35,6 +36,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         for i in response:
             i['_id'] = str(i['_id'])
             i['asesor'] = str(i['asesor'])
+            i['formulario'] = str(i['formulario'])
             i['producto'] = str(i['producto'])
             allItems.append(i)
         return allItems
@@ -48,6 +50,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         for i in response:
             i['_id'] = str(i['_id'])
             i['asesor'] = str(i['asesor'])
+            i['formulario'] = str(i['formulario'])
             i['producto'] = str(i['producto'])
             allItems.append(i)
         return allItems
@@ -60,6 +63,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         for i in response:
             i['_id'] = str(i['_id'])
             i['asesor'] = str(i['asesor'])
+            i['formulario'] = str(i['formulario'])
             i['producto'] = str(i['producto'])
             allItems.append(i)
         return allItems
@@ -73,6 +77,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         for i in response:
             i['_id'] =str(i['_id'])
             i['asesor'] = str(i['asesor'])
+            i['formulario'] = str(i['formulario'])
             i['producto'] = str(i['producto'])
             allItems.append(i)
         return allItems
@@ -83,6 +88,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
         if response != None:
             response['_id'] = str(response['_id'])
             response['asesor'] = str(response['asesor'])
+            response['formulario'] = str(response['formulario'])
             response['producto'] = str(response['producto'])
         return response
 
@@ -99,6 +105,7 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
             response['asesor'] = str(response['asesor'])
+            response['formulario'] = str(response['formulario'])
             response['producto'] = str(response['producto'])
             return response
         except:
@@ -111,11 +118,6 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
 
 
     def delete(self,id):
-        dict = [{
-            "status": True,
-            "code": 202
-        }]
         collection = self.db[self.collection]
         delObject = collection.delete_one({'_id':ObjectId(id)}).deleted_count
-        dict.append({"deleted_count": delObject})
-        return dict
+        return {"deleted_count": delObject}

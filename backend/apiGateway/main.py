@@ -29,14 +29,16 @@ jwt = JWTManager(app)
 
 ###-------VALIDACIÓN DE PERMISOS-------###
 @app.before_request
+@jwt_required()
 def before_request_callback():
     endPoint = limpiarURL(request.path)
     print(endPoint)
     excludedRoutes = ["/login","/logout","/productos/getAll","/productos/getById/?","/productos/getByReferencia/?","/user/create"]
-    if excludedRoutes.__contains__(endPoint):
+    usuario = get_jwt_identity()
+    print(usuario['rol']['_id'])
+    if excludedRoutes.__contains__(endPoint) or usuario['rol']['_id'] == '648f6d5104e7df55bd457ccd':
         pass
     elif verify_jwt_in_request():
-        usuario = get_jwt_identity()
         print(usuario)
         if usuario["rol"] is not None:
             tienePersmiso = validarPermiso(endPoint, request.method, usuario["rol"]["_id"])
@@ -331,10 +333,11 @@ def desbloquear(id):
 def CreateFormularioAlquiler():
     print("crear formulario de alquiler")
     data = request.get_json()
+    form = requests.get(url=dataConfig["url-backend-productos"]+"/alquiler/factura/"+ data['NumeroDeFactura'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
     asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idAsesor'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
     producto = requests.get(url=dataConfig["url-backend-productos"]+"/productos/"+data['idProducto'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
     try:
-        if asesor['id'] and producto['_id'] and producto['disponible'] is True:
+        if asesor['id'] and producto['_id'] and producto['disponible'] is True and form['status'] is False:
             bloquear = requests.put(url=dataConfig["url-backend-productos"]+"/productos/bloquear/"+data['idProducto'],headers={"Content-Type": "application/json; charset=utf-8"})
             alquiler = requests.post(url=dataConfig["url-backend-productos"]+"/alquiler", json=data, headers={"Content-Type": "application/json; charset=utf-8"})
             print(alquiler)
@@ -342,7 +345,7 @@ def CreateFormularioAlquiler():
         else:
             return {"status": False, "Code": 400, "message": "El producto se encuentra bloqueado"}
     except:
-        return {"status": False, "Code": 400, "message": "no se encontro el cliente, el asesor o producto"}
+        return {"status": False, "Code": 400, "message": "no se encontro el asesor, producto, o ya existe ese numero de factura"}
 
 @app.route('/alquiler',methods=['GET'])
 def GetAllFormularioAlquiler():
@@ -674,7 +677,7 @@ def calendarioAdmin():
     return jsonify(response.json())
 
 @app.route('/calendar/<string:idAsesor>',methods=['GET'])
-def calendarioAdmin(idAsesor):
+def calendarioAdminViewAsesor(idAsesor):
     response = requests.get(url=dataConfig["url-backend-productos"]+'/calendar/'+idAsesor, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 

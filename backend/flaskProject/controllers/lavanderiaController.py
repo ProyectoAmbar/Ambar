@@ -18,7 +18,7 @@ class lavanderiaController():
 
     def isValid( self, infoLavanderia):
         try:
-            if infoLavanderia['producto'] != None and infoLavanderia['fecha'] != None and validar_formato_fecha(infoLavanderia['fecha']) is True and infoLavanderia['completado'] != None:
+            if infoLavanderia['producto'] != None and infoLavanderia['formulario'] != None and infoLavanderia['fecha'] != None and validar_formato_fecha(infoLavanderia['fecha']) is True and infoLavanderia['completado'] != None:
                 return True
             elif validar_formato_fecha(infoLavanderia['fecha']) is False:
                 return False
@@ -26,7 +26,7 @@ class lavanderiaController():
             return False
     def createLavanderia(self, infoLavanderia):
         if self.isValid(infoLavanderia):
-            lavanderia = tareaLavanderia(infoLavanderia['lavanderia'] , infoLavanderia['producto'] , infoLavanderia['fecha'] , infoLavanderia['completado'])
+            lavanderia = tareaLavanderia(infoLavanderia['lavanderia'] , infoLavanderia['producto'] , infoLavanderia['formulario'], infoLavanderia['fecha'] , infoLavanderia['completado'])
             return self.repoLavanderia.save(lavanderia)
         else:
             return {"status":False, "code": 400, "message": "No tiene la información apropidada para crear una tarea de lavanderia"}
@@ -44,7 +44,7 @@ class lavanderiaController():
     def updateTarea(self, id, infoUpdate):
         search = self.repoLavanderia.getById(id)
         if search is not None and self.isValid(infoUpdate):
-            tarea = tareaLavanderia(infoUpdate['lavanderia'], infoUpdate['producto'], infoUpdate['fecha'], infoUpdate['completado'])
+            tarea = tareaLavanderia(infoUpdate['lavanderia'], infoUpdate['producto'], infoUpdate['formulario'],infoUpdate['fecha'], infoUpdate['completado'])
             return self.repoLavanderia.update(id, tarea)
         else:
             return {"status": False, "code": 400, "message": "no fue posible encontrar la tarea, o la información a actualizar es erronea"}
@@ -55,7 +55,7 @@ class lavanderiaController():
     def responderTareaLavanderia(self, id, infoUpdate):
         search = self.repoLavanderia.getByIdToUpdate(id)
         if search['completado'] is False:
-            tarea = tareaLavanderia(search['lavanderia'], search['producto'], search['fecha'], infoUpdate['completado'])
+            tarea = tareaLavanderia(search['lavanderia'], search['producto'], search['formulario'],search['fecha'], infoUpdate['completado'])
             return self.repoLavanderia.update(id, tarea)
         else:
             return {"status": False, "code": 400, "message": "la tarea ya fue completada"}
@@ -63,7 +63,7 @@ class lavanderiaController():
     def asignarLavanderia(self, id, idLavanderia):
         search = self.repoLavanderia.getByIdToUpdate(id)
         if search is not None:
-            tarea = tareaLavanderia(idLavanderia,search['producto'], search['fecha'], False)
+            tarea = tareaLavanderia(idLavanderia,search['producto'],search['formulario'], search['fecha'], False)
             return self.repoLavanderia.update(id, tarea)
         else:
             return {"status": False, "code": 400, "message": "No ha sido encontrada la tarea"}

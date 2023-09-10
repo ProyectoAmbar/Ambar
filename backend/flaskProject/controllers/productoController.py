@@ -68,6 +68,7 @@ class ProductoController():
                     "color": search['color'],
                     "disponible": False
                 }
+                print("xd")
                 return self.RepositorioProductos.update(id,Producto(productoUpdate))
             else:
                 return {"status":False, "code":400, "message": "el producto ya esta bloqueado"}

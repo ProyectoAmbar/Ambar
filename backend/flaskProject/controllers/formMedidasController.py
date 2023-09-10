@@ -38,19 +38,22 @@ class fomMedidasController():
             return {"status": False, "code": 400, "message": "hace falta información para actualizar el formato de medidas"}
 
     def responderFormMedidas(self,id,infoMedidas):
-        search = self.repoMedidas.getByIdToUpdate(id)
-        arreglos = search['arreglos']
-        if len(arreglos) == len(infoMedidas['arreglos']):
-            for i in range(len(arreglos)):
-                print(i)
-                print(arreglos[i]["precio"])
-                search['arreglos'][i]["precio"] = infoMedidas["arreglos"][i]["precio"]
-                print(search)
-            form = formatoMedidas(search['asesor'], search['formulario'], search['producto'],
-            search['arreglos'], search['estadoCita'], True)
-            return self.repoMedidas.update(id,form)
-        else:
-            return {"status":False, "code": 400, "message":"hacen falta arreglos por proporcionar"}
+        try:
+            search = self.repoMedidas.getByIdToUpdate(id)
+            arreglos = search['arreglos']
+            if len(arreglos) == len(infoMedidas['arreglos']):
+                for i in range(len(arreglos)):
+                    print(i)
+                    print(arreglos[i]["precio"])
+                    search['arreglos'][i]["precio"] = infoMedidas["arreglos"][i]["precio"]
+                    print(search)
+                form = formatoMedidas(search['asesor'], search['formulario'], search['producto'],
+                search['arreglos'], search['estadoCita'], True)
+                return self.repoMedidas.update(id,form)
+            else:
+                return {"status":False, "code": 400, "message": "hacen falta arreglos por proporcionar"}
+        except:
+            return {"status": False, "code": 400, "message": "No se encontro el id"}
 
 
 

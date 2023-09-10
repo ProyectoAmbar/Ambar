@@ -99,6 +99,18 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
             allItems.append(task)
         return allItems
 
+    def getByFactura(self,Factura):
+        try:
+            collection = self.db[self.collection]
+            response = collection.find_one({'numeroFactura': Factura})
+            response['_id'] = str(response['_id'])
+            response['asesor'] = str(response['asesor'])
+            response['Producto'] = str(response['Producto'])
+
+            return response
+        except:
+            return {"status": False , "code": 400, "message": "no se encontro el form de factura numero" + Factura}
+
 
 
     pass

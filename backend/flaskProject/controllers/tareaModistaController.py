@@ -1,3 +1,5 @@
+import this
+
 from repositories.repositorioTareaModista import repoTareaModista
 from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
@@ -19,7 +21,7 @@ class tareaModisteriaController():
         print("crear Tarea Modisteria")
         if self.isValid(infoTareaModisteria):
 
-            tareaModista = tareaModisteria(infoTareaModisteria['formMedidas'], infoTareaModisteria['modista'],infoTareaModisteria['producto'],
+            tareaModista = tareaModisteria(infoTareaModisteria['formMedidas'], infoTareaModisteria['modista'],infoTareaModisteria['producto'], infoTareaModisteria['formulario'],
                             infoTareaModisteria['preciosCompletado'], infoTareaModisteria['completado'], infoTareaModisteria['fecha'])
             return self.repoModista.save(tareaModista)
 
@@ -37,7 +39,7 @@ class tareaModisteriaController():
     def updateTareaModista(self,id,infoTareaModisteria):
         search = self.repoModista.getById(id)
         if self.isValid(infoTareaModisteria) and search is not None:
-            tareaModista = tareaModisteria(infoTareaModisteria['formMedidas'],infoTareaModisteria['modista'],infoTareaModisteria['producto'],
+            tareaModista = tareaModisteria(infoTareaModisteria['formMedidas'],infoTareaModisteria['modista'],infoTareaModisteria['producto'],infoTareaModisteria['formulario'],
                             infoTareaModisteria['preciosCompletado'], infoTareaModisteria['completado'],infoTareaModisteria['fecha'])
             return self.repoModista.update(id, tareaModista)
         elif search is None:
@@ -57,10 +59,14 @@ class tareaModisteriaController():
 
     def getTareaModistaPendiente(self,idEmpleado):
         return self.repoModista.getTareasPendientes(idEmpleado).sort("fecha",1)
+
+    def getTareaModisteriaByFormulario(self,formulario):
+        return self.repoModista.getByFormulario(formulario)
+
     def AsignarTareaModista(self,id, infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
         if search is not None:
-            tareaModista = tareaModisteria(search['formMedidas'],infoTareaModisteria['modista'], search['producto'],
+            tareaModista = tareaModisteria(search['formMedidas'],infoTareaModisteria['modista'], search['producto'],search['formulario'],
                             search['preciosCompletado'], search['completado'], search['fecha'])
             return self.repoModista.update(id,tareaModista)
         else:
@@ -77,10 +83,10 @@ class tareaModisteriaController():
             if preciosCompletado is True:
                 dict = []
                 fecha = date.today() + timedelta(days=1)
-                lavanderia= tareaLavanderia(None,search['producto'], str(fecha),False )
+                lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False )
                 responseLavanderia = self.repoLavanderia.save(lavanderia)
-                tareaModista = tareaModisteria(search['formMedidas'],search['modista'],
-                            search['producto'],True, infoTareaModisteria['completado'],search['fecha'])
+                tareaModista = tareaModisteria(search['formMedidas'],search['modista'],search['producto'],
+                                               search['formulario'],True, infoTareaModisteria['completado'],search['fecha'])
                 response = self.repoModista.update(id, tareaModista)
                 dict.append(response)
                 dict.append(responseLavanderia)

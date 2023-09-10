@@ -15,6 +15,8 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
         response['_id'] = str(response['_id'])
         response['formMedidas'] = str(response['formMedidas'])
         response['producto'] = str(response['producto'])
+        response['formulario'] = str(response['formulario'])
+
         if response['modista'] is not None:
             response['modista'] = str(response['modista'])
         else:
@@ -32,6 +34,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
             i['formMedidas'] = str(i['formMedidas'])
             i['modista'] = str(i['modista'])
             i['producto'] = str(i['producto'])
+            i['formulario'] = str(i['formulario'])
             allItems.append(i)
         dict.append(allItems)
         return dict
@@ -39,12 +42,30 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
     def getById(self, id):
         collection = self.db[self.collection]
         response = collection.find_one({"_id":ObjectId(id)})
-        if response != None:
-            response['_id'] = str(response['_id'])
-            response['formMedidas'] = str(response['formMedidas'])
-            response['modista'] = str(response['modista'])
-            response['producto'] = str(response['producto'])
-        return response
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                response['formMedidas'] = str(response['formMedidas'])
+                response['modista'] = str(response['modista'])
+                response['producto'] = str(response['producto'])
+                response['formulario'] = str(response['formulario'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la tarea de modisteria"}
+
+    def getByFormulario(self,formulario):
+        collection = self.db[self.collection]
+        response = collection.find_one({'formulario': DBRef('formatoAlquiler', ObjectId(formulario))})
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                response['formMedidas'] = str(response['formMedidas'])
+                response['modista'] = str(response['modista'])
+                response['producto'] = str(response['producto'])
+                response['formulario'] = str(response['formulario'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la tarea de modisteria"}
 
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]
@@ -62,6 +83,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
             response['formMedidas'] = str(response['formMedidas'])
             response['modista'] = str(response['modista'])
             response['producto'] = str(response['producto'])
+            response['formulario'] = str(response['formulario'])
             dict.append(response)
             return response
         except:
@@ -94,6 +116,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
                 item['formMedidas'] = str(item['formMedidas'])
                 item['modista'] = str(item['modista'])
                 item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
                 allItems.append(item)
         return allItems
 
@@ -108,6 +131,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
                 item['formMedidas'] = str(item['formMedidas'])
                 item['modista'] = str(item['modista'])
                 item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
                 allItems.append(item)
         return allItems
 
@@ -122,6 +146,7 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
                 item['_id'] = str(item['_id'])
                 item['formMedidas'] = str(item['formMedidas'])
                 item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
                 allItems.append(item)
         return allItems
 

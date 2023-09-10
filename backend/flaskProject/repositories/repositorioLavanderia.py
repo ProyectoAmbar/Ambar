@@ -14,6 +14,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
         response['_id'] = str(response['_id'])
         if response['lavanderia'] is not None:
             response['lavanderia'] = str(response['lavanderia'])
+        response['formulario'] = str(response['formulario'])
         response['producto'] = str(response['producto'])
 
         return response
@@ -29,6 +30,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
             if i['lavanderia'] is not None:
                 i['lavanderia'] = str(i['lavanderia'])
             i['producto'] = str(i['producto'])
+            i['formulario'] = str(i['formulario'])
             allItems.append(i)
 
         return allItems
@@ -58,6 +60,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
             if response['lavanderia'] is not None:
                 response['lavanderia'] = str(response['lavanderia'])
             response['producto'] = str(response['producto'])
+            response['formulario'] = str(response['formulario'])
             return response
         except:
             dict = [{
@@ -89,6 +92,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
                 if item['lavanderia'] is not None:
                     item['lavanderia'] = str(item['lavanderia'])
                 item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
                 allItems.append(item)
         return allItems
 
@@ -103,6 +107,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
                 if item['lavanderia'] is not None:
                     item['lavanderia'] = str(item['lavanderia'])
                 item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
                 allItems.append(item)
         return allItems
 
@@ -116,6 +121,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
                 if item['lavanderia'] is not None:
                     item['lavanderia'] = str(item['lavanderia'])
                 item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
                 allItems.append(item)
         return allItems
 

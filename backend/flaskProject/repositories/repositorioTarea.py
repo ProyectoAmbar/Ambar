@@ -39,12 +39,29 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
     def getById(self, id):
         collection = self.db[self.collection]
         response = collection.find_one({"_id": ObjectId(id)})
-        if response is not None:
+        try:
+            if response is not None:
+                response['_id'] = str(response['_id'])
+                response['formulario'] = str(response['formulario'])
+                response['asesor'] = str(response['asesor'])
+                response['producto'] = str(response['producto'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro el id " + id}
+
+
+    def getByFormulario(self, formulario):
+        try:
+            collection = self.db[self.collection]
+            response = collection.find_one({'formulario':  DBRef('formatoAlquiler', ObjectId(formulario))})
             response['_id'] = str(response['_id'])
             response['formulario'] = str(response['formulario'])
             response['asesor'] = str(response['asesor'])
             response['producto'] = str(response['producto'])
-        return response
+
+            return response
+        except:
+            return {"status": False , "code": 400, "message": "no se encontro la tarea asociada al formulario "+ formulario}
 
     ##ID DE EMPLEADO##
     def getTareasPendientesPorAsesor(self,id):

@@ -1,7 +1,7 @@
 from bson import DBRef, ObjectId
 
 class entregaDevolucion:
-    def __init__(self, idProducto, idAsesor, fechaEntrega:str, entregaCompletado:bool, fechaDevolucion, devolucionCompletado:bool):
+    def __init__(self, idProducto, idAsesor, idFormulario,fechaEntrega:str, entregaCompletado:bool, fechaDevolucion, devolucionCompletado:bool):
         if isinstance(idAsesor, str):
             self.asesor = DBRef('empleado', ObjectId(idAsesor))
         elif isinstance(idAsesor, DBRef):
@@ -15,6 +15,14 @@ class entregaDevolucion:
             self.producto = idProducto
         else:
             self.producto = None
+
+        if isinstance(idFormulario, str):
+            self.formulario = DBRef('Producto', ObjectId(idFormulario))
+        elif isinstance((idFormulario), DBRef):
+            self.formulario = idFormulario
+        else:
+            self.formulario = None
+
         self.fechaEntrega = fechaEntrega
         self.entregaCompletado = entregaCompletado
         self.fechaDevolucion = fechaDevolucion

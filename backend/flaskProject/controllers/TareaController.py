@@ -89,7 +89,7 @@ class tareaController():
                         searchFormMed['arreglos'].append(arreglo)
                     formMedida = formatoMedidas(search['asesor'], search['formulario'], search['producto'],searchFormMed['arreglos'], True, True)
                     responseFormMedida = self.repoFormMedidas.update(searchFormMed['_id'], formMedida)
-                tareaModista = tareaModisteria(responseFormMedida['_id'], None, search['producto'],False, False, str(fechaTareaModista))
+                tareaModista = tareaModisteria(responseFormMedida['_id'], None, search['producto'],search['formulario'],False, False, str(fechaTareaModista))
                 responseTareaModista = self.repoModista.save(tareaModista)
                 dict.append(response)
                 dict.append(responseFormMedida)
@@ -130,14 +130,14 @@ class tareaController():
         elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None and infoUpdate['nuevaCita'] is False):
             tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'])
             response = self.repositorioTareas.update(id,tarea)
-            lavanderia = tareaLavanderia(None,search['producto'], str(date.today() + timedelta(days=1)),False)
+            lavanderia = tareaLavanderia(None,search['producto'],search['formulario'], str(date.today() + timedelta(days=1)),False)
             responseLavanderia = self.repoLavanderia.save(lavanderia)
             dict.append(response)
             dict.append(responseLavanderia)
             if searchFormMed is not None:
                 fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
                 fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=5)).strftime("%Y-%m-%d"))
-                tareaModista = tareaModisteria(DBRef('formatoMedidas',searchFormMed['_id']),None,search['producto'],False, False, str(fechaTareaModista))
+                tareaModista = tareaModisteria(DBRef('formatoMedidas',searchFormMed['_id']),None,search['producto'],search['formulario'],False, False, str(fechaTareaModista))
                 responseTareaModista = self.repoModista.save(tareaModista)
                 dict.append(responseTareaModista)
                 dict.append(self.repoFormMedidas.getById(str(searchFormMed['_id'])))
@@ -148,6 +148,10 @@ class tareaController():
 
     def verTareasPendientesPorAsesor(self, id):
         search = self.repositorioTareas.getTareasPendientesPorAsesor(id)
+        return search
+
+    def getByFormulario(self,formulario):
+        search = self.repositorioTareas.getByFormulario(formulario)
         return search
 
     def getAllTareasPendientes(self):

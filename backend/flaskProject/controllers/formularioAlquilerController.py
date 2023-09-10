@@ -42,7 +42,7 @@ class formularioAlquilerController():
             infoTarea = self.repositorioAlquiler.getByIdToUpdate(response['_id'])
             tarea = Tarea(DBRef('formatoAlquiler',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'], formulario.FechaCitaDeMedidas,False,False)
             responseTarea = self.repoTareas.save(tarea,False)
-            entrega = entregaDevolucion(infoAlquiler['idProducto'], infoAlquiler['idAsesor'],str(date(infoAlquiler['AñoEntrega'], infoAlquiler['MesEntrega'],infoAlquiler['DiaEntrega'])), False, None, False)
+            entrega = entregaDevolucion(infoAlquiler['idProducto'], infoAlquiler['idAsesor'],response['_id'],str(date(infoAlquiler['AñoEntrega'], infoAlquiler['MesEntrega'],infoAlquiler['DiaEntrega'])), False, None, False)
             responseEntrega = self.repoEntrega.save(entrega)
             dict.append(response)
             dict.append(responseTarea)
@@ -50,6 +50,10 @@ class formularioAlquilerController():
             return dict
         else:
             return {"status": False, "code": 400, "message": "el formulario no pudo ser creado"}
+
+    def getByFactura(self,factura:str):
+        print("get formulario by factura")
+        return self.repositorioAlquiler.getByFactura(factura)
 
     def getAllFormularios(self):
         print("get all Formularios Alquileres")
