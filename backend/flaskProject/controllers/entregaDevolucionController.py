@@ -68,6 +68,9 @@ class entregaDevolucionController():
     def getSinDevolverByAsesor(self,id):
         return self.repoEntrega.getAllSinDevolverByAsesor(id)
 
+    def getByFormulario(self,formulario):
+        return self.repoEntrega.getByFormulario(formulario)
+
     def responderEntrega(self,id,infoUpdate):
         try:
             search = self.repoEntrega.getByIdToUpdate(id)
@@ -93,6 +96,4 @@ class entregaDevolucionController():
             entrega = entregaDevolucion(search['producto'], search['asesor'], search['formulario'],search['fechaEntrega'],search['entregaCompletado'],search['fechaDevolucion'],infoUpdate['devolucionCompletado'])
             producto = self.productoControler.desbloquearProducto(str(search['producto'].id))
             return self.repoEntrega.update(id, entrega)
-
-
 

@@ -8,25 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formMedidasController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formMedidasController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/productoController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/productoController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaModisteria.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repoEntregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repoEntregaDevolucion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,6 +123,7 @@
       <workItem from="1694275814850" duration="2969000" />
       <workItem from="1694346536828" duration="599000" />
       <workItem from="1694365504909" duration="5948000" />
+      <workItem from="1694519887192" duration="5509000" />
     </task>
     <servers />
   </component>
@@ -157,68 +146,83 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>614</line>
+          <line>615</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>615</line>
+          <line>616</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>660</line>
+          <line>661</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>661</line>
+          <line>662</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>668</line>
+          <line>669</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>669</line>
+          <line>670</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>340</line>
+          <line>341</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>478</line>
+          <line>479</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>477</line>
+          <line>478</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>476</line>
+          <line>477</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>475</line>
+          <line>476</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="21" />
+          <line>100</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>101</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>102</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>38</line>
-          <option name="timeStamp" value="22" />
+          <line>685</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>686</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -232,6 +236,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/apiGateway$main.coverage" NAME="apiGateway Coverage Results" MODIFIED="1686605407796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1694382755375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1694530543169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

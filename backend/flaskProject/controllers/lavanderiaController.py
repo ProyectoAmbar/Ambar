@@ -34,6 +34,9 @@ class lavanderiaController():
     def getAllTareaLavanderia(self):
         return self.repoLavanderia.getAll()
 
+    def GetTareaLavanderiaByFormulario(self,formulario):
+        return self.repoLavanderia.GetByFormulario(formulario)
+
     def getTareaLavanderiaById(self, id):
         response = self.repoLavanderia.getById(id)
         if response is not None:

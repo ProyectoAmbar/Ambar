@@ -350,6 +350,10 @@ def getTareaLavanderiaById(id):
 def getAllTareaLavanderiaSinAsignar():
     response = tareaLavanderia.getSinAsignarLavanderia()
     return jsonify(response)
+@app.route('/lavanderia/formulario/<string:formulario>')
+def GetTareaLavanderiaByForm(formulario):
+    json = tareaLavanderia.GetTareaLavanderiaByFormulario(formulario)
+    return jsonify(json)
 
 @app.route('/lavanderia/pendientes',methods=['GET'])
 def getAllPendientesLavanderia():
@@ -435,6 +439,11 @@ def responderDevolucion(id):
     data = request.get_json()
     response = entregaDevolver.responderDevolucion(id,data)
     return jsonify(response)
+
+@app.route('/entregaDevolucion/formulario/<string:formulario>', methods=['GET'])
+def getEntregaDevolucionByFormulario(formulario):
+    json = entregaDevolver.getByFormulario(formulario)
+    return jsonify(json)
 
 #------------CALENDARIO------------#
 @app.route('/calendar',methods=['GET'])

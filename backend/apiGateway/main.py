@@ -29,18 +29,19 @@ jwt = JWTManager(app)
 
 ###-------VALIDACIÓN DE PERMISOS-------###
 @app.before_request
-@jwt_required()
 def before_request_callback():
     endPoint = limpiarURL(request.path)
     print(endPoint)
-    excludedRoutes = ["/login","/logout","/productos/getAll","/productos/getById/?","/productos/getByReferencia/?","/user/create"]
-    usuario = get_jwt_identity()
-    print(usuario['rol']['_id'])
-    if excludedRoutes.__contains__(endPoint) or usuario['rol']['_id'] == '648f6d5104e7df55bd457ccd':
+    excludedRoutes = ["/login","/logout","/productos/getAll","/productos/getById/?","/productos/getByReferencia/?","/user/create", "/estadoProducto/?"]
+
+    if excludedRoutes.__contains__(endPoint) :
         pass
     elif verify_jwt_in_request():
+        usuario = get_jwt_identity()
         print(usuario)
-        if usuario["rol"] is not None:
+        if usuario['rol']['_id'] == '648f6d5104e7df55bd457ccd':
+            pass
+        elif usuario["rol"] is not None:
             tienePersmiso = validarPermiso(endPoint, request.method, usuario["rol"]["_id"])
             print(tienePersmiso)
             if not tienePersmiso:
@@ -681,7 +682,23 @@ def calendarioAdminViewAsesor(idAsesor):
     response = requests.get(url=dataConfig["url-backend-productos"]+'/calendar/'+idAsesor, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
-
+@app.route('/estadoProducto/<string:factura>',methods=['GET'])
+def getEstadoProducto(factura):
+    dict = []
+    formulario = requests.get(url=dataConfig['url-backend-productos']+'/alquiler/factura/'+ factura, headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    dict.append(formulario)
+    try:
+        tarea = requests.get(url=dataConfig['url-backend-productos']+'/tarea/formulario/'+ formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
+        tareaModisteria = requests.get(url=dataConfig['url-backend-productos']+'/tareaModista/formulario/'+formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
+        lavanderia = requests.get(url=dataConfig['url-backend-productos']+'/lavanderia/formulario/'+ formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
+        entregaDevolucion = requests.get(url=dataConfig['url-backend-productos']+'/entregaDevolucion/formulario/'+ formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
+        dict.append(tarea)
+        dict.append(tareaModisteria)
+        dict.append(lavanderia)
+        dict.append(entregaDevolucion)
+        return jsonify(dict)
+    except:
+        return {"message": "no se encontro el formulario con numero de factura: "+factura}
 
 if __name__ == '__main__':
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))

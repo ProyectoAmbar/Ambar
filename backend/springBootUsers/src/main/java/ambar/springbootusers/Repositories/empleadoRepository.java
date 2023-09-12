@@ -15,4 +15,6 @@ public interface empleadoRepository extends MongoRepository<empleado,String>{
 
     @Query("{'usuario':  ?0}")
     public empleado getempleadoByUser(String usuarioId);
+
+
 }

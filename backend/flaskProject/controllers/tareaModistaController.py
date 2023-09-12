@@ -100,9 +100,12 @@ class tareaModisteriaController():
         return self.repoModista.getAllTareasPendientes()
 
 
+    def getByFormulario(self,formulario):
+        return self.repoModista.getByFormulario(formulario)
+
     def isValid(self,infoTareaModisteria):
         try:
-            if (infoTareaModisteria['modista'] != None and infoTareaModisteria['producto'] != None
+            if (infoTareaModisteria['modista'] != None and infoTareaModisteria['producto'] != None and infoTareaModisteria['formulario'] != None
                 and infoTareaModisteria['preciosCompletado'] != None and infoTareaModisteria['completado'] != None and infoTareaModisteria['fecha'] != None):
                 return True
         except:

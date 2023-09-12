@@ -38,12 +38,30 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
     def getById(self, id):
         collection = self.db[self.collection]
         response = collection.find_one({"_id":ObjectId(id)})
-        if response != None:
-            response['_id'] = str(response['_id'])
-            if response['lavanderia'] is not None:
-                response['lavanderia'] = str(response['lavanderia'])
-            response['producto'] = str(response['producto'])
-        return response
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                if response['lavanderia'] is not None:
+                    response['lavanderia'] = str(response['lavanderia'])
+                response['producto'] = str(response['producto'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la tarea de lavanderia"}
+
+    def GetByFormulario(self,formulario):
+        collection = self.db[self.collection]
+        response = collection.find_one({'formulario': DBRef('formatoAlquiler', ObjectId(formulario))})
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                if response['lavanderia'] is not None:
+                    response['formulario'] = str(response['formulario'])
+                    response['lavanderia'] = str(response['lavanderia'])
+                response['producto'] = str(response['producto'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la tarea de lavanderia"}
+
 
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]

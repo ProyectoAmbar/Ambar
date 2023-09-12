@@ -135,7 +135,19 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
                 allItems.append(item)
         return allItems
 
-
+    def getByFormulario(self,formulario):
+        collection = self.db[self.collection]
+        response = collection.find_one({'formulario':  DBRef('formatoAlquiler', ObjectId(formulario))})
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                response['formMedidas'] = str(response['formMedidas'])
+                response['modista'] = str(response['modista'])
+                response['producto'] = str(response['producto'])
+                response['formulario'] = str(response['formulario'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la tarea de modisteria"}
 
     def getTareasSinAsignar(self):
         allItems = []

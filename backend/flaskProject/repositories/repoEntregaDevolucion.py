@@ -85,12 +85,28 @@ class repoEntregaDevolucion(interfaceRepositorio[entregaDevolucion]):
     def getById(self, id):
         collection = self.db[self.collection]
         response = collection.find_one({"_id":ObjectId(id)})
-        if response != None:
-            response['_id'] = str(response['_id'])
-            response['asesor'] = str(response['asesor'])
-            response['formulario'] = str(response['formulario'])
-            response['producto'] = str(response['producto'])
-        return response
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                response['asesor'] = str(response['asesor'])
+                response['formulario'] = str(response['formulario'])
+                response['producto'] = str(response['producto'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la Entrega/Devolución"}
+
+    def getByFormulario(self,formulario):
+        collection = self.db[self.collection]
+        response = collection.find_one({'formulario': DBRef('formatoAlquiler', ObjectId(formulario))})
+        try:
+            if response != None:
+                response['_id'] = str(response['_id'])
+                response['asesor'] = str(response['asesor'])
+                response['formulario'] = str(response['formulario'])
+                response['producto'] = str(response['producto'])
+            return response
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la Entrega/Devolución"}
 
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]
