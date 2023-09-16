@@ -33,7 +33,7 @@ class formularioAlquilerController():
                 "producto": infoAlquiler['idProducto'],
                 "creada": False
             })
-            formulario = formatoAlquiler(infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
+            formulario = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
             infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
 
@@ -67,14 +67,15 @@ class formularioAlquilerController():
         else:
             return {"status": False, "code": 400, "message": "No se encontro el formulario de Alquiler con id: " + id}
 
-    def UpdateFormularioAlquiler(self, id, infoUpdate):
+    def UpdateFormularioAlquiler(self, id, infoAlquiler):
         print("actualizar Productos")
-        if(self.isValid(infoUpdate)):
+        if(self.isValid(
+            infoAlquiler
+        )):
             dict = []
-            form = formatoAlquiler(infoUpdate['idAsesor'], infoUpdate['idProducto'],infoUpdate['identificacion'], infoUpdate['AñoEntrega'],
-            infoUpdate['MesEntrega'],infoUpdate['DiaEntrega'], infoUpdate['NumeroDeFactura'],infoUpdate['accesorio'], infoUpdate['corbatin'],
-            infoUpdate['velo'], infoUpdate['aro'], infoUpdate['total'], infoUpdate['metodoDePago'], infoUpdate['Abono'], infoUpdate['Saldo'],
-            infoUpdate['Deposito'], infoUpdate['AñoCitaMedidas'], infoUpdate['MesCitaMedidas'], infoUpdate['DiaCitaMedidas'])
+            form = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
+            infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
+            infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
             response = self.repositorioAlquiler.update(id,form)
             dict.append(response)
             dict.append({"status": True , "code": 200, "message": "El fomulario fue actualizado de manera exitosa"})
