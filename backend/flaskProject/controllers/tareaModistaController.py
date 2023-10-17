@@ -1,5 +1,3 @@
-import this
-
 from repositories.repositorioTareaModista import repoTareaModista
 from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
@@ -58,7 +56,7 @@ class tareaModisteriaController():
         return self.repoModista.getTareasSinAsignar()
 
     def getTareaModistaPendiente(self,idEmpleado):
-        return self.repoModista.getTareasPendientes(idEmpleado).sort("fecha",1)
+        return self.repoModista.getTareasPendientes(idEmpleado)
 
     def getTareaModisteriaByFormulario(self,formulario):
         return self.repoModista.getByFormulario(formulario)

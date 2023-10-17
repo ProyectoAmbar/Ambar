@@ -78,7 +78,7 @@ class entregaDevolucionController():
                 return {"message": "la entrega ya se a realizado"}
             elif infoUpdate['entregaCompletado'] is True:
                 if validar_fecha_devolucion(search['fechaEntrega'], infoUpdate['fechaDevolucion']):
-                    entrega = entregaDevolucion(search['producto'], search['asesor'], search['fechaEntrega'], search['formulario'],
+                    entrega = entregaDevolucion(search['producto'], search['asesor'], search['formulario'],search['fechaEntrega'],
                                                 infoUpdate['entregaCompletado'], infoUpdate['fechaDevolucion'], False)
                     return self.repoEntrega.update(id, entrega)
                 else:

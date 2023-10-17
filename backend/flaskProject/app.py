@@ -16,6 +16,7 @@ from repositories.repositorioProductos import RepositorioProductos
 from controllers.lavanderiaController import lavanderiaController
 from controllers.entregaDevolucionController import entregaDevolucionController
 from controllers.calendar import calendar
+from controllers.cajaController import cajaController
 
 from models.producto import Producto
 from datetime import datetime, timedelta
@@ -34,11 +35,11 @@ tareaModista = tareaModisteriaController()
 tareaLavanderia = lavanderiaController()
 entregaDevolver = entregaDevolucionController()
 calendario = calendar()
+caja = cajaController()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
 repoDb = RepositorioProductos()
-
 
 
 def desbloquearProducto( id, idTarea):
@@ -59,6 +60,7 @@ def desbloquearProducto( id, idTarea):
 
 
     except:
+        print(job.delete_one({'_id': ObjectId(idTarea)}).deleted_count)
         pass
 
 db = repoDb.getDb()
@@ -445,7 +447,7 @@ def getEntregaDevolucionByFormulario(formulario):
     json = entregaDevolver.getByFormulario(formulario)
     return jsonify(json)
 
-#------------CALENDARIO------------#
+
 @app.route('/calendar',methods=['GET'])
 def calendar():
     json = calendario.tareasEnOrdenPorFecha()
@@ -455,6 +457,33 @@ def calendar():
 def calendarAsesor(idAsesor):
     json = calendario.calendarAsesor(idAsesor)
     return jsonify(json)
+
+#------------ CAJA ------------#
+@app.route('/caja/agregar',methods=['PUT'])
+def agregarCaja():
+    info = request.get_json()
+    json = caja.agregarSaldo(info)
+    return jsonify(json)
+
+@app.route('/caja/retirar', methods=['PUT'])
+def retirarCja():
+    info = request.get_json()
+    json = caja.retirarSaldo(info)
+    return jsonify(json)
+
+@app.route('/caja/saldo', methods=['GET'])
+def GetSaldo():
+    json = caja.verSaldo()
+    return jsonify(json)
+
+@app.route('/caja/restaurar',methods=['PUT'])
+def restaurarSaldoCaja():
+    json = caja.restaurarSaldo()
+    return jsonify(json)
+
+
+## asñdlkfjajklsñdf ##
+
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
     with open('config.json') as f:
