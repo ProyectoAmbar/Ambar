@@ -22,7 +22,7 @@ class repositorioAuditoria(interfaceRepositorio[auditoria]):
         response = collection.find()
         for i in response:
             i['_id'] = str(i['_id'])
-            response['empleado'] = str(response['empleado'])
+            i['empleado'] = str(i['empleado'])
             allItems.append(i)
         dict.append(allItems)
         return dict

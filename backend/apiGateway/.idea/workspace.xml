@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../flaskProject/controllers/auditoriaController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/controllers/cajaController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/models/auditoria.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/models/caja.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/repositories/cajaRepository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -17,6 +17,7 @@ from controllers.lavanderiaController import lavanderiaController
 from controllers.entregaDevolucionController import entregaDevolucionController
 from controllers.calendar import calendar
 from controllers.cajaController import cajaController
+from controllers.auditoriaController import auditoriaController
 
 from models.producto import Producto
 from datetime import datetime, timedelta
@@ -36,6 +37,7 @@ tareaLavanderia = lavanderiaController()
 entregaDevolver = entregaDevolucionController()
 calendario = calendar()
 caja = cajaController()
+audit = auditoriaController()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -482,7 +484,18 @@ def restaurarSaldoCaja():
     return jsonify(json)
 
 
-## asñdlkfjajklsñdf ##
+#----------- AUDITORIA -----------#
+
+@app.route('/Auditoria/<string:id>', methods=['GET'])
+def getRegistroById(id):
+    json = audit.getRegistroById(id)
+    return jsonify(json)
+
+@app.route('/Auditoria', methods=['GET'])
+def getAllResgistro():
+    json = audit.getAllResgistro()
+    return jsonify(json)
+
 
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
