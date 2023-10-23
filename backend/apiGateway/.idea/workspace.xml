@@ -7,7 +7,8 @@
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/cajaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/cajaController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,6 +126,8 @@
       <workItem from="1694977949909" duration="610000" />
       <workItem from="1696695899546" duration="2607000" />
       <workItem from="1697505696051" duration="1417000" />
+      <workItem from="1697729496064" duration="599000" />
+      <workItem from="1697754154861" duration="1258000" />
     </task>
     <servers />
   </component>
@@ -214,16 +217,6 @@
           <url>file://$PROJECT_DIR$/main.py</url>
           <line>102</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>685</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>686</line>
-          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

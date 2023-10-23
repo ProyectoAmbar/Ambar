@@ -7,6 +7,8 @@ from repositories.repoEntregaDevolucion import repoEntregaDevolucion
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from repositories.repositorioTarea import repositorioTareas
 from controllers.productoController import ProductoController
+from controllers.cajaController import cajaController
+from controllers.auditoriaController import auditoriaController
 
 from bson import DBRef, ObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -18,6 +20,9 @@ class formularioAlquilerController():
         self.repoTareas = repositorioTareas()
         self.controllerProduct = ProductoController()
         self.repoEntrega = repoEntregaDevolucion()
+        self.repoCaja = cajaController()
+        self.auditoria = auditoriaController()
+
 
     def create(self, infoAlquiler):
         if self.isValid(infoAlquiler):
@@ -36,9 +41,14 @@ class formularioAlquilerController():
             formulario = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
             infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
-
             dict = []
             response = self.repositorioAlquiler.save(formulario)
+            self.repoCaja.agregarSaldo({"saldo": infoAlquiler['Abono'],
+                                        "empleado": infoAlquiler['idAsesor'],
+                                        "metodo": "Deposito",
+                                        "descripcion": "Abono de parte del formulario " + response[
+                                            '_id'] + "y numero de factura " + infoAlquiler['NumeroDeFactura']
+                                        })
             infoTarea = self.repositorioAlquiler.getByIdToUpdate(response['_id'])
             tarea = Tarea(DBRef('formatoAlquiler',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'], formulario.FechaCitaDeMedidas,False,False)
             responseTarea = self.repoTareas.save(tarea,False)

@@ -105,6 +105,7 @@ def consultarEIniciarTareas():
 
 scheduler.add_job(consultarEIniciarTareas, 'interval' ,seconds=6)
 
+
 #-----------------RUTAS DE PRODUCTOS-----------------#
 @app.route('/productos' , methods=['POST'])
 def crearProducto():
@@ -481,8 +482,13 @@ def GetSaldo():
 @app.route('/caja/restaurar',methods=['PUT'])
 def restaurarSaldoCaja():
     json = caja.restaurarSaldo()
+    print(json)
     return jsonify(json)
 
+def restaurarSaldoTarea():
+    caja.restaurarSaldo()
+
+scheduler.add_job(restaurarSaldoTarea,'interval',days=1,start_date = '2023-10-19 00:00:00')
 
 #----------- AUDITORIA -----------#
 
@@ -512,7 +518,6 @@ def test():
         "port": 5000
     }
     return jsonify(json)
-
 
 if __name__ == '__main__':
     dataConfig = loadFileConfig()

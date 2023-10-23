@@ -19,7 +19,7 @@ class cajaController():
         dict = []
         infoCaja = caja(0)
         getCaja = self.repoCaja.getOne()
-        dict.append( self.repoCaja.update(getCaja['_id'], infoCaja))
+        dict.append(self.repoCaja.update(getCaja['_id'], infoCaja))
         registro = auditoria(None,"Retiro Automatico", "Se realiza retiro automatico de caja", getCaja['saldo'])
         dict.append(self.repoAuditoria.save(registro))
         return dict
