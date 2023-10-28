@@ -38,7 +38,7 @@ class formularioAlquilerController():
                 "producto": infoAlquiler['idProducto'],
                 "creada": False
             })
-            formulario = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
+            formulario = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['sede'], infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
             infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
             dict = []
@@ -83,7 +83,7 @@ class formularioAlquilerController():
             infoAlquiler
         )):
             dict = []
-            form = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
+            form = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['sede'], infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
             infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
             response = self.repositorioAlquiler.update(id,form)
@@ -103,10 +103,11 @@ class formularioAlquilerController():
 
 
     def isValid(self, infoAlquiler):
-        if (infoAlquiler['idAsesor'] and infoAlquiler['idProducto']  and infoAlquiler['identificacion']
-            and infoAlquiler['NumeroDeFactura'] and infoAlquiler['accesorio'] != None and infoAlquiler['corbatin'] != None and infoAlquiler['velo'] != None
-            and infoAlquiler['aro'] != None and infoAlquiler['total'] and infoAlquiler['metodoDePago'] and infoAlquiler['Abono'] and infoAlquiler['Saldo']
-            and infoAlquiler['Deposito'] and infoAlquiler['AñoEntrega'] and infoAlquiler['MesEntrega'] and infoAlquiler['DiaEntrega']):
-            return True
-        else:
+        try:
+            if (infoAlquiler['idAsesor'] and infoAlquiler['idProducto']  and infoAlquiler['identificacion'] and infoAlquiler['sede']
+                and infoAlquiler['NumeroDeFactura'] and infoAlquiler['accesorio'] != None and infoAlquiler['corbatin'] != None and infoAlquiler['velo'] != None
+                and infoAlquiler['aro'] != None and infoAlquiler['total'] and infoAlquiler['metodoDePago'] and infoAlquiler['Abono'] and infoAlquiler['Saldo']
+                and infoAlquiler['Deposito'] and infoAlquiler['AñoEntrega'] and infoAlquiler['MesEntrega'] and infoAlquiler['DiaEntrega']):
+                return True
+        except:
             return False

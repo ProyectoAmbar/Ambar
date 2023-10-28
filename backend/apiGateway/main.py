@@ -613,7 +613,7 @@ def responderTareaLavanderia(id):
     data = request.get_json()
     response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/answer/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
-@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>',methods=['PUT'])
+@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>>',methods=['PUT'])
 def asignarLavanderia(id, idLavanderia):
     response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id+'/empleado/'+idLavanderia, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
@@ -699,6 +699,31 @@ def getEstadoProducto(factura):
         return jsonify(dict)
     except:
         return {"message": "no se encontro el formulario con numero de factura: "+factura}
+
+
+#------------- CAJA -----------#
+@app.route('/caja/agregar', methods=['PUT'])
+def agregarCaja():
+    data = request.get_json()
+    response = requests.put(url=dataConfig['url-backend-productos']+'/caja/agregar',json= data, headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    return jsonify(response)
+
+@app.route('/caja/retirar', methods=['PUT'])
+def retirarCaja():
+    data = request.get_json()
+    response = requests.put(url=dataConfig['url-backend-productos']+'/caja/retirar',json= data, headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    return jsonify(response)
+
+@app.route('/caja/saldo', methods=['GET'])
+def getSaldo():
+    response = requests.get(url=dataConfig['url-backend-productos']+'/caja/saldo', headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    return jsonify(response)
+
+@app.route('/caja/restaurar', methods=['GET'])
+def restaurarSaldo():
+    response = requests.put(url=dataConfig['url-backend-productos'] + '/caja/restaurar',headers={"Content-Type": "application/json; charset=utf-8"}).json()
+    return jsonify(response)
+
 
 if __name__ == '__main__':
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
