@@ -18,6 +18,7 @@ from controllers.entregaDevolucionController import entregaDevolucionController
 from controllers.calendar import calendar
 from controllers.cajaController import cajaController
 from controllers.auditoriaController import auditoriaController
+from controllers.makeupController import makeupController
 
 from models.producto import Producto
 from datetime import datetime, timedelta
@@ -38,6 +39,7 @@ entregaDevolver = entregaDevolucionController()
 calendario = calendar()
 caja = cajaController()
 audit = auditoriaController()
+makeup = makeupController()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -502,7 +504,39 @@ def getAllResgistro():
     json = audit.getAllResgistro()
     return jsonify(json)
 
+#-------------- Form MakeUP --------------#
 
+@app.route('/makeup',methods=['POST'])
+def CreateFormMakeup():
+    data = request.get_json()
+    json = makeup.create(data)
+    return jsonify(json)
+
+@app.route('/makeup', methods=['GET'])
+def getAllFormMakeup():
+    json = makeup.getAll()
+    return jsonify(json)
+
+@app.route('/makeup/<string:id>',methods=['GET'])
+def getFormMkaupById(id):
+    json = makeup.getById(id)
+    return jsonify(json)
+
+@app.route('/makeup/factura/<string:factura>', methods=['GET'])
+def getFormMakeUpByFactura(factura):
+    json = makeup.getByFactura(factura)
+    return jsonify(json)
+
+@app.route('/makeup/<string:id>',methods=['DELETE'])
+def deleteFormMakeUpById(id):
+    json = makeup.deleteMakeUpForm(id)
+    return jsonify(json)
+
+@app.route('makeup/<string:id>', methods=['PUT'])
+def updateFormMakeUp(id):
+    data = request.get_json()
+    json = makeup.updateMakeUpFom(id, data)
+    return jsonify(json)
 # -----------CONFIG AND MAIN ROOT-----------#
 def loadFileConfig():
     with open('config.json') as f:

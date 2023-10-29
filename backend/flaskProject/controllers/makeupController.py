@@ -5,7 +5,7 @@ class makeupController():
         self.repoMakeup = makeupRepo()
     def create(self, infoMakeup):
         if self.isValid(infoMakeup):
-            if infoMakeup['entrega'] is "DOMICILIO" and infoMakeup['direccion'] != None:
+            if (infoMakeup['entrega'] == "DOMICILIO" and infoMakeup['direccion'] != None) or infoMakeup['entrega'] == "AMBAR":
                 form = formatoMakeUP(infoMakeup['dia'] , infoMakeup['mes'] , infoMakeup['año'], infoMakeup['hora'] , infoMakeup['minutos'],
                 infoMakeup['fv'] , infoMakeup['ref'], infoMakeup['tipo'] , infoMakeup['cliente'] , infoMakeup['maquilladora'], infoMakeup['entrega'],infoMakeup['direccion'])
                 response = self.repoMakeup.save(form)
@@ -20,10 +20,12 @@ class makeupController():
         return self.repoMakeup.getByFactura(factura)
     def updateMakeUpFom(self,id,infoUpdate):
         if self.isValid(infoUpdate):
-            form = formatoMakeUP(infoUpdate['dia'], infoUpdate['mes'], infoUpdate['año'], infoUpdate['hora'],
-                                 infoUpdate['minutos'],
-                                 infoUpdate['fv'], infoUpdate['ref'], infoUpdate['tipo'], infoUpdate['cliente'],
-                                 infoUpdate['maquilladora'], infoUpdate['entrega'], infoUpdate['direccion'])
+            if (infoUpdate['entrega'] == "DOMICILIO" and infoUpdate['direccion'] != None) or infoUpdate[
+                'entrega'] == "AMBAR":
+                form = formatoMakeUP(infoUpdate['dia'], infoUpdate['mes'], infoUpdate['año'], infoUpdate['hora'],
+                                     infoUpdate['minutos'],
+                                     infoUpdate['fv'], infoUpdate['ref'], infoUpdate['tipo'], infoUpdate['cliente'],
+                                     infoUpdate['maquilladora'], infoUpdate['entrega'], infoUpdate['direccion'])
             return self.updateMakeUpFom(id,form)
 
     def deleteMakeUpForm(self,id):
