@@ -712,7 +712,7 @@ def agregarCaja():
 def retirarCaja():
     data = request.get_json()
     response = requests.put(url=dataConfig['url-backend-productos']+'/caja/retirar',json= data, headers={"Content-Type": "application/json; charset=utf-8"}).json()
-    return jsonxify(response)
+    return jsonify(response)
 
 @app.route('/caja/saldo', methods=['GET'])
 def getSaldo():
