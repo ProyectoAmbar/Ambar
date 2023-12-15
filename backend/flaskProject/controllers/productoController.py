@@ -8,6 +8,7 @@ class ProductoController():
 
     def create(self, infoProducto):
         try:
+            infoProducto['disponible'] = True
             if infoProducto['nombre']!= None and infoProducto['referencia']!= None and infoProducto['imagenProducto']!= None and infoProducto['color']!= None and infoProducto['disponible'] != None:
                 theProduct = Producto(infoProducto)
                 print(theProduct)

@@ -532,7 +532,7 @@ def deleteFormMakeUpById(id):
     json = makeup.deleteMakeUpForm(id)
     return jsonify(json)
 
-@app.route('makeup/<string:id>', methods=['PUT'])
+@app.route('/makeup/<string:id>', methods=['PUT'])
 def updateFormMakeUp(id):
     data = request.get_json()
     json = makeup.updateMakeUpFom(id, data)
