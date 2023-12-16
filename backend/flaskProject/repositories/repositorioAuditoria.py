@@ -16,7 +16,6 @@ class repositorioAuditoria(interfaceRepositorio[auditoria]):
         return response
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
@@ -24,8 +23,7 @@ class repositorioAuditoria(interfaceRepositorio[auditoria]):
             i['_id'] = str(i['_id'])
             i['empleado'] = str(i['empleado'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         try:

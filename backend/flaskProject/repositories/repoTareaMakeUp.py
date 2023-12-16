@@ -12,23 +12,21 @@ class repoTareaMakeup(interfaceRepositorio[tareaMakeup]):
         response = collection.find_one({"_id": ObjectId(id)})
         response['_id'] = str(response['_id'])
         response['idMakeup'] = str(response['idMakeup'])
-        response['idFormMakeup'] = str(response['idFormMakeup'])
+        response['formulario'] = str(response['formulario'])
         dict.append(response)
         return dict
 
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
         for i in response:
             i['_id'] =str(i['_id'])
             i['idMakeup'] = str(i['idMakeup'])
-            i['idFormMakeup'] = str(i['idFormMakeup'])
+            i['formulario'] = str(i['formulario'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         collection = self.db[self.collection]
@@ -36,7 +34,15 @@ class repoTareaMakeup(interfaceRepositorio[tareaMakeup]):
         if response != None:
             response['_id'] = str(response['_id'])
             response['idMakeup'] = str(response['idMakeup'])
-            response['idFormMakeup'] = str(response['idFormMakeup'])
+            response['formulario'] = str(response['formulario'])
+        return response
+    def getById(self, id):
+        collection = self.db[self.collection]
+        response = collection.find_one({"_id":ObjectId(id)})
+        if response != None:
+            response['_id'] = str(response['_id'])
+            response['idMakeup'] = str(response['idMakeup'])
+            response['formulario'] = str(response['formulario'])
         return response
     def update(self,id , item:tareaMakeup):
         try:
@@ -47,7 +53,7 @@ class repoTareaMakeup(interfaceRepositorio[tareaMakeup]):
             response = collection.find_one({"_id": ObjectId(id)})
             response['_id'] = str(response['_id'])
             response['idMakeup'] = str(response['idMakeup'])
-            response['idFormMakeup'] = str(response['idFormMakeup'])
+            response['formulario'] = str(response['formulario'])
             return response
         except:
             dict = [{
@@ -67,35 +73,34 @@ class repoTareaMakeup(interfaceRepositorio[tareaMakeup]):
         dict.append({"deleted_count": delObject})
         return dict
 
-    def getAllMakeupSinAsignar(self):
-        collection = self.db[self.collection]
-        response = collection.find_one({"idMakeup": None })
-        if response != None:
-            response['_id'] = str(response['_id'])
-            response['idMakeup'] = str(response['idMakeup'])
-            response['idFormMakeup'] = str(response['idFormMakeup'])
-        return response
+
 
     def getAllPendientes(self):
+        allItems = []
         collection = self.db[self.collection]
         response = collection.find({"completado": False}).sort("fecha", 1)
         if response != None:
-            response['_id'] = str(response['_id'])
-            response['idMakeup'] = str(response['idMakeup'])
-            response['idFormMakeup'] = str(response['idFormMakeup'])
-        return response
+            for i in response:
+                i['_id'] = str(i['_id'])
+                i['idMakeup'] = str(i['idMakeup'])
+                i['formulario'] = str(i['formulario'])
+                allItems.append(i)
+        return allItems
 
     def getAllPendientesByStylist(self,idMakeup):
+        allItems = []
         collection = self.db[self.collection]
-        query = {"$and": [{"completado": False}, {"modista": DBRef('empleado', ObjectId(idMakeup))}]}
+        query = {"$and": [{"completado": False}, {"idMakeup": DBRef('empleado', ObjectId(idMakeup))}]}
         response = collection.find(query).sort("fecha",1)
         if response != None:
-            response['_id'] = str(response['_id'])
-            response['idMakeup'] = str(response['idMakeup'])
-            response['idFormMakeup'] = str(response['idFormMakeup'])
-        return response
+            for i in response:
+                i['_id'] = str(i['_id'])
+                i['idMakeup'] = str(i['idMakeup'])
+                i['formulario'] = str(i['formulario'])
+                allItems.append(i)
+        return allItems
 
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]
-        response = collection.find_one({"_id": id})
+        response = collection.find_one({"_id": ObjectId(id)})
         return response

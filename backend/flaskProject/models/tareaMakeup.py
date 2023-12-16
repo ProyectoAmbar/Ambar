@@ -1,6 +1,6 @@
 from bson import ObjectId, DBRef
 class tareaMakeup:
-    def __init__(self, idMakeup, idFormMakeUp,referencia:str, tipoMakeup:str , fechaHora:str, completado:bool):
+    def __init__(self, idMakeup, idFormMakeUp,referencia:str, tipoMakeup:str , fechaHora, completado:bool):
         if isinstance(idMakeup,str):
             self.idMakeup = DBRef('empleado', ObjectId(idMakeup))
         elif isinstance(idMakeup,DBRef):

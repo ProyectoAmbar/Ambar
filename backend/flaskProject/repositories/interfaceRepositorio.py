@@ -33,15 +33,13 @@ class interfaceRepositorio(Generic[T]):
 
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
         for i in response:
             i['_id'] =str(i['_id'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         collection = self.db[self.collection]

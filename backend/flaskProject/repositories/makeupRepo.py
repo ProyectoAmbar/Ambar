@@ -17,7 +17,6 @@ class makeupRepo(interfaceRepositorio[formatoMakeUP]):
         return response
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
@@ -25,13 +24,22 @@ class makeupRepo(interfaceRepositorio[formatoMakeUP]):
             i['_id'] = str(i['_id'])
             i['maquilladora'] = str(i['maquilladora'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         try:
             collection = self.db[self.collection]
             response = collection.find_one({"_id": ObjectId(id)})
+            response['_id'] = str(response['_id'])
+            response['maquilladora'] = str(response['maquilladora'])
+
+            return response
+        except:
+            return {"status": False , "code": 400, "message": "no se encontro el id " + id}
+    def getByFactura(self,factura):
+        try:
+            collection = self.db[self.collection]
+            response = collection.find_one({"fv": factura})
             response['_id'] = str(response['_id'])
             response['maquilladora'] = str(response['maquilladora'])
 

@@ -18,7 +18,6 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
 
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
@@ -28,8 +27,7 @@ class repositorioFormMedidas(interfaceRepositorio[formatoMedidas]):
             i['producto'] = str(i['producto'])
             i['formulario'] = str(i['formulario'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         collection = self.db[self.collection]

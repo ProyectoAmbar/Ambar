@@ -23,7 +23,6 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         return response
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
@@ -33,8 +32,7 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
             i['asesor'] = str(i['asesor'])
             i['producto'] = str(i['producto'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         collection = self.db[self.collection]

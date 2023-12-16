@@ -736,6 +736,25 @@ def restaurarSaldo():
     response = requests.put(url=dataConfig['url-backend-productos'] + '/caja/restaurar',headers={"Content-Type": "application/json; charset=utf-8"}).json()
     return jsonify(response)
 
+## ----------- FORMULARIO MAKEUP -----------##
+
+@app.route('/makeup',methods=['POST'])
+def createFormMakeup():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-productos"]+'/makeup',json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+    return jsonify(response.json())
+
+@app.route('/makeup', methods=['GET'])
+def getAllFormMakeup():
+    response = requests.get(url=dataConfig["url-backend-productos"]+"/makeup",headers={"Content-Type": "application/json; charset=utf"}).json()
+    return jsonify(response)
+
+@app.route('/makeup/<string:id>', methods=['GET'])
+def getAllFormMakeupById(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/makeup/"+id,headers={"Content-Type": "application/json; charset=utf"}).json()
+    return jsonify(response)
+
+@app.route('/makeup/<string:id>')
 
 if __name__ == '__main__':
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))

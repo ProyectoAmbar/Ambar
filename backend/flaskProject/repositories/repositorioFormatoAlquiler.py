@@ -20,7 +20,6 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
         return response
 
     def getAll(self):
-        dict = []
         allItems = []
         collection = self.db[self.collection]
         response = collection.find()
@@ -29,8 +28,7 @@ class repositorioFormatoAlquiler(interfaceRepositorio[formatoAlquiler]):
             i['asesor'] = str(i['asesor'])
             i['Producto'] = str(i['Producto'])
             allItems.append(i)
-        dict.append(allItems)
-        return dict
+        return allItems
 
     def getById(self, id):
         try:

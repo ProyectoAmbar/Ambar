@@ -1,7 +1,7 @@
 from bson import ObjectId, DBRef
 from datetime import datetime
 class formatoMakeUP:
-    def __init__(self, dia: int, mes: int, año:int, hora: int, minutos: int, fv: int, ref: str, tipo: str,nombreCliente: str, idMaquilladora,  entrega:str, direccion:str):
+    def __init__(self, dia: int, mes: int, año:int, hora: int, minutos: int, fv: str, ref: str, tipo: str,nombreCliente: str, idMaquilladora,  entrega:str, direccion:str):
         self.fecha_hora = datetime(año,mes,dia,hora,minutos,0)
         self.fv = fv
         self.ref = ref
