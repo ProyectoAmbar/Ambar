@@ -3,7 +3,7 @@ from bson import ObjectId, DBRef
 import pymongo
 
 class formatoAlquiler():
-    def __init__(self, nombre: str, apellido:str, correo:str, celular:str,direccion:str,idAsesor, sede:str, idProducto, identificacion, AñoEntrega, MesEntrega, DiaEntrega, NumeroDeFactura, accesorio, corbatin, velo, aro, total, metodoDePago, Abono, Saldo, Deposito, AñoCitaMedidas, MesCitaMedidas,DiaCitaMedidas):
+    def __init__(self, nombre: str, apellido:str, correo:str, celular:str,direccion:str,idAsesor, sede:str, idProducto, identificacion, AñoEntrega, MesEntrega, DiaEntrega, NumeroDeFactura, accesorio, corbatin, velo, aro, metodoDePago, Abono, Saldo, Deposito, AñoCitaMedidas, MesCitaMedidas,DiaCitaMedidas):
         self.nombre = nombre
         self.apellido = apellido
         self.correo = correo
@@ -20,7 +20,7 @@ class formatoAlquiler():
         self.corbatin = corbatin
         self.velo = velo
         self.aro = aro
-        self.total = total
+        self.total = Saldo + Deposito
         self.metodoDePago = metodoDePago
         self.abono = Abono
         self.saldo = Saldo

@@ -4,7 +4,7 @@ from models.entregaDevolucion import entregaDevolucion
 
 
 
-from datetime import datetime
+from datetime import datetime, date
 
 
 def validar_fecha_devolucion(fechaInicio_str, fechaDevolucion_str):
@@ -74,15 +74,16 @@ class entregaDevolucionController():
     def responderEntrega(self,id,infoUpdate):
         try:
             search = self.repoEntrega.getByIdToUpdate(id)
-            if search['entregaCompletado'] is True:
-                return {"message": "la entrega ya se a realizado"}
-            elif infoUpdate['entregaCompletado'] is True:
-                if validar_fecha_devolucion(search['fechaEntrega'], infoUpdate['fechaDevolucion']):
+            ##if search['entregaCompletado'] is True:
+               ## return {"message": "la entrega ya se a realizado"}
+            if infoUpdate['entregaCompletado'] is True:
+                fecha_date = datetime.strptime(infoUpdate['fechaDevolucion'], "%Y-%m-%d").date()
+                if validar_fecha_devolucion(search['fechaEntrega'], infoUpdate['fechaDevolucion']) and fecha_date > date.today():
                     entrega = entregaDevolucion(search['producto'], search['asesor'], search['formulario'],search['fechaEntrega'],
                                                 infoUpdate['entregaCompletado'], infoUpdate['fechaDevolucion'], False)
                     return self.repoEntrega.update(id, entrega)
                 else:
-                    return {"status":False, "code": 400, "message": "la fecha de devolucion es mayor a 8 días"}
+                    return {"status":False, "code": 400, "message": "la fecha de devolucion es mayor a 8 días o incorrecta"}
             else:
                 return {"message": "No se ha completado la tarea"}
         except:

@@ -50,7 +50,6 @@ public class empleadoController{
 
     @PostMapping("rol/{idRol}")
     public empleado createEmpleadowithRol(@RequestBody infoEmpleado empleadoActual, @PathVariable String idRol){
-
         userGeneral usuario = new userGeneral(empleadoActual.getIdEmpleado(),empleadoActual.getNombreApellido(),empleadoActual.getCorreo(),empleadoActual.getNumeroCelular(),empleadoActual.getPassword(),empleadoActual.getRol());
         empleado nuevoEmpleado = new empleado(empleadoActual.getIdEmpleado(),usuario, empleadoActual.getIdentificacion(),empleadoActual.getSede());
         if(nuevoEmpleado.getUsuario().isValid() && nuevoEmpleado.getIdentificacion() != null && nuevoEmpleado.getSede() != null){

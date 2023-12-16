@@ -67,8 +67,15 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
     def getTareasPendientesPorAsesor(self,id):
         allItems = []
         collection = self.db[self.collection]
-        query = {"$and": [{"asesor": DBRef("empleado",ObjectId(id))}, {"estado": False},{"fechaCitaDeMedidas": {"$gte": str(date.today())}}]}
-        response = collection.find(query).sort("fechaCitaDeMedidas",1)
+        query = {
+            "$and": [
+                {"asesor": DBRef("empleado", ObjectId(id))},
+                {"estado": False},
+                {"fechaCitaDeMedidas": {"$gte": str(date.today())}}
+            ]
+        }
+        print(query)
+        response = collection.find(query).sort("fechaCitaMedidas", 1)
         for item in response:
             if item is not None:
                 item['_id'] = str(item['_id'])

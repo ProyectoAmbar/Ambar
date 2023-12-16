@@ -33,7 +33,7 @@ class ProductoController():
         if response != None:
             return response
         else:
-            return {"status": False , "code": 400, "message": "No se encontro el producto con id: " + id}
+            return {"status": False , "code": 400, "message": "No se encontro el producto con id: " + str(id)}
 
     def getByRef(self,referencia):
         print("mostrando prodcuto con referencia: "+ str(referencia))
@@ -41,7 +41,7 @@ class ProductoController():
         if response != None:
             return response
         else:
-            return {"status": False, "code": 400, "message": "No se encontro el producto con referencia: " + referencia}
+            return {"status": False, "code": 400, "message": "No se encontro el producto con referencia: " + str(referencia)}
 
 
     def updateProduct(self, _id, infoProducto):

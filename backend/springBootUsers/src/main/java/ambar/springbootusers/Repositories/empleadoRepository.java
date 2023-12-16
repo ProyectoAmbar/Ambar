@@ -10,7 +10,7 @@ public interface empleadoRepository extends MongoRepository<empleado,String>{
 
     @Query("{'correo': ?0}")
     public userGeneral getempleadoByCorreo(String correo);
-    @Query(" {'indentificacion': ?0}")
+    @Query(" {'identificacion': ?0}")
     public empleado getempleadoByIdentificacion(String identificacion);
 
     @Query("{'usuario':  ?0}")

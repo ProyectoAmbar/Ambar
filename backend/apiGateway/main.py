@@ -251,11 +251,11 @@ def getAllEmpleado():
     return jsonify(response.json())
 
 @app.route('/empleado/rol/<string:idRol>',methods=['POST'])
-def createEmpleadoWithRol(id):
+def createEmpleadoWithRol(idRol):
     data = request.get_json()
-    rol = requests.get(url=dataConfig["url-backend-users"]+'/rol/'+id, headers={"Content-Type": "application/json; charset=utf-8"})
+    rol = requests.get(url=dataConfig["url-backend-users"]+'/rol/'+idRol, headers={"Content-Type": "application/json; charset=utf-8"})
     if(rol.json() != None):
-        response = requests.post(url=dataConfig["url-backend-users"]+'empleado/rol/'+id,    json=data, headers={"Content-Type": "application/json; charset=utf-8"})
+        response = requests.post(url=dataConfig["url-backend-users"]+'/empleado/rol/'+idRol,    json=data, headers={"Content-Type": "application/json; charset=utf-8"})
         return jsonify(response.json())
     else:
         return {"status": 400, "code": False, "message": "no se encontro el rol a asígnar, por favor ingrese correctamente el id"}
@@ -339,10 +339,15 @@ def CreateFormularioAlquiler():
     producto = requests.get(url=dataConfig["url-backend-productos"]+"/productos/"+data['idProducto'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
     try:
         if asesor['id'] and producto['_id'] and producto['disponible'] is True and form['status'] is False:
-            bloquear = requests.put(url=dataConfig["url-backend-productos"]+"/productos/bloquear/"+data['idProducto'],headers={"Content-Type": "application/json; charset=utf-8"})
             alquiler = requests.post(url=dataConfig["url-backend-productos"]+"/alquiler", json=data, headers={"Content-Type": "application/json; charset=utf-8"})
-            print(alquiler)
-            return jsonify(alquiler.json())
+            rtaAlquiler = alquiler.json()
+            if rtaAlquiler.__len__() == 3:
+                bloquear = requests.put(
+                    url=dataConfig["url-backend-productos"] + "/productos/bloquear/" + data['idProducto'],
+                    headers={"Content-Type": "application/json; charset=utf-8"})
+                return jsonify(alquiler.json())
+            else:
+                return {"status": False, "Code": 400, "message": "No se ha podido crear el formulario de alquiler"}
         else:
             return {"status": False, "Code": 400, "message": "El producto se encuentra bloqueado"}
     except:
@@ -613,10 +618,17 @@ def responderTareaLavanderia(id):
     data = request.get_json()
     response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/answer/'+id, json=data, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
-@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>>',methods=['PUT'])
+@app.route('/lavanderia/<string:id>/empleado/<string:idLavanderia>',methods=['PUT'])
 def asignarLavanderia(id, idLavanderia):
-    response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id+'/empleado/'+idLavanderia, headers={"Content-Type": "application/json; charset=utf-8"})
-    return jsonify(response.json())
+    tarea = requests.get(url=dataConfig['url-backend-productos'] + '/lavanderia/'+id).json()
+    empleado = requests.get(url=dataConfig['url-backend-users'] + '/empleado/'+idLavanderia).json()
+    try:
+        if tarea['_id'] and empleado['id']:
+            response = requests.put(url=dataConfig["url-backend-productos"]+'/lavanderia/'+id+'/empleado/'+idLavanderia, headers={"Content-Type": "application/json; charset=utf-8"})
+            return jsonify(response.json())
+    except:
+        return {"status": False, "code": 400, "message": "no se encontro la tarea o el empleado"}
+
 
 #----------ENTREGA-DEVOLUCION----------#
 

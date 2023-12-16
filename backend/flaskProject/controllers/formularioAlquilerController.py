@@ -39,7 +39,7 @@ class formularioAlquilerController():
                 "creada": False
             })
             formulario = formatoAlquiler(infoAlquiler['nombre'],infoAlquiler['apellido'],infoAlquiler['correo'],infoAlquiler['celular'],infoAlquiler['direccion'],infoAlquiler['idAsesor'] , infoAlquiler['sede'], infoAlquiler['idProducto'] , infoAlquiler['identificacion'] , infoAlquiler['AñoEntrega'] , infoAlquiler['MesEntrega'] ,
-            infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'], infoAlquiler['total'],
+            infoAlquiler['DiaEntrega'], infoAlquiler['NumeroDeFactura'], infoAlquiler['accesorio'], infoAlquiler['corbatin'], infoAlquiler['velo'], infoAlquiler['aro'],
             infoAlquiler['metodoDePago'], infoAlquiler['Abono'], infoAlquiler['Saldo'], infoAlquiler['Deposito'], infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'], infoAlquiler['DiaCitaMedidas'])
             dict = []
             response = self.repositorioAlquiler.save(formulario)
@@ -59,7 +59,7 @@ class formularioAlquilerController():
             dict.append(responseEntrega)
             return dict
         else:
-            return {"status": False, "code": 400, "message": "el formulario no pudo ser creado"}
+            return {"status": False, "code": 400, "message": "el formulario no pudo ser creado, por favor revise la información suministrada"}
 
     def getByFactura(self,factura:str):
         print("get formulario by factura")
@@ -103,11 +103,12 @@ class formularioAlquilerController():
 
 
     def isValid(self, infoAlquiler):
-        try:
-            if (infoAlquiler['idAsesor'] and infoAlquiler['idProducto']  and infoAlquiler['identificacion'] and infoAlquiler['sede']
-                and infoAlquiler['NumeroDeFactura'] and infoAlquiler['accesorio'] != None and infoAlquiler['corbatin'] != None and infoAlquiler['velo'] != None
-                and infoAlquiler['aro'] != None and infoAlquiler['total'] and infoAlquiler['metodoDePago'] and infoAlquiler['Abono'] and infoAlquiler['Saldo']
-                and infoAlquiler['Deposito'] and infoAlquiler['AñoEntrega'] and infoAlquiler['MesEntrega'] and infoAlquiler['DiaEntrega']):
-                return True
-        except:
-            return False
+        fechaEntrega = date(infoAlquiler['AñoEntrega'], infoAlquiler['MesEntrega'], infoAlquiler['DiaEntrega'])
+        fechaMedidas = date(infoAlquiler['AñoCitaMedidas'], infoAlquiler['MesCitaMedidas'],infoAlquiler['DiaCitaMedidas'])
+        if (True and infoAlquiler['idAsesor'] and infoAlquiler['idProducto']  and infoAlquiler['identificacion'] and infoAlquiler['sede']
+            and infoAlquiler['NumeroDeFactura'] and infoAlquiler['accesorio']  and infoAlquiler['corbatin']  and infoAlquiler['velo']
+            and infoAlquiler['aro'] and infoAlquiler['metodoDePago'] and infoAlquiler['Abono'] and infoAlquiler['Saldo']
+                and infoAlquiler['Deposito'] and infoAlquiler['AñoEntrega'] and infoAlquiler['MesEntrega'] and infoAlquiler['DiaEntrega']
+                and fechaEntrega >= date.today() and fechaMedidas >= date.today()):
+            return True
+

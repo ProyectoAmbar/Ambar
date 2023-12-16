@@ -41,6 +41,7 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
         try:
             if response != None:
                 response['_id'] = str(response['_id'])
+                response['formulario'] = str(response['formulario'])
                 if response['lavanderia'] is not None:
                     response['lavanderia'] = str(response['lavanderia'])
                 response['producto'] = str(response['producto'])
@@ -54,10 +55,10 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
         try:
             if response != None:
                 response['_id'] = str(response['_id'])
-                if response['lavanderia'] is not None:
-                    response['formulario'] = str(response['formulario'])
-                    response['lavanderia'] = str(response['lavanderia'])
+                response['formulario'] = str(response['formulario'])
                 response['producto'] = str(response['producto'])
+                if response['lavanderia'] is not None:
+                    response['lavanderia'] = str(response['lavanderia'])
             return response
         except:
             return {"status": False, "code": 400, "message": "no se encontro la tarea de lavanderia"}

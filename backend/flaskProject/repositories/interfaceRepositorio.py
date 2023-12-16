@@ -45,10 +45,13 @@ class interfaceRepositorio(Generic[T]):
 
     def getById(self, id):
         collection = self.db[self.collection]
-        response = collection.find_one({"_id":ObjectId(id)})
+        response = collection.find_one({"_id": ObjectId(id)})
         if response != None:
             response['_id'] = str(response['_id'])
-        return response
+            return response
+        else:
+            return None
+
     def update(self,id , item:T):
         try:
             collection = self.db[self.collection]
