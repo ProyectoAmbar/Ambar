@@ -754,7 +754,6 @@ def getAllFormMakeupById(id):
     response = requests.get(url=dataConfig["url-backend-productos"] + "/makeup/"+id,headers={"Content-Type": "application/json; charset=utf"}).json()
     return jsonify(response)
 
-@app.route('/makeup/<string:id>')
 
 if __name__ == '__main__':
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))

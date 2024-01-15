@@ -7,20 +7,6 @@
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/makeupController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/makeupController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaMakeUpController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaMakeUpController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/FormatoMakeup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/FormatoMakeup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaMakeup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaMakeup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/makeupRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/makeupRepo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repoTareaMakeUp.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repoTareaMakeUp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioAuditoria.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormMedidas.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormMedidas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioFormatoAlquiler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,23 +35,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.apiGateway.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "angel",
-    "last_opened_file_path": "D:/work/Ambar/backend/apiGateway",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.apiGateway.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;angel&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/work/Ambar/backend/apiGateway&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="apiGateway" type="PythonConfigurationType" factoryName="Python">
       <module name="apiGateway" />
@@ -161,7 +147,8 @@
       <workItem from="1702603321305" duration="1116000" />
       <workItem from="1702666860454" duration="822000" />
       <workItem from="1702675599094" duration="15413000" />
-      <workItem from="1702747765064" duration="2016000" />
+      <workItem from="1702747765064" duration="2017000" />
+      <workItem from="1704862322736" duration="348000" />
     </task>
     <servers />
   </component>
