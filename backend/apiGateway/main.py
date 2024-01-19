@@ -32,7 +32,7 @@ jwt = JWTManager(app)
 def before_request_callback():
     endPoint = limpiarURL(request.path)
     print(endPoint)
-    excludedRoutes = ["/login","/logout","/productos/getAll","/productos/getById/?","/productos/getByReferencia/?","/user/create", "/estadoProducto/?"]
+    excludedRoutes = ["/login","/logout","/productos/getAll","/productos/getById/?","/productos/getByReferencia/?","/user/create", "/estadoProducto/?", "/empleado", "/makeup/factura/?"]
 
     if excludedRoutes.__contains__(endPoint) :
         pass
@@ -334,6 +334,7 @@ def desbloquear(id):
 def CreateFormularioAlquiler():
     print("crear formulario de alquiler")
     data = request.get_json()
+    print(data['NumeroDeFactura'])
     form = requests.get(url=dataConfig["url-backend-productos"]+"/alquiler/factura/"+ data['NumeroDeFactura'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
     asesor = requests.get(url=dataConfig["url-backend-users"] + '/empleado/' + data['idAsesor'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
     producto = requests.get(url=dataConfig["url-backend-productos"]+"/productos/"+data['idProducto'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
@@ -746,15 +747,82 @@ def createFormMakeup():
 
 @app.route('/makeup', methods=['GET'])
 def getAllFormMakeup():
-    response = requests.get(url=dataConfig["url-backend-productos"]+"/makeup",headers={"Content-Type": "application/json; charset=utf"}).json()
+    response = requests.get(url=dataConfig["url-backend-productos"]+"/makeup",headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
 
 @app.route('/makeup/<string:id>', methods=['GET'])
 def getAllFormMakeupById(id):
-    response = requests.get(url=dataConfig["url-backend-productos"] + "/makeup/"+id,headers={"Content-Type": "application/json; charset=utf"}).json()
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/makeup/"+id,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/makeup/factura/<string:factura>', methods=['GET'])
+def getFormMakeUpByFactura(factura):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/makeup/factura/" + factura,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/makeup/<string:id>', methods=['DELETE'])
+def deleteFormMakeUpById(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"] + "/makeup/" + id,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/makeup/<string:id>', methods=['PUT'])
+def updateFormMakeUpById(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/makeup/" + id, json=data, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/makeup/dia', methods=['GET'])
+def getFormMakeUpByDia():
+    data = request.get_json()
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/makeup/dia", json=data, headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
 
 
+## ----------- FORMULARIO TAREAS MAKEUP -----------##
+@app.route('/tareaMakeup', methods=['POST'])
+def createTareaMakeup():
+    data = request.get_json()
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup",json=data, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/tareaMakeup', methods=['GET'])
+def getTareaMakeup():
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup",headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/tareaMakeup/<string:id>', methods=['GET'])
+def getTareaMakeupById(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup/"+id, headers={"Content-Type": "application/json; charset=utf8"})
+    return jsonify(response)
+
+@app.route('/tareaMakeup/<string:id>', methods=['UPDATE'])
+def updateTareaMakeup(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tareaMakeup/"+id, json=data, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/tareaMakeup/<string:id>', methods=['DELETE'])
+def deleteTareaMakeup(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"] + "/tareaMakeup/"+id , headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/tareaMakeup/verPendientes/<string:id>', methods=['GET'])
+def GetAllPendientesTareaMakeupByStylist(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup/verPendientes/"+ id, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/tareaMakeup/verPendientes', methods=['GET'])
+def GetAllPendientesTareaMakeupByStylist():
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup/verPendientes", headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/tareaMakeup/responder/<string:id>', methods=['PUT'])
+def responderTareaMakeup(id):
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tareaMakeup/responder/"+id, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+
+#-------------------------------------------------#
+
+
 if __name__ == '__main__':
-    print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
+    print("Server running : " + "http://" + dataConfig["url-backend-productos"] + ":" + str(dataConfig["port"]))
     serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])

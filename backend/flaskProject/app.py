@@ -615,6 +615,12 @@ def updateFormMakeUp(id):
     json = makeup.updateMakeUpFom(id, data)
     return jsonify(json)
 
+@app.route('/makeup/dia', methods=['GET'])
+def getFormsByDia():
+    infoDia = request.get_json()
+    json = makeup.getTareasPorDia(infoDia)
+    return json
+
 ##----------- TAREAS MAKEUP -----------##
 @app.route('/tareaMakeup',methods=['POST'])
 def createTareaMakeup():

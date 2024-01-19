@@ -1,6 +1,7 @@
 from models.FormatoMakeup import formatoMakeUP
 from repositories.interfaceRepositorio import interfaceRepositorio
 from bson import ObjectId
+from datetime import datetime, timedelta
 
 class makeupRepo(interfaceRepositorio[formatoMakeUP]):
     def save(self, formAlquiler):
@@ -36,16 +37,7 @@ class makeupRepo(interfaceRepositorio[formatoMakeUP]):
             return response
         except:
             return {"status": False , "code": 400, "message": "no se encontro el id " + id}
-    def getByFactura(self,factura):
-        try:
-            collection = self.db[self.collection]
-            response = collection.find_one({"fv": factura})
-            response['_id'] = str(response['_id'])
-            response['maquilladora'] = str(response['maquilladora'])
 
-            return response
-        except:
-            return {"status": False , "code": 400, "message": "no se encontro el id " + id}
 
     def update(self, id, infoUpdate):
             collection = self.db[self.collection]
@@ -61,6 +53,18 @@ class makeupRepo(interfaceRepositorio[formatoMakeUP]):
             collection = self.db[self.collection]
             response = collection.find_one({"_id": ObjectId(id)})
             return response
+
+    def getTareasPorDia(self, año,mes,dia):
+        dict = []
+        collection = self.db[self.collection]
+        hora1 = datetime(año,mes,dia,0,0,0)
+        hora2 = datetime(año,mes,dia,23,59,59)
+        response = collection.find({"fecha_hora": {"$gte": hora1,"$lte": hora2}})
+        for i in response:
+            i['_id'] = str(i['_id'])
+            i['maquilladora'] = str(i['maquilladora'])
+            dict.append(i)
+        return dict
 
 
     def delete(self, id):
@@ -82,4 +86,14 @@ class makeupRepo(interfaceRepositorio[formatoMakeUP]):
 
             return response
         except:
-            return {"status": False , "code": 400, "message": "no se encontro el form de factura numero" + Factura}
+            return {"status": False , "code": 400, "message": "no se encontro el form de factura numero " + Factura}
+
+    def query(self, theQuery):
+        dict=[]
+        collection = self.db[self.collection]
+        response = collection.find(theQuery)
+        for i in response:
+            i['_id'] = str(i['_id'])
+            i['maquilladora'] = str(i['maquilladora'])
+            dict.append(i)
+        return dict
