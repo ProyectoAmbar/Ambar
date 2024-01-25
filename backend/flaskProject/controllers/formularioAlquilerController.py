@@ -59,7 +59,7 @@ class formularioAlquilerController():
             dict.append(responseEntrega)
             return dict
         else:
-            return {"status": False, "code": 400, "message": "el formulario no pudo ser creado, por favor revise la información suministrada"}
+            return {"status": False, "message": "el formulario no pudo ser creado, por favor revise la información suministrada"}
 
     def getByFactura(self,factura:str):
         print("get formulario by factura")

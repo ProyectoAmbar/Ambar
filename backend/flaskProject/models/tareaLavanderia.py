@@ -1,7 +1,7 @@
 from bson import DBRef, ObjectId
 
 class tareaLavanderia:
-    def __init__(self, idLavanderia, idProducto, idFormulario,fecha:str, completado:bool):
+    def __init__(self, idLavanderia, idProducto, idFormulario,fecha:str, completado:bool, postEntrega:bool):
         if isinstance(idLavanderia,str):
             self.lavanderia = DBRef('empleado', ObjectId(idLavanderia))
         elif isinstance(idLavanderia,DBRef):
@@ -23,3 +23,4 @@ class tareaLavanderia:
 
         self.fecha = fecha
         self .completado = completado
+        self.postEntrega = postEntrega

@@ -1,6 +1,9 @@
 from repositories.repoEntregaDevolucion import repoEntregaDevolucion
-from controllers.productoController import ProductoController
+from controllers.lavanderiaController import lavanderiaController
 from models.entregaDevolucion import entregaDevolucion
+from models.tareaLavanderia import tareaLavanderia
+from repositories.repositorioLavanderia import repoLavanderia
+from datetime import date, timedelta
 
 
 
@@ -25,7 +28,8 @@ def validar_fecha_devolucion(fechaInicio_str, fechaDevolucion_str):
 class entregaDevolucionController():
     def __init__(self):
         self.repoEntrega = repoEntregaDevolucion()
-        self.productoControler = ProductoController()
+        self.lavanderiaRepo = repoLavanderia()
+
 
     def createEntregaDevolucion(self,infoEntrega):
         try:
@@ -95,6 +99,11 @@ class entregaDevolucionController():
             return {"message": "la tarea ya se ha completado"}
         else:
             entrega = entregaDevolucion(search['producto'], search['asesor'], search['formulario'],search['fechaEntrega'],search['entregaCompletado'],search['fechaDevolucion'],infoUpdate['devolucionCompletado'])
-            producto = self.productoControler.desbloquearProducto(str(search['producto'].id))
-            return self.repoEntrega.update(id, entrega)
+            infoLavanderia = tareaLavanderia(None,search['producto'],search['formulario'],str(date.today() + timedelta(days=3)),False, True)
+            lavanderia = self.lavanderiaRepo.save(infoLavanderia)
+            entrega = self.repoEntrega.update(id, entrega)
+            dict = []
+            dict.append(entrega)
+            dict.append(lavanderia)
+            return dict
 

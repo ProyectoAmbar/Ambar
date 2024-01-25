@@ -81,7 +81,7 @@ class tareaModisteriaController():
             if preciosCompletado is True:
                 dict = []
                 fecha = date.today() + timedelta(days=1)
-                lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False )
+                lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False, False )
                 responseLavanderia = self.repoLavanderia.save(lavanderia)
                 tareaModista = tareaModisteria(search['formMedidas'],search['modista'],search['producto'],
                                                search['formulario'],True, infoTareaModisteria['completado'],search['fecha'])

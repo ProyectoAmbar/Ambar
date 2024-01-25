@@ -7,9 +7,11 @@
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/makeupController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/makeupController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/makeupRepo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/makeupRepo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/entregaDevolucionController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/formularioAlquilerController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/tareaLavanderia.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
@@ -42,23 +44,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.apiGateway.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;angel&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/work/Ambar/backend/flaskProject&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.apiGateway.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "angel",
+    "last_opened_file_path": "D:/work/Ambar/backend/apiGateway",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="apiGateway" type="PythonConfigurationType" factoryName="Python">
       <module name="apiGateway" />
@@ -158,7 +160,8 @@
       <workItem from="1704862322736" duration="348000" />
       <workItem from="1705360650839" duration="836000" />
       <workItem from="1705470387909" duration="614000" />
-      <workItem from="1705601953620" duration="6437000" />
+      <workItem from="1705601953620" duration="6770000" />
+      <workItem from="1706212048656" duration="2007000" />
     </task>
     <servers />
   </component>
@@ -212,6 +215,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/apiGateway$main.coverage" NAME="apiGateway Coverage Results" MODIFIED="1686605407796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1705470859181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/apiGateway$apiGateway.coverage" NAME="apiGateway Coverage Results" MODIFIED="1706217594580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

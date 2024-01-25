@@ -811,7 +811,7 @@ def GetAllPendientesTareaMakeupByStylist(id):
     return jsonify(response)
 
 @app.route('/tareaMakeup/verPendientes', methods=['GET'])
-def GetAllPendientesTareaMakeupByStylist():
+def GetAllPendientesTareaMakeup():
     response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup/verPendientes", headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
 @app.route('/tareaMakeup/responder/<string:id>', methods=['PUT'])
