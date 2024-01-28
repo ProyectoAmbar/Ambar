@@ -36,6 +36,9 @@ class lavanderiaController():
     def getAllTareaLavanderia(self):
         return self.repoLavanderia.getAll()
 
+    def getTaskCompleted(self, id):
+        return self.repoLavanderia.getCompletedTask(id)
+
     def GetTareaLavanderiaByFormulario(self,formulario):
         return self.repoLavanderia.GetByFormulario(formulario)
 

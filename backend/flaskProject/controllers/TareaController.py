@@ -48,6 +48,9 @@ class tareaController():
         print("get all tareas")
         return self.repositorioTareas.getAll()
 
+    def getTaskCompleted(self,id):
+        return self.repositorioTareas.getCompletedTask(id)
+
     def getById(self, _id):
         print("get producto by id")
         response = self.repositorioTareas.getById(_id)

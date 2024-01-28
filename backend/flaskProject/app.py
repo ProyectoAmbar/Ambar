@@ -254,6 +254,10 @@ def verTareasPendientes(idEmpleado):
     json = tareasController.verTareasPendientesPorAsesor(idEmpleado)
     return jsonify(json)
 
+@app.route('/tarea/completed/<string:id>', methods=['GET'])
+def getAllAsesorCompleted(id):
+    response = tareasController.getTaskCompleted(id)
+    return jsonify(response)
 
 @app.route('/tarea/formulario/<string:formulario>')
 def getByFormulario(formulario):
@@ -326,6 +330,11 @@ def getTareaModistaById(id):
     json = tareaModista.getTareaModistaById(id)
     return jsonify(json)
 
+@app.route('/tareaModista/completed/<string:id>')
+def getTareaModistaCompleted(id):
+    json = tareaModista.getTaskCompleted(id)
+    return jsonify(json)
+
 
 @app.route('/tareaModista/formulario/<string:formulario>')
 def getTareaModistaByFormulario(formulario):
@@ -384,6 +393,11 @@ def getAllPendientesModisteria():
 def createTareaLavanderia():
     data = request.get_json()
     response = tareaLavanderia.createLavanderia(data)
+    return jsonify(response)
+
+@app.route('/lavanderia/completed/<string:id>', methods=['GET'])
+def getAllCompletedLavanderia(id):
+    response = tareaLavanderia.getTaskCompleted(id)
     return jsonify(response)
 
 
@@ -592,7 +606,7 @@ def getAllFormMakeup():
 
 
 @app.route('/makeup/<string:id>', methods=['GET'])
-def getFormMkaupById(id):
+def getFormMakekupById(id):
     json = makeup.getById(id)
     return jsonify(json)
 
@@ -634,6 +648,11 @@ def getAllTareaMakeup():
 @app.route('/tareaMakeup/<string:id>',methods=['GET'])
 def getByIdTareaMakeup(id):
     json = tareaMake.getTareaMakeUpById(id)
+    return jsonify(json)
+
+@app.route('/tareaMakeup/completed/<string:id>', methods=['GET'])
+def getTareaMakeupCompleted(id):
+    json = tareaMake.getTaskCompleted(id)
     return jsonify(json)
 
 @app.route('/tareaMakeup/<string:id>',methods=['PUT'])

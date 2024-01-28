@@ -51,6 +51,25 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
         except:
             return {"status": False, "code": 400, "message": "no se encontro la tarea de modisteria"}
 
+    def getCompletedTask(self,id):
+        allItems = []
+        collection = self.db[self.collection]
+        response = collection.find({"$and": [{"modista": DBRef("empleado", ObjectId(id))}, {"completado": True}]})
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['formMedidas'] = str(item['formMedidas'])
+                item['modista'] = str(item['modista'])
+                item['producto'] = str(item['producto'])
+                item['formulario'] = str(item['formulario'])
+                allItems.append(item)
+        return allItems
+
+
+
+
+
+
     def getByFormulario(self,formulario):
         collection = self.db[self.collection]
         response = collection.find_one({'formulario': DBRef('formatoAlquiler', ObjectId(formulario))})

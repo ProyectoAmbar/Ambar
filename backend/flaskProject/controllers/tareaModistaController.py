@@ -30,6 +30,10 @@ class tareaModisteriaController():
         print("get all tarea Modista")
         return self.repoModista.getAll()
 
+    def getTaskCompleted(self,id):
+        return self.repoModista.getCompletedTask(id)
+
+
     def getTareaModistaById(self,id):
         print("get tarea modista by id")
         return self.repoModista.getById(id)

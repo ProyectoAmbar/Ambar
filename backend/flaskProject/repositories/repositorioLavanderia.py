@@ -19,7 +19,18 @@ class repoLavanderia(interfaceRepositorio[tareaLavanderia]):
 
         return response
 
-
+    def getCompletedTask(self,id):
+        allItems = []
+        collection = self.db[self.collection]
+        response = collection.find({"$and": [{"lavanderia": DBRef("empleado", ObjectId(id))}, {"completado": True}]})
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['formulario'] = str(item['formulario'])
+                item['lavanderia'] = str(item['lavanderia'])
+                item['producto'] = str(item['producto'])
+                allItems.append(item)
+        return allItems
     def getAll(self):
 
         allItems = []

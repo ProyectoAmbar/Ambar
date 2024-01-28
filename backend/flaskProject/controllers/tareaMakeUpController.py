@@ -37,6 +37,9 @@ class tareaMakeupController:
     def getTareaMakeUpById(self, id):
         return self.repoTareaMakeup.getById(id)
 
+    def getTaskCompleted(self,id):
+        return self.repoTareaMakeup.getCompletedTask(id)
+
     def getAllTareaMakeUp(self):
         return self.repoTareaMakeup.getAll()
     def getByFactura(self,factura):

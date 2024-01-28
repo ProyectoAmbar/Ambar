@@ -16,6 +16,18 @@ class repoTareaMakeup(interfaceRepositorio[tareaMakeup]):
         dict.append(response)
         return dict
 
+    def getCompletedTask(self,id):
+        allItems = []
+        collection = self.db[self.collection]
+        print({"$and": [{"asesor": DBRef("empleado", ObjectId(id))}, {"estado": True}, {"necesitaModista": False}]})
+        response = collection.find({"$and": [{"idMakeup": DBRef("empleado", ObjectId(id))}, {"completado": True}]})
+        for item in response:
+            if item is not None:
+                item['_id'] = str(item['_id'])
+                item['idMakeup'] = str(item['idMakeup'])
+                item['formulario'] = str(item['formulario'])
+                allItems.append(item)
+        return allItems
 
     def getAll(self):
         allItems = []
