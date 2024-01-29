@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../flaskProject/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/TareaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/lavanderiaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaMakeUpController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaMakeUpController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repoTareaMakeUp.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repoTareaMakeUp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioLavanderia.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" afterDir="false" />
-    </list>
+    <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -172,7 +154,7 @@
       <workItem from="1706374830567" duration="14000" />
       <workItem from="1706374993826" duration="713000" />
       <workItem from="1706375725391" duration="179000" />
-      <workItem from="1706400227814" duration="1782000" />
+      <workItem from="1706400227814" duration="1876000" />
     </task>
     <servers />
   </component>

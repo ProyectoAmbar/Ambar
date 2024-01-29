@@ -94,12 +94,14 @@ public class empleadoController{
             empleado Validacion = this.empleadoRepository.findById(id).orElse(null);
             if (Validacion != null ){
                 userGeneral usuario = this.myUserRepo.getUserGeneralByCorreo(informacionEmpleado.getCorreo());
-                if (usuario == null || Validacion.getUsuario().get_id() == usuario.get_id()){
+                if (usuario == null || Validacion.getUsuario().get_id().equals(usuario.get_id())){
                     Validacion.getUsuario().setNombreApellido(informacionEmpleado.getNombreApellido());
                     Validacion.getUsuario().setPassword(convertirSHA256(informacionEmpleado.getPassword()));
                     Validacion.getUsuario().setCorreo(informacionEmpleado.getCorreo());
                     Validacion.getUsuario().setNumeroCelular(informacionEmpleado.getNumeroCelular());
+                    Validacion.setIdentificacion(informacionEmpleado.getIdentificacion());
                     Validacion.setSede(informacionEmpleado.getSede());
+                    this.myUserRepo.save(Validacion.getUsuario());
                     return this.empleadoRepository.save(Validacion);
                 }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "ya existe un empleado con el correo: "+ informacionEmpleado.getCorreo());
             }else{
