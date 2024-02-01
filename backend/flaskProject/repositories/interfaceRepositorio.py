@@ -63,7 +63,7 @@ class interfaceRepositorio(Generic[T]):
             dict = [{
                 "status": False,
                 "code": 403,
-                "message": "El candidato con id "+id+" no ha sido encontrado"
+                "message": "El producto con id "+id+" no ha sido encontrado"
             }]
             return dict
 

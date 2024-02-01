@@ -39,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "angel",
-    "last_opened_file_path": "D:/work/Ambar/backend/apiGateway",
+    "last_opened_file_path": "D:/work/Ambar/backend/flaskProject",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -155,6 +155,7 @@
       <workItem from="1706374993826" duration="713000" />
       <workItem from="1706375725391" duration="179000" />
       <workItem from="1706400227814" duration="1876000" />
+      <workItem from="1706802326025" duration="19000" />
     </task>
     <servers />
   </component>

@@ -47,16 +47,16 @@ class ProductoController():
     def updateProduct(self, _id, infoProducto):
         print("actualizando un producto")
         dict = []
-        if infoProducto["nombre"] and infoProducto["referencia"] and infoProducto["imagenProducto"] and infoProducto["cantidadTallaS"] and infoProducto["cantidadTallaM"] and infoProducto["cantidadTallaL"]:
+        if infoProducto["nombre"] and infoProducto["referencia"] and infoProducto["imagenProducto"]:
             search = self.RepositorioProductos.getByReferencia(infoProducto["referencia"])
             print(search)
-            if not search or str(search["_id"]) == _id:
+            if search is None or str(search["_id"]) == _id:
                 response = self.RepositorioProductos.update(_id, Producto(infoProducto))
                 dict.append(response)
                 dict.append({"status": True, "code": 200, "message": "el producto fue actualizado"})
                 return response
             else:
-                return {"status": False, "Code": 400, "message": "hace falta información o el id no fue encontrado"}
+                return {"status": False, "Code": 400, "message": "hace falta información, el id no fue encontrado, o la referencia ya existe"}
 
     def bloquearProducto(self,id):
         search = self.RepositorioProductos.getById(id)
