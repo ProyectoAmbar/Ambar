@@ -1,6 +1,9 @@
 from models.tareaLavanderia import tareaLavanderia
 from repositories.repositorioLavanderia import repoLavanderia
 from controllers.productoController import ProductoController
+from controllers.TareaController import tareaController
+from repositories.repositorioTarea import repositorioTareas
+from models.Tarea import Tarea
 import re
 
 
@@ -15,6 +18,7 @@ class lavanderiaController():
     def __init__(self):
         self.repoLavanderia = repoLavanderia()
         self.productoController = ProductoController()
+        self.tareaAsesor =repositorioTareas()
 
 
 
@@ -62,10 +66,15 @@ class lavanderiaController():
 
     def responderTareaLavanderia(self, id, infoUpdate):
         search = self.repoLavanderia.getByIdToUpdate(id)
+        tareaAsesor = self.tareaAsesor.getByFormulario(search['formulario'])
         if search['completado'] is False:
             if search['postEntrega'] is False:
+                dict = []
                 tarea = tareaLavanderia(search['lavanderia'], search['producto'], search['formulario'],search['fecha'], infoUpdate['completado'], search['postEntrega'])
-                return self.repoLavanderia.update(id, tarea)
+                dict.append(self.repoLavanderia.update(id, tarea))
+                tareaAsesor = Tarea(search['formulario'], search['asesor'], search['producto'], None, False, False, False,False,True)
+                dict.append(self.tareaAsesor.save(tareaAsesor,False))
+                return dict
             else:
                 tarea = tareaLavanderia(search['lavanderia'], search['producto'], search['formulario'], search['fecha'],
                                         infoUpdate['completado'], search['postEntrega'])

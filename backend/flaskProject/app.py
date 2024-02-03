@@ -18,6 +18,7 @@ from controllers.cajaController import cajaController
 from controllers.auditoriaController import auditoriaController
 from controllers.makeupController import makeupController
 from controllers.tareaMakeUpController import tareaMakeupController
+from controllers.fotosController import fotosController
 
 from models.producto import Producto
 from datetime import datetime
@@ -39,6 +40,7 @@ caja = cajaController()
 audit = auditoriaController()
 makeup = makeupController()
 tareaMake = tareaMakeupController()
+formFotos = fotosController()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -678,6 +680,36 @@ def responderTareaMakeUp(id):
     data = request.get_json()
     json = tareaMake.responderTareaModista(id,data)
     return jsonify(json)
+
+#------------- FORMULARIO FOTOS --------------#
+@app.route('/fotos', methods=['POST'])
+def createFormFotos():
+    data = request.get_json()
+    json = formFotos.create(data)
+    return jsonify(json)
+
+@app.route('/fotos/<string:id>', methods=['PUT'])
+def updateFormFotos(id):
+    data = request.get_json()
+    json = formFotos.update(id, data)
+    return jsonify(json)
+
+@app.route('/fotos')
+def getAllFormFotos():
+    json = formFotos.getAll()
+    return jsonify(json)
+
+@app.route('/fotos/<string:id>')
+def getFormFotos(id):
+    json = formFotos.getById(id)
+    return jsonify(json)
+
+@app.route('/fotos/responder/<string:id>', methods=['PUT'])
+def ResponderFormFotos(id):
+    data = request.get_json()
+    json = formFotos.responderTarea(id, data)
+    return jsonify(json)
+
 
 # -----------CONFIG AND MAIN ROOT-----------##
 def loadFileConfig():

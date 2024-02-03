@@ -3,7 +3,9 @@ from repositories.repositorioFormMedidas import repositorioFormMedidas
 from repositories.repositorioFormatoAlquiler import repositorioFormatoAlquiler
 from models.tareaModisteria import tareaModisteria
 from models.tareaLavanderia import tareaLavanderia
+from models.Tarea import Tarea
 from repositories.repositorioLavanderia import repoLavanderia
+from repositories.repositorioTarea import repositorioTareas
 from datetime import date, timedelta
 from bson import DBRef, ObjectId
 import re
@@ -14,6 +16,7 @@ class tareaModisteriaController():
         self.repoFormMedidas = repositorioFormMedidas()
         self.repoAlquiler = repositorioFormatoAlquiler()
         self.repoLavanderia = repoLavanderia()
+        self.repoTareaAsesor = repositorioTareas()
 
     def Create(self, infoTareaModisteria):
         print("crear Tarea Modisteria")
@@ -76,6 +79,7 @@ class tareaModisteriaController():
 
     def responderTareaModista(self,id,infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
+        Tareas = self.repoTareaAsesor.getByFormulario(search['formulario'])
         if search['completado'] is True:
             return {"message": "la tarea ya ha finalizado"}
         elif search is not None and infoTareaModisteria['completado']!= None:
@@ -83,16 +87,38 @@ class tareaModisteriaController():
             comprobarPrecios = self.repoFormMedidas.getById(str(search['formMedidas'].id))
             preciosCompletado = all(arr["precio"] is not None for arr in comprobarPrecios['arreglos'])
             if preciosCompletado is True:
-                dict = []
-                fecha = date.today() + timedelta(days=1)
-                lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False, False )
-                responseLavanderia = self.repoLavanderia.save(lavanderia)
-                tareaModista = tareaModisteria(search['formMedidas'],search['modista'],search['producto'],
-                                               search['formulario'],True, infoTareaModisteria['completado'],search['fecha'])
-                response = self.repoModista.update(id, tareaModista)
-                dict.append(response)
-                dict.append(responseLavanderia)
-                return dict
+                #Si es primera cita vuelve a crear Tarea de asesor
+                if Tareas['cita1'] is True:
+                    dict = []
+                    tareaModista = tareaModisteria(search['formMedidas'], search['modista'], search['producto'],
+                                                   search['formulario'], True, infoTareaModisteria['completado'],
+                                                   search['fecha'])
+                    response = self.repoModista.update(id, tareaModista)
+                    tareaAsesor = Tarea(Tareas['formulario'],Tareas['asesor'],Tareas['producto'],None,None,False,False,True,False)
+                    responseAsesor = self.repoTareaAsesor.save(tareaAsesor,tareaAsesor.estado)
+                    dict.append(response)
+                    dict.append(responseAsesor)
+                    return dict
+                #si es segunda cita crea tarea de lavanderia
+                elif Tareas['cita2'] is True:
+                    dict = []
+                    fecha = date.today() + timedelta(days=1)
+                    lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False, False )
+                    responseLavanderia = self.repoLavanderia.save(lavanderia)
+                    tareaModista = tareaModisteria(search['formMedidas'],search['modista'],search['producto'],
+                                                   search['formulario'],True, infoTareaModisteria['completado'],search['fecha'])
+                    response = self.repoModista.update(id, tareaModista)
+                    dict.append(response)
+                    dict.append(responseLavanderia)
+                    return dict
+                #Termina el modista faltaria entregar
+                elif Tareas['cita3'] is True:
+                    tareaModista = tareaModisteria(search['formMedidas'], search['modista'], search['producto'],
+                                                   search['formulario'], True, infoTareaModisteria['completado'],
+                                                   search['fecha'])
+                    response = self.repoModista.update(id, tareaModista)
+                    return response
+
             else:
                 return {"status": False, "message": "no se han colocado los precios al formato de medidas"}
         else:

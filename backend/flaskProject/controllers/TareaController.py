@@ -39,7 +39,7 @@ class tareaController():
         if (infoTarea['formulario'] != None and infoTarea['producto'] != None and infoTarea['asesor']!=None and
             infoTarea['estado'] != None and infoTarea['fechaCitaDeMedidas'] != None and infoTarea['necesitaModista']!=None):
             tarea = Tarea(infoTarea['formulario'], infoTarea['asesor'],infoTarea['producto'],
-                           infoTarea['fechaCitaDeMedidas'], infoTarea['necesitaModista'],infoTarea['estado'])
+                           infoTarea['fechaCitaDeMedidas'], infoTarea['necesitaModista'],infoTarea['estado'], infoTarea['cita1'], infoTarea['cita2'], infoTarea['cita3'])
             return self.repositorioTareas.save(tarea, infoTarea['estado'])
         else:
             return {"status": False, "code": 400, "message": "no se tiene la información necesaria para crear la tarea"}
@@ -64,8 +64,7 @@ class tareaController():
         search = self.repositorioTareas.getById(id)
         if search is not None and (infoUpdate['formulario'] != None and infoUpdate['producto'] != None and infoUpdate['asesor'] != None and
             infoUpdate['estado'] != None and infoUpdate['fechaCitaDeMedidas'] != None and infoUpdate['necesitaModista'] != None):
-            response = self.repositorioTareas.update(id, Tarea(infoUpdate['formulario'], infoUpdate['producto'], infoUpdate['asesor'],
-                          infoUpdate['estado'], infoUpdate['fechaCitaDeMedidas'], infoUpdate['necesitaModista']))
+            response = self.repositorioTareas.update(id, Tarea(infoUpdate['formulario'], infoUpdate['asesor'],infoUpdate['producto'], infoUpdate['fechaCitaDeMedidas'], infoUpdate['necesitaModista'], infoUpdate['estado'], infoUpdate['cita1'], infoUpdate['cita2'], infoUpdate['cita3']))
 
             response.append({"status": True, "code": 200, "message": "La tarea fue actualizada"})
             return response
@@ -78,10 +77,15 @@ class tareaController():
         searchFormMed = self.repoFormMedidas.getFormMedidasByFormAlquiler((search['formulario'].id))
         if search['estado'] is True:
             return {"message": "la tarea ya ha finalizado"}
+        #si es la ultima cita y no necesita más
+        elif search['cita3'] is True and infoUpdate['necesitaModista'] is False and infoUpdate['nuevaCita'] is False:
+            tarea = Tarea(search['formulario'],search['asesor'], search['producto'], search['fechaCitaDeMedidas'],False ,True,False, False, True)
+            return self.repositorioTareas.update(id,tarea)
+        #si necesita modista pero no otra cita
         elif search is not None and (infoUpdate['estado'] is True and infoUpdate['necesitaModista'] is True and infoUpdate['nuevaCita'] is False):
             fechaEntrega = self.repoAlquiler.getById(str(search['formulario'].id))['fechaDeEntrega']
             fechaTareaModista = str((datetime.strptime(fechaEntrega, "%Y-%m-%d") - timedelta(days=5)).strftime("%Y-%m-%d"))
-            tarea = Tarea(search['formulario'],search['asesor'], search['producto'], search['fechaCitaDeMedidas'],True,True)
+            tarea = Tarea(search['formulario'],search['asesor'], search['producto'], search['fechaCitaDeMedidas'],True,True,search['cita1'], search['cita2'], search['cita3'])
             if infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0:
                 response = self.repositorioTareas.update(id, tarea)
                 if searchFormMed is None:
@@ -101,7 +105,7 @@ class tareaController():
             else:
                 return {"status": False, "code": 400, "message": "Se necesitan los arreglos a realizar"}
 
-
+        #si necesita otra cita
         elif search is not None and infoUpdate['nuevaCita'] is True:
             try:
                 if infoUpdate['necesitaModista'] is True and (infoUpdate['arreglos'] is not None or len(infoUpdate['arreglos']) > 0):
@@ -116,22 +120,22 @@ class tareaController():
                         responseFormMedida = self.repoFormMedidas.update(searchFormMed['_id'], formMedida)
 
                     nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
-                    tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha,True, False)
+                    tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha,True, False, search['cita1'], search['cita2'], search['cita3'])
                     response = self.repositorioTareas.update(id, tarea)
                     dict.append(response)
                     dict.append(responseFormMedida)
                     return dict
                 else:
                     nuevaFecha = str(date(infoUpdate['añoCitaMedidas'], infoUpdate['mesCitaMedidas'], infoUpdate['diaCitaMedidas']))
-                    tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha, False, False)
+                    tarea = Tarea(search['formulario'], search['asesor'], search['producto'], nuevaFecha, False, False,search['cita1'], search['cita2'], search['cita3'])
                     return  self.repositorioTareas.update(id, tarea)
             except:
                 return{"status": False, "code": 400, "message": "hace falta ya sean arreglos o información para crear las tareas correspondientes"}
 
 
-
+        #si no necesita más va a lavanderia directamente
         elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None and infoUpdate['nuevaCita'] is False):
-            tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'])
+            tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'], search['cita1'], search['cita2'], search['cita3'])
             response = self.repositorioTareas.update(id,tarea)
             lavanderia = tareaLavanderia(None,search['producto'],search['formulario'], str(date.today() + timedelta(days=1)),False)
             responseLavanderia = self.repoLavanderia.save(lavanderia)

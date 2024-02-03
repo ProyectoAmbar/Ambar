@@ -50,7 +50,7 @@ class formularioAlquilerController():
                                             '_id'] + "y numero de factura " + infoAlquiler['NumeroDeFactura']
                                         })
             infoTarea = self.repositorioAlquiler.getByIdToUpdate(response['_id'])
-            tarea = Tarea(DBRef('formatoAlquiler',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'], formulario.FechaCitaDeMedidas,False,False)
+            tarea = Tarea(DBRef('formatoAlquiler',infoTarea['_id']), infoTarea['asesor'] , infoTarea['Producto'], formulario.FechaCitaDeMedidas,False,False, True, False, False)
             responseTarea = self.repoTareas.save(tarea,False)
             entrega = entregaDevolucion(infoAlquiler['idProducto'], infoAlquiler['idAsesor'],response['_id'],str(date(infoAlquiler['AñoEntrega'], infoAlquiler['MesEntrega'],infoAlquiler['DiaEntrega'])), False, None, False)
             responseEntrega = self.repoEntrega.save(entrega)
