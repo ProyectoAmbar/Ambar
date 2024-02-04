@@ -710,6 +710,11 @@ def ResponderFormFotos(id):
     json = formFotos.responderTarea(id, data)
     return jsonify(json)
 
+@app.route('/fotos/<string:id>', methods=['DELETE'])
+def DeleteFotos(id):
+    json = formFotos.delete(id)
+    return jsonify(json)
+
 
 # -----------CONFIG AND MAIN ROOT-----------##
 def loadFileConfig():

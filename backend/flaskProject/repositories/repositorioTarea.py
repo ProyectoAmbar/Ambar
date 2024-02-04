@@ -62,14 +62,26 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
 
 
     def getByFormulario(self, formulario):
+        dict = []
         try:
             collection = self.db[self.collection]
-            response = collection.find_one({'formulario':  DBRef('formatoAlquiler', ObjectId(formulario))})
-            response['_id'] = str(response['_id'])
-            response['formulario'] = str(response['formulario'])
-            response['asesor'] = str(response['asesor'])
-            response['producto'] = str(response['producto'])
+            response = collection.find({'formulario':  DBRef('formatoAlquiler', ObjectId(formulario))})
+            for i in response:
+                i['_id'] = str(i['_id'])
+                i['formulario'] = str(i['formulario'])
+                i['asesor'] = str(i['asesor'])
+                i['producto'] = str(i['producto'])
+                dict.append(i)
 
+            return dict
+        except:
+            return {"status": False , "code": 400, "message": "no se encontro la tarea asociada al formulario "+ formulario}
+
+    def getByFormularioToUpdate(self, formulario):
+        dict = []
+        try:
+            collection = self.db[self.collection]
+            response = collection.find({'formulario':  DBRef('formatoAlquiler', ObjectId(formulario))})
             return response
         except:
             return {"status": False , "code": 400, "message": "no se encontro la tarea asociada al formulario "+ formulario}

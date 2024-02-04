@@ -64,8 +64,8 @@ class tareaController():
         search = self.repositorioTareas.getById(id)
         if search is not None and (infoUpdate['formulario'] != None and infoUpdate['producto'] != None and infoUpdate['asesor'] != None and
             infoUpdate['estado'] != None and infoUpdate['fechaCitaDeMedidas'] != None and infoUpdate['necesitaModista'] != None):
-            response = self.repositorioTareas.update(id, Tarea(infoUpdate['formulario'], infoUpdate['asesor'],infoUpdate['producto'], infoUpdate['fechaCitaDeMedidas'], infoUpdate['necesitaModista'], infoUpdate['estado'], infoUpdate['cita1'], infoUpdate['cita2'], infoUpdate['cita3']))
-
+            response = []
+            response.append(self.repositorioTareas.update(id, Tarea(infoUpdate['formulario'], infoUpdate['asesor'],infoUpdate['producto'], infoUpdate['fechaCitaDeMedidas'], infoUpdate['necesitaModista'], infoUpdate['estado'], infoUpdate['cita1'], infoUpdate['cita2'], infoUpdate['cita3'])))
             response.append({"status": True, "code": 200, "message": "La tarea fue actualizada"})
             return response
         else:

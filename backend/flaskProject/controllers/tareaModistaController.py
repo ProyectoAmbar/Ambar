@@ -79,7 +79,7 @@ class tareaModisteriaController():
 
     def responderTareaModista(self,id,infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
-        Tareas = self.repoTareaAsesor.getByFormulario(search['formulario'])
+        Tareas = self.repoTareaAsesor.getByFormulario(search['formulario'].id)
         if search['completado'] is True:
             return {"message": "la tarea ya ha finalizado"}
         elif search is not None and infoTareaModisteria['completado']!= None:
@@ -88,7 +88,7 @@ class tareaModisteriaController():
             preciosCompletado = all(arr["precio"] is not None for arr in comprobarPrecios['arreglos'])
             if preciosCompletado is True:
                 #Si es primera cita vuelve a crear Tarea de asesor
-                if Tareas['cita1'] is True:
+                if Tareas.__len__() == 1:
                     dict = []
                     tareaModista = tareaModisteria(search['formMedidas'], search['modista'], search['producto'],
                                                    search['formulario'], True, infoTareaModisteria['completado'],
@@ -100,7 +100,7 @@ class tareaModisteriaController():
                     dict.append(responseAsesor)
                     return dict
                 #si es segunda cita crea tarea de lavanderia
-                elif Tareas['cita2'] is True:
+                elif Tareas.__len__() == 2:
                     dict = []
                     fecha = date.today() + timedelta(days=1)
                     lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False, False )
@@ -112,7 +112,7 @@ class tareaModisteriaController():
                     dict.append(responseLavanderia)
                     return dict
                 #Termina el modista faltaria entregar
-                elif Tareas['cita3'] is True:
+                elif Tareas.__len__() == 3:
                     tareaModista = tareaModisteria(search['formMedidas'], search['modista'], search['producto'],
                                                    search['formulario'], True, infoTareaModisteria['completado'],
                                                    search['fecha'])

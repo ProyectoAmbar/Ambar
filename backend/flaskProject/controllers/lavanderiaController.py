@@ -66,13 +66,13 @@ class lavanderiaController():
 
     def responderTareaLavanderia(self, id, infoUpdate):
         search = self.repoLavanderia.getByIdToUpdate(id)
-        tareaAsesor = self.tareaAsesor.getByFormulario(search['formulario'])
+        tareaAsesor = self.tareaAsesor.getByFormularioToUpdate(search['formulario'].id)[0]
         if search['completado'] is False:
             if search['postEntrega'] is False:
                 dict = []
                 tarea = tareaLavanderia(search['lavanderia'], search['producto'], search['formulario'],search['fecha'], infoUpdate['completado'], search['postEntrega'])
+                tareaAsesor = Tarea(tareaAsesor['formulario'], tareaAsesor['asesor'], tareaAsesor['producto'], None, False, False, False,False,True)
                 dict.append(self.repoLavanderia.update(id, tarea))
-                tareaAsesor = Tarea(search['formulario'], search['asesor'], search['producto'], None, False, False, False,False,True)
                 dict.append(self.tareaAsesor.save(tareaAsesor,False))
                 return dict
             else:

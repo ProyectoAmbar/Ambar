@@ -1,6 +1,6 @@
 from models.formatoFotos import formatoFotos
 from repositories.repoFotos import RepoFotos
-
+from datetime import datetime
 
 class fotosController():
     def __init__(self):
@@ -17,10 +17,8 @@ class fotosController():
 
     def create(self, infoFotos):
         if (self.isValid(infoFotos)):
-            formFotos = formatoFotos(infoFotos['dia'], infoFotos['mes'], infoFotos['año'], infoFotos['hora'],
-                                     infoFotos['minutos'], infoFotos['fv'], infoFotos['locacion'],
-                                     infoFotos['referencia'], infoFotos['nombreCliente'], infoFotos['numeroCliente'],
-                                     infoFotos['correoCliente'])
+            fecha = datetime(infoFotos['año'], infoFotos['mes'], infoFotos['dia'], infoFotos['hora'],infoFotos['minutos'],0)
+            formFotos = formatoFotos(fecha, infoFotos['fv'], infoFotos['locacion'],infoFotos['referencia'], infoFotos['nombreCliente'], infoFotos['numeroCliente'],infoFotos['correoCliente'], False)
             return self.repoFotos.save(formFotos)
         else:
             return {"status": False, "code": 400,
@@ -28,10 +26,8 @@ class fotosController():
 
     def update(self, id, infoFotos):
         if (self.isValid(infoFotos)):
-            formFotos = formatoFotos(infoFotos['dia'], infoFotos['mes'], infoFotos['año'], infoFotos['hora'],
-                                     infoFotos['minutos'], infoFotos['fv'], infoFotos['locacion'],
-                                     infoFotos['referencia'], infoFotos['nombreCliente'], infoFotos['numeroCliente'],
-                                     infoFotos['correoCliente'])
+            fecha = datetime(infoFotos['año'], infoFotos['mes'], infoFotos['dia'], infoFotos['hora'],infoFotos['minutos'], 0)
+            formFotos = formatoFotos(fecha , infoFotos['fv'], infoFotos['locacion'],infoFotos['referencia'], infoFotos['nombreCliente'], infoFotos['numeroCliente'],infoFotos['correoCliente'], infoFotos['estado'])
             return self.repoFotos.update(id, formFotos)
         else:
             return {"status": False, "code": 400,
@@ -48,7 +44,7 @@ class fotosController():
 
     def responderTarea(self, id, infoFotos):
         search = self.repoFotos.getById(id)
-        if search['estado'] is True:
+        if search['estado'] is False:
             formFotos = formatoFotos(search['fecha'], search['fv'], search['locacion'], search['referencia'],
                                      search['nombreCliente'], search['numeroCliente'], search['correoCliente'], infoFotos['estado'])
             return self.repoFotos.update(id, formFotos)
