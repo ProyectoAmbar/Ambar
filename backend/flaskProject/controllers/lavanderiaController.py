@@ -78,6 +78,7 @@ class lavanderiaController():
             else:
                 tarea = tareaLavanderia(search['lavanderia'], search['producto'], search['formulario'], search['fecha'],
                                         infoUpdate['completado'], search['postEntrega'])
+                xd = str(search['producto'].id)
                 self.productoController.desbloquearProducto(str(search['producto'].id))
                 return self.repoLavanderia.update(id, tarea)
         else:

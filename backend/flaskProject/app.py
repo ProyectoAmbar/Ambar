@@ -224,6 +224,11 @@ def getTareaById(id):
     json = tareasController.getById(id)
     return jsonify(json)
 
+@app.route('/tarea/fecha/<string:id>', methods=['PUT'])
+def asignarFecha(id):
+    data = request.get_json()
+    json = tareasController.asignarFecha(id,data)
+    return json
 
 @app.route('/tarea', methods=['GET'])
 def getAllTareas():

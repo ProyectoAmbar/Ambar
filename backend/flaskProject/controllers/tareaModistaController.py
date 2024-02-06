@@ -79,7 +79,7 @@ class tareaModisteriaController():
 
     def responderTareaModista(self,id,infoTareaModisteria):
         search = self.repoModista.getByIdToUpdate(id)
-        Tareas = self.repoTareaAsesor.getByFormulario(search['formulario'].id)
+        Tareas = self.repoTareaAsesor.getByFormularioToUpdate(search['formulario'].id)
         if search['completado'] is True:
             return {"message": "la tarea ya ha finalizado"}
         elif search is not None and infoTareaModisteria['completado']!= None:
@@ -93,8 +93,10 @@ class tareaModisteriaController():
                     tareaModista = tareaModisteria(search['formMedidas'], search['modista'], search['producto'],
                                                    search['formulario'], True, infoTareaModisteria['completado'],
                                                    search['fecha'])
+
+                    infoTarea = Tareas[0]
+                    tareaAsesor = Tarea(infoTarea['formulario'],infoTarea['asesor'],infoTarea['producto'],None,None,False,False,True,False)
                     response = self.repoModista.update(id, tareaModista)
-                    tareaAsesor = Tarea(Tareas['formulario'],Tareas['asesor'],Tareas['producto'],None,None,False,False,True,False)
                     responseAsesor = self.repoTareaAsesor.save(tareaAsesor,tareaAsesor.estado)
                     dict.append(response)
                     dict.append(responseAsesor)

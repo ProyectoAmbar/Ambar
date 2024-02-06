@@ -35,6 +35,8 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
                 allItems.append(item)
         return allItems
 
+
+
     def getAll(self):
         allItems = []
         collection = self.db[self.collection]
@@ -82,7 +84,9 @@ class repositorioTareas(interfaceRepositorio[Tarea]):
         try:
             collection = self.db[self.collection]
             response = collection.find({'formulario':  DBRef('formatoAlquiler', ObjectId(formulario))})
-            return response
+            for item in response:
+                dict.append(item)
+            return dict
         except:
             return {"status": False , "code": 400, "message": "no se encontro la tarea asociada al formulario "+ formulario}
 

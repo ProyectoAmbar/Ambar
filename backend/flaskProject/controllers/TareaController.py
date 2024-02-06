@@ -44,6 +44,15 @@ class tareaController():
         else:
             return {"status": False, "code": 400, "message": "no se tiene la información necesaria para crear la tarea"}
 
+    def asignarFecha(self,id,infoFecha):
+        search = self.repositorioTareas.getByIdToUpdate(id)
+        try:
+            if infoFecha['dia'] and infoFecha['mes'] and infoFecha['año'] and search['_id']:
+                fecha = str(date(infoFecha['año'],infoFecha['mes'],infoFecha['dia']))
+                newTarea = Tarea(search['formulario'], search['asesor'], search['producto'],fecha,search['necesitaModista'], search['estado'],search['cita1'], search['cita2'],search['cita3'])
+                return self.repositorioTareas.update(id,newTarea)
+        except:
+            return {"status": False, "code": 400, "message": "No se encontro el id o la fecha es incorrecta"}
     def getAllTareas(self):
         print("get all tareas")
         return self.repositorioTareas.getAll()
@@ -137,7 +146,7 @@ class tareaController():
         elif search is not None and(infoUpdate['estado'] != None and infoUpdate['necesitaModista'] != None and infoUpdate['nuevaCita'] is False):
             tarea = Tarea(search['formulario'], search['asesor'], search['producto'], search['fechaCitaDeMedidas'],infoUpdate['necesitaModista'], infoUpdate['estado'], search['cita1'], search['cita2'], search['cita3'])
             response = self.repositorioTareas.update(id,tarea)
-            lavanderia = tareaLavanderia(None,search['producto'],search['formulario'], str(date.today() + timedelta(days=1)),False)
+            lavanderia = tareaLavanderia(None,search['producto'],search['formulario'], str(date.today() + timedelta(days=1)),False,False)
             responseLavanderia = self.repoLavanderia.save(lavanderia)
             dict.append(response)
             dict.append(responseLavanderia)
