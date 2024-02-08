@@ -702,7 +702,7 @@ def getEstadoProducto(factura):
     dict.append(formulario)
     try:
         tarea = requests.get(url=dataConfig['url-backend-productos']+'/tarea/formulario/'+ formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
-        tareaModisteria = requests.get(url=dataConfig['url-backend-productos']+'/tareaModista/formulario/'+formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
+        tareaModisteria = requests.get(url=dataConfig['url-backend-productos']+'/tareaModista/formulario/getAll/'+formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
         lavanderia = requests.get(url=dataConfig['url-backend-productos']+'/lavanderia/formulario/'+ formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
         entregaDevolucion = requests.get(url=dataConfig['url-backend-productos']+'/entregaDevolucion/formulario/'+ formulario['_id'], headers={"Content-Type": "application/json; charset=utf-8"}).json()
         dict.append(tarea)

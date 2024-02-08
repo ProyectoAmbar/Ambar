@@ -19,7 +19,7 @@ from controllers.auditoriaController import auditoriaController
 from controllers.makeupController import makeupController
 from controllers.tareaMakeUpController import tareaMakeupController
 from controllers.fotosController import fotosController
-
+from controllers.primeraVezController import primeraVezController
 from models.producto import Producto
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -41,6 +41,7 @@ audit = auditoriaController()
 makeup = makeupController()
 tareaMake = tareaMakeupController()
 formFotos = fotosController()
+cita = primeraVezController()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -348,6 +349,11 @@ def getTareaModistaByFormulario(formulario):
     json = tareaModista.getTareaModisteriaByFormulario(formulario)
     return jsonify(json)
 
+@app.route('/tareaModista/formulario/getAll/<string:formulario>')
+def getAllTareaModistaByForm(formulario):
+    json = tareaModista.getAllByFormulario(formulario)
+    return jsonify(json)
+
 
 @app.route('/tareaModista/<string:id>', methods=['PUT'])
 def updateTareaModista(id):
@@ -536,6 +542,7 @@ def getEntregaDevolucionByFormulario(formulario):
     return jsonify(json)
 
 
+
 @app.route('/calendar', methods=['GET'])
 def calendar():
     json = calendario.tareasEnOrdenPorFecha()
@@ -719,7 +726,59 @@ def ResponderFormFotos(id):
 def DeleteFotos(id):
     json = formFotos.delete(id)
     return jsonify(json)
+# -----------CITA PRIMERA VEZ-----------##
+@app.route('/cita', methods=['POST'])
+def createCitaPrimeraVez():
+    info = request.get_json()
+    json = cita.createCitaPrimeraVez(info)
+    return jsonify(json)
 
+@app.route('/cita')
+def getAllCita():
+    json = cita.getAllCitas()
+    return jsonify(json)
+
+@app.route('/cita/<string:id>')
+def getCitaById(id):
+    json = cita.getCitasById(id)
+    return jsonify(json)
+
+@app.route('/cita/sinAsignar')
+def getCitaSinAsignar():
+    json =  cita.getSinAsignar()
+    return jsonify(json)
+
+@app.route('/cita/sinCompletar')
+def getCitasSinCompletar():
+    json = cita.getSinCompletar()
+    return jsonify(json)
+
+@app.route('/cita/sinCompletar/<string:id>')
+def getCitasSinCompletarByAsesor(id):
+    json = cita.getSinCompletarByAsesor(id)
+    return jsonify(json)
+
+@app.route('/cita/<string:id>',methods=['PUT'])
+def updateCita(id):
+    data = request.get_json()
+    json = cita.updateCita(id,data)
+    return jsonify(json)
+
+@app.route('/cita/responder/<string:id>', methods=['PUT'])
+def responderCita(id):
+    data = request.get_json()
+    json = cita.responder(id,data)
+    return jsonify(json)
+
+@app.route('/cita/<string:id>',methods=['DELETE'])
+def deleteCita(id):
+    json = cita.deleteCita(id)
+    return jsonify(json)
+
+@app.route('/cita/<string:idCita>/empleado/<string:idEmpleado>')
+def asignarCita(idCita,idEmpleado):
+    json = cita.responder(idCita,idEmpleado)
+    return jsonify(json)
 
 # -----------CONFIG AND MAIN ROOT-----------##
 def loadFileConfig():

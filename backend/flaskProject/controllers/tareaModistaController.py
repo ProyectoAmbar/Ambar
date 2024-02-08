@@ -102,7 +102,7 @@ class tareaModisteriaController():
                     dict.append(responseAsesor)
                     return dict
                 #si es segunda cita crea tarea de lavanderia
-                elif Tareas.__len__() == 2:
+                elif Tareas.__len__() == 2 and Tareas[1]['cita3'] is False:
                     dict = []
                     fecha = date.today() + timedelta(days=1)
                     lavanderia= tareaLavanderia(None,search['producto'],search['formulario'], str(fecha),False, False )
@@ -114,7 +114,7 @@ class tareaModisteriaController():
                     dict.append(responseLavanderia)
                     return dict
                 #Termina el modista faltaria entregar
-                elif Tareas.__len__() == 3:
+                elif Tareas.__len__() == 3 or Tareas[1]['cita3'] is True:
                     tareaModista = tareaModisteria(search['formMedidas'], search['modista'], search['producto'],
                                                    search['formulario'], True, infoTareaModisteria['completado'],
                                                    search['fecha'])
@@ -132,6 +132,9 @@ class tareaModisteriaController():
 
     def getByFormulario(self,formulario):
         return self.repoModista.getByFormulario(formulario)
+
+    def getAllByFormulario(self,formulario):
+        return self.repoModista.getAllByFormulario(formulario)
 
     def isValid(self,infoTareaModisteria):
         try:

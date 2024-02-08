@@ -84,6 +84,22 @@ class repoTareaModista(interfaceRepositorio[tareaModisteria]):
         except:
             return {"status": False, "code": 400, "message": "no se encontro la tarea de modisteria"}
 
+    def getAllByFormulario(self,formulario):
+        dict = []
+        collection = self.db[self.collection]
+        response = collection.find({'formulario': DBRef('formatoAlquiler', ObjectId(formulario))})
+        try:
+            for i in response:
+                i['_id'] = str(i['_id'])
+                i['formMedidas'] = str(i['formMedidas'])
+                i['modista'] = str(i['modista'])
+                i['producto'] = str(i['producto'])
+                i['formulario'] = str(i['formulario'])
+                dict.append(i)
+            return dict
+        except:
+            return {"status": False, "code": 400, "message": "no se encontro la tarea de modisteria"}
+
     def getByIdToUpdate(self,id):
         collection = self.db[self.collection]
         response = collection.find_one({"_id":ObjectId(id)})

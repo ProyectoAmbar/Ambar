@@ -62,7 +62,7 @@ class interfaceRepositorio(Generic[T]):
         except:
             dict = [{
                 "status": False,
-                "code": 403,
+                "code": 404,
                 "message": "El producto con id "+id+" no ha sido encontrado"
             }]
             return dict

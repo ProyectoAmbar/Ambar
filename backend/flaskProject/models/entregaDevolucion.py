@@ -17,7 +17,7 @@ class entregaDevolucion:
             self.producto = None
 
         if isinstance(idFormulario, str):
-            self.formulario = DBRef('formularioAlquiler', ObjectId(idFormulario))
+            self.formulario = DBRef('formatoAlquiler', ObjectId(idFormulario))
         elif isinstance((idFormulario), DBRef):
             self.formulario = idFormulario
         else:
