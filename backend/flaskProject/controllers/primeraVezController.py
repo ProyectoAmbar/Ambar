@@ -5,7 +5,7 @@ from datetime import datetime
 
 def isValid(infoCita):
     try:
-        if (infoCita['nombre'] and infoCita['apellido']  and infoCita['direccion'] and infoCita[
+        if (infoCita['nombre'] and infoCita['apellido'] and infoCita['direccion'] and infoCita[
             'telefono'] and infoCita['motivo'] and infoCita['dia'] and infoCita['mes'] and
                 infoCita['año'] and infoCita['hora'] and infoCita['minuto']):
             return True
@@ -21,8 +21,8 @@ class primeraVezController():
     def createCitaPrimeraVez(self, infoCita):
         if (isValid(infoCita)):
             fecha = datetime(infoCita['año'], infoCita['mes'], infoCita['dia'], infoCita['hora'], infoCita['minuto'], 0)
-            cita = citaPrimeraVez(infoCita['nombre'], infoCita['apellido'], infoCita['asesor'], infoCita['direccion'],
-                                  infoCita['telefono'], infoCita['motivo'], infoCita['estado'], fecha)
+            cita = citaPrimeraVez(None,infoCita['nombre'], infoCita['apellido'], infoCita['direccion'],
+                                  infoCita['telefono'], infoCita['motivo'], False, fecha)
             return self.repoPrimeraVez.save(cita)
         else:
             return {"status": False, "code": 400, "message": "No fue posible crear la cita de primera vez"}
@@ -35,13 +35,17 @@ class primeraVezController():
 
     def updateCita(self, id, infoCita):
         search = self.repoPrimeraVez.getByIdToUpdate(id)
-        if (isValid(infoCita)) and search['_id']:
-            fecha = datetime(infoCita['año'], infoCita['mes'], infoCita['dia'], infoCita['hora'], infoCita['minuto'], 0)
-            cita = citaPrimeraVez(infoCita['nombre'], infoCita['apellido'], infoCita['asesor'], infoCita['direccion'],
-                                  infoCita['telefono'], infoCita['motivo'], infoCita['estado'], fecha)
-            return self.repoPrimeraVez.update(id, cita)
-        else:
+        try:
+            if (isValid(infoCita)) and search['_id']:
+                fecha = datetime(infoCita['año'], infoCita['mes'], infoCita['dia'], infoCita['hora'], infoCita['minuto'], 0)
+                cita = citaPrimeraVez(infoCita['asesor'], infoCita['nombre'], infoCita['apellido'], infoCita['direccion'],
+                                      infoCita['telefono'], infoCita['motivo'], infoCita['estado'], fecha)
+                return self.repoPrimeraVez.update(id, cita)
+            else:
+                return {"status": False, "code": 400, "message": "No fue posible actualizar la cita de primera vez"}
+        except:
             return {"status": False, "code": 400, "message": "No fue posible actualizar la cita de primera vez"}
+
 
     def getSinAsignar(self):
         return self.repoPrimeraVez.getCitasSinAsignar()
@@ -57,7 +61,7 @@ class primeraVezController():
         if infoCita['estado'] is True:
             return {"message": "La Cita ya ha sido completada"}
         else:
-            cita = citaPrimeraVez(infoCita['nombre'], infoCita['apellido'], infoCita['asesor'], infoCita['direccion'],
+            cita = citaPrimeraVez(infoCita['asesor'],infoCita['nombreCliente'], infoCita['apellidoCliente'], infoCita['direccion'],
                                   infoCita['telefono'], infoCita['motivo'], respuestaCita['estado'], infoCita['fecha'])
             return self.repoPrimeraVez.update(id, cita)
 
@@ -73,7 +77,7 @@ class primeraVezController():
         infoCita = self.repoPrimeraVez.getByIdToUpdate(id)
         try:
             if infoCita['_id']:
-                cita = citaPrimeraVez(infoCita['nombre'], infoCita['apellido'], asesor, infoCita['direccion'],
+                cita = citaPrimeraVez( asesor,infoCita['nombreCliente'], infoCita['apellidoCliente'], infoCita['direccion'],
                                   infoCita['telefono'], infoCita['motivo'], infoCita['estado'], infoCita['fecha'])
                 return self.repoPrimeraVez.update(id,cita)
         except:

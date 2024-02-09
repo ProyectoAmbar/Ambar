@@ -1,7 +1,7 @@
 from repositories.interfaceRepositorio import interfaceRepositorio
 from models.citaPrimeraVez import citaPrimeraVez
 from bson import ObjectId, DBRef
-from datetime import date
+from datetime import datetime
 class primeraVezRepository(interfaceRepositorio[citaPrimeraVez]):
     def save(self,infoCita):
         collection = self.db[self.collection]
@@ -19,7 +19,7 @@ class primeraVezRepository(interfaceRepositorio[citaPrimeraVez]):
         response = collection.find()
         for i in response:
             i['_id'] =str(i['_id'])
-            response['asesor'] = str(response['asesor'])
+            i['asesor'] = str(i['asesor'])
             allItems.append(i)
         return allItems
 
@@ -54,12 +54,7 @@ class primeraVezRepository(interfaceRepositorio[citaPrimeraVez]):
     def getCitasSinCompletar(self):
         allItems = []
         collection = self.db[self.collection]
-        query = {
-            "$and": [
-                {"estado": False},
-                {"fechaCitaDeMedidas": {"$gte": str(date.today())}}
-            ]
-        }
+        query = {"estado": False}
         print(query)
         response = collection.find(query).sort("fecha", 1)
         for item in response:
@@ -75,8 +70,7 @@ class primeraVezRepository(interfaceRepositorio[citaPrimeraVez]):
         query = {
             "$and": [
                 {"estado": False},
-                {"asesor": DBRef("empleado", ObjectId(id))},
-                {"fechaCitaDeMedidas": {"$gte": str(date.today())}}
+                {"asesor": DBRef("empleado", ObjectId(id))}
             ]
         }
         print(query)

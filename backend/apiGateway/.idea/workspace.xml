@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dec8aa8-2f23-4f69-99bc-db81324e5bcc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../flaskProject/controllers/primeraVezController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/models/citaPrimeraVez.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../flaskProject/repositories/primeraVezRepository.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/tareaModistaController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/models/entregaDevolucion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/interfaceRepositorio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTarea.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/repositorioTareaModista.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../springBootUsers/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/controllers/primeraVezController.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/controllers/primeraVezController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flaskProject/repositories/primeraVezRepository.py" beforeDir="false" afterPath="$PROJECT_DIR$/../flaskProject/repositories/primeraVezRepository.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,23 +36,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.apiGateway.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "angel",
-    "last_opened_file_path": "D:/work/Ambar/backend/flaskProject",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.apiGateway.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;angel&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/work/Ambar/backend/flaskProject&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="apiGateway" type="PythonConfigurationType" factoryName="Python">
       <module name="apiGateway" />
@@ -175,6 +163,7 @@
       <workItem from="1707179052932" duration="3265000" />
       <workItem from="1707259677830" duration="773000" />
       <workItem from="1707352923886" duration="3601000" />
+      <workItem from="1707435178537" duration="597000" />
     </task>
     <servers />
   </component>
@@ -204,11 +193,6 @@
           <url>file://$PROJECT_DIR$/venv/Lib/site-packages/flask_jwt_extended/view_decorators.py</url>
           <line>45</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>707</line>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
