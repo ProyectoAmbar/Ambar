@@ -775,9 +775,9 @@ def deleteCita(id):
     json = cita.deleteCita(id)
     return jsonify(json)
 
-@app.route('/cita/<string:idCita>/empleado/<string:idEmpleado>')
+@app.route('/cita/<string:idCita>/empleado/<string:idEmpleado>', methods=['PUT'])
 def asignarCita(idCita,idEmpleado):
-    json = cita.responder(idCita,idEmpleado)
+    json = cita.asignarAsesor(idCita,idEmpleado)
     return jsonify(json)
 
 # -----------CONFIG AND MAIN ROOT-----------##
