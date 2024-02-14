@@ -47,8 +47,6 @@ class primeraVezController():
             return {"status": False, "code": 400, "message": "No fue posible actualizar la cita de primera vez"}
 
 
-    def getSinAsignar(self):
-        return self.repoPrimeraVez.getCitasSinAsignar()
 
     def getSinCompletar(self):
         return self.repoPrimeraVez.getCitasSinCompletar()
@@ -57,13 +55,16 @@ class primeraVezController():
         return self.repoPrimeraVez.getCitaSinCompletarByAsesor(id)
 
     def responder(self, id, respuestaCita):
-        infoCita = self.repoPrimeraVez.getByIdToUpdate(id)
-        if infoCita['estado'] is True:
-            return {"message": "La Cita ya ha sido completada"}
-        else:
-            cita = citaPrimeraVez(infoCita['asesor'],infoCita['nombreCliente'], infoCita['apellidoCliente'], infoCita['direccion'],
-                                  infoCita['telefono'], infoCita['motivo'], respuestaCita['estado'], infoCita['fecha'])
-            return self.repoPrimeraVez.update(id, cita)
+        try:
+            infoCita = self.repoPrimeraVez.getByIdToUpdate(id)
+            if infoCita['estado'] is True:
+                return {"message": "La Cita ya ha sido completada"}
+            else:
+                cita = citaPrimeraVez(respuestaCita['asesor'],infoCita['nombreCliente'], infoCita['apellidoCliente'], infoCita['direccion'],
+                                      infoCita['telefono'], infoCita['motivo'], respuestaCita['estado'], infoCita['fecha'])
+                return self.repoPrimeraVez.update(id, cita)
+        except:
+            return {"status": False, "code": 400, "message": "No fue posible responder la cita de primera vez"}
 
     def deleteCita(self, id):
         search = self.repoPrimeraVez.getById(id)
@@ -72,15 +73,3 @@ class primeraVezController():
                 return self.repoPrimeraVez.delete(id)
         except:
             return {"message": "No fue posible encontrar la cita con id: " + id}
-
-    def asignarAsesor(self,id,asesor):
-        infoCita = self.repoPrimeraVez.getByIdToUpdate(id)
-        try:
-            if infoCita['_id']:
-                cita = citaPrimeraVez( asesor,infoCita['nombreCliente'], infoCita['apellidoCliente'], infoCita['direccion'],
-                                  infoCita['telefono'], infoCita['motivo'], infoCita['estado'], infoCita['fecha'])
-                return self.repoPrimeraVez.update(id,cita)
-        except:
-            return {"message": "No se encontro la cita"}
-
-

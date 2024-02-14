@@ -819,6 +819,90 @@ def responderTareaMakeup(id):
     response = requests.put(url=dataConfig["url-backend-productos"] + "/tareaMakeup/responder/"+id, headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
 
+#-------------------FOTOS--------------------------#
+@app.route('/fotos',methods=['POST'])
+def createFormFotos():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-productos"] + "/fotos", json = data, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/fotos/<string:id>',methods=['PUT'])
+def udpateFormFotos(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/fotos/" + id , json = data,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/fotos')
+def  getAllFormFotos():
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/fotos", headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/fotos/<string:id>')
+def getByIDFormFotos(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/fotos/"+id, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/fotos/<string:id>',methods=['PUT'])
+def responderFormFotos(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/fotos/"+id,json = data, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+@app.route('/fotos/<string:id>',methods=['DELETE'])
+def deleteeFormFotos(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"] + "/fotos/"+id , headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/fotos/sinCompletar')
+def getAllFotosSinCompletar():
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/fotos/sinCompletar",headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+#------------------CITA PRIMERA VEZ-------------------#
+@app.route('/cita', methods=['POST'])
+def createCitaPrimeraVez():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-productos"] + "/cita", json=data,
+                             headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/cita')
+def getAllCita():
+    data = request.get_json()
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/cita",
+                             headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/cita/<string:id>')
+def getCitaById(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/cita/"+id,
+                             headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+
+@app.route('/cita/sinCompletar')
+def getCitasSinCompletar():
+    data = request.get_json()
+    response = requests.post(url=dataConfig["url-backend-productos"] + "/cita/sinCompletar",headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/cita/sinCompletar/<string:id>')
+def getCitasSinCompletarByAsesor(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/cita/sinCompletar/"+id,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/cita/<string:id>',methods=['PUT'])
+def updateCita(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/cita/"+id, json=data,
+                             headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/cita/responder/<string:id>', methods=['PUT'])
+def responderCita(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/cita/responder/"+id, json=data,
+                             headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/cita/<string:id>',methods=['DELETE'])
+def deleteCita(id):
+    response = requests.delete(url=dataConfig["url-backend-productos"] + "/cita/" + id,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
 
 #-------------------------------------------------#
 

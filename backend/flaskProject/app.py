@@ -726,6 +726,11 @@ def ResponderFormFotos(id):
 def DeleteFotos(id):
     json = formFotos.delete(id)
     return jsonify(json)
+
+@app.route('/fotos/sinCompletar')
+def getAllFotosSinCompletar():
+    json = formFotos.getSinCompletar()
+    return jsonify(json)
 # -----------CITA PRIMERA VEZ-----------##
 @app.route('/cita', methods=['POST'])
 def createCitaPrimeraVez():
@@ -743,10 +748,6 @@ def getCitaById(id):
     json = cita.getCitasById(id)
     return jsonify(json)
 
-@app.route('/cita/sinAsignar')
-def getCitaSinAsignar():
-    json =  cita.getSinAsignar()
-    return jsonify(json)
 
 @app.route('/cita/sinCompletar')
 def getCitasSinCompletar():
@@ -775,10 +776,6 @@ def deleteCita(id):
     json = cita.deleteCita(id)
     return jsonify(json)
 
-@app.route('/cita/<string:idCita>/empleado/<string:idEmpleado>', methods=['PUT'])
-def asignarCita(idCita,idEmpleado):
-    json = cita.asignarAsesor(idCita,idEmpleado)
-    return jsonify(json)
 
 # -----------CONFIG AND MAIN ROOT-----------##
 def loadFileConfig():

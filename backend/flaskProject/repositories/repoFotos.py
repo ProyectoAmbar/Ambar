@@ -11,7 +11,15 @@ class RepoFotos(interfaceRepositorio[formatoFotos]):
             i['_id'] =str(i['_id'])
             allItems.append(i)
         return allItems
-    pass
+
+    def getSinCompletar(self):
+        allItems = []
+        collection = self.db[self.collection]
+        response = collection.find({"estado": False}).sort("fecha",1)
+        for i in response:
+            i['_id'] =str(i['_id'])
+            allItems.append(i)
+        return allItems
 
     def getById(self, id):
         collection = self.db[self.collection]
@@ -21,4 +29,5 @@ class RepoFotos(interfaceRepositorio[formatoFotos]):
             return response
         else:
             return None
+    pass
 

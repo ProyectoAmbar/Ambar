@@ -15,6 +15,9 @@ class fotosController():
         except:
             return False
 
+    def getSinCompletar(self):
+        self.repoFotos.getSinCompletar()
+
     def create(self, infoFotos):
         if (self.isValid(infoFotos)):
             fecha = datetime(infoFotos['año'], infoFotos['mes'], infoFotos['dia'], infoFotos['hora'],infoFotos['minutos'],0)
