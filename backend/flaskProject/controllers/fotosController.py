@@ -16,19 +16,21 @@ class fotosController():
             return False
 
     def getSinCompletar(self):
-        self.repoFotos.getSinCompletar()
+        return self.repoFotos.getSinCompletar()
 
     def create(self, infoFotos):
-        if (self.isValid(infoFotos)):
+        search = self.repoFotos.getByfactura(infoFotos['fv'])
+        if (self.isValid(infoFotos)) and search is None:
             fecha = datetime(infoFotos['año'], infoFotos['mes'], infoFotos['dia'], infoFotos['hora'],infoFotos['minutos'],0)
             formFotos = formatoFotos(fecha, infoFotos['fv'], infoFotos['locacion'],infoFotos['referencia'], infoFotos['nombreCliente'], infoFotos['numeroCliente'],infoFotos['correoCliente'], False)
             return self.repoFotos.save(formFotos)
         else:
             return {"status": False, "code": 400,
-                    "message": "Por favor ingrese la información necesaria para crear la tarea de fotos"}
+                    "message": "Por favor ingrese la información necesaria para crear la tarea de fotos o el numero de factura ya existe"}
 
     def update(self, id, infoFotos):
-        if (self.isValid(infoFotos)):
+        search = self.repoFotos.getByfactura(infoFotos['fv'])
+        if (self.isValid(infoFotos))and search is None6:
             fecha = datetime(infoFotos['año'], infoFotos['mes'], infoFotos['dia'], infoFotos['hora'],infoFotos['minutos'], 0)
             formFotos = formatoFotos(fecha , infoFotos['fv'], infoFotos['locacion'],infoFotos['referencia'], infoFotos['nombreCliente'], infoFotos['numeroCliente'],infoFotos['correoCliente'], infoFotos['estado'])
             return self.repoFotos.update(id, formFotos)

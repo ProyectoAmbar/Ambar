@@ -441,6 +441,18 @@ def verTareasPendientes(idEmpleado):
     response = requests.get(url=dataConfig["url-backend-productos"] + "/tarea/verPendientes/" + idEmpleado, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
+@app.route('/tarea/completed/<string:id>', methods=['GET'])
+def getAllAsesorCompleted(id):
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tarea/completed/" + id,
+                            headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
+@app.route('/tarea/fecha/<string:id>', methods=['PUT'])
+def asignarFecha(id):
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tarea/fecha/"+id,json = data,headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
 ###--------------RUTAS FORMULARIO DE MEDIDAS--------------###
 
 @app.route('/formMedidas',methods=['POST'])
@@ -571,6 +583,12 @@ def getTareasPendientes(idModista):
     response = requests.get(url=dataConfig["url-backend-productos"] +'/tareaModista/pendientes/'+idModista, headers={"Content-Type": "application/json; charset=utf-8"})
     return jsonify(response.json())
 
+@app.route('/tareaModista/completed/<string:id>')
+def getTareaModistaCompleted(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaModista/completed/" + id,
+                            headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
 #-----------TareaLavanderia-----------#
 @app.route('/lavanderia',methods=['POST'])
 def createTareaLavanderia():
@@ -629,6 +647,11 @@ def asignarLavanderia(id, idLavanderia):
             return jsonify(response.json())
     except:
         return {"status": False, "code": 400, "message": "no se encontro la tarea o el empleado"}
+
+@app.route('/lavanderia/completed/<string:id>', methods=['GET'])
+def getAllCompletedLavanderia(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/lavanderia/completed/"+id, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
 
 
 #----------ENTREGA-DEVOLUCION----------#
@@ -816,8 +839,16 @@ def GetAllPendientesTareaMakeup():
     return jsonify(response)
 @app.route('/tareaMakeup/responder/<string:id>', methods=['PUT'])
 def responderTareaMakeup(id):
-    response = requests.put(url=dataConfig["url-backend-productos"] + "/tareaMakeup/responder/"+id, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    data = request.get_json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/tareaMakeup/responder/"+id, json = data,headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
+
+@app.route('/tareaMakeup/completed/<string:id>', methods=['GET'])
+def getTareasMakeUpCompletadas(id):
+    response = requests.get(url=dataConfig["url-backend-productos"] + "/tareaMakeup/completed/" + id,
+                            headers={"Content-Type": "application/json; charset=utf8"}).json()
+    return jsonify(response)
+
 
 #-------------------FOTOS--------------------------#
 @app.route('/fotos',methods=['POST'])
@@ -838,10 +869,10 @@ def  getAllFormFotos():
 def getByIDFormFotos(id):
     response = requests.get(url=dataConfig["url-backend-productos"] + "/fotos/"+id, headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
-@app.route('/fotos/<string:id>',methods=['PUT'])
+@app.route('/fotos/responder/<string:id>',methods=['PUT'])
 def responderFormFotos(id):
     data = request.get_json()
-    response = requests.put(url=dataConfig["url-backend-productos"] + "/fotos/"+id,json = data, headers={"Content-Type": "application/json; charset=utf8"}).json()
+    response = requests.put(url=dataConfig["url-backend-productos"] + "/fotos/responder/"+id,json = data, headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)
 @app.route('/fotos/<string:id>',methods=['DELETE'])
 def deleteeFormFotos(id):
@@ -862,7 +893,6 @@ def createCitaPrimeraVez():
 
 @app.route('/cita')
 def getAllCita():
-    data = request.get_json()
     response = requests.get(url=dataConfig["url-backend-productos"] + "/cita",
                              headers={"Content-Type": "application/json; charset=utf8"}).json()
     return jsonify(response)

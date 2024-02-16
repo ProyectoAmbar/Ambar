@@ -754,11 +754,6 @@ def getCitasSinCompletar():
     json = cita.getSinCompletar()
     return jsonify(json)
 
-@app.route('/cita/sinCompletar/<string:id>')
-def getCitasSinCompletarByAsesor(id):
-    json = cita.getSinCompletarByAsesor(id)
-    return jsonify(json)
-
 @app.route('/cita/<string:id>',methods=['PUT'])
 def updateCita(id):
     data = request.get_json()

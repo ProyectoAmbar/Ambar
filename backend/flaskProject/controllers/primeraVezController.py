@@ -7,7 +7,7 @@ def isValid(infoCita):
     try:
         if (infoCita['nombre'] and infoCita['apellido'] and infoCita['direccion'] and infoCita[
             'telefono'] and infoCita['motivo'] and infoCita['dia'] and infoCita['mes'] and
-                infoCita['año'] and infoCita['hora'] and infoCita['minuto']):
+                infoCita['año'] and infoCita['hora'] and infoCita['minuto'] != None):
             return True
     except:
         return False

@@ -29,5 +29,14 @@ class RepoFotos(interfaceRepositorio[formatoFotos]):
             return response
         else:
             return None
+
+    def getByfactura(self, fv):
+        collection = self.db[self.collection]
+        response = collection.find_one({"fv": fv})
+        if response != None:
+            response['_id'] = str(response['_id'])
+            return response
+        else:
+            return None
     pass
 
