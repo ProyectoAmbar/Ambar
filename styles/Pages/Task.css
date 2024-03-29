@@ -1,0 +1,15 @@
+.CardComponentTask{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+}
+
+.MetaCardComponent{
+padding: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+   .CardComponentTask{
+    flex-direction: column;
+   }
+}

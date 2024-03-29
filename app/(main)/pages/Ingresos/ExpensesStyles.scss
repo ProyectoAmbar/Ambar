@@ -1,0 +1,19 @@
+.p-text-success {
+    color: #2ca02c; 
+}
+
+.p-text-danger {
+    color: #d9534f; 
+}
+
+div.containerbuttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 720px) {
+    div.containerbuttons {
+      flex-direction: column;
+    }
+}

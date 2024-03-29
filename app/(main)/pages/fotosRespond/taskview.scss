@@ -1,0 +1,16 @@
+div.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+@media (min-width: 1024px) {
+    .containerFormTask {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+.table-responsive-container {
+    overflow-x: auto;
+}

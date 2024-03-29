@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--surface-ground);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.layout-wrapper {
+    min-height: 100vh;
+}
+
+div.grid.termCondition {
+    padding-top: 3%;
+}
+
+div.p-fluid.formgrid.grid.formmedidas {
+    padding-top: 1rem;
+}
+
+div.field.col-12.containerbutton {
+    display: flex;
+    align-items: center;
+}
+.div.field.col-12.md\:col-6.mb-0.pb-0.pt-\[1rem\].containerbutton {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem; 
+}
+
+.field.col-12.md\:col-4.md\:mb-0.buttonform {
+    padding-top: 1rem; 
+}
+.fc-input {
+    @apply px-2;
+}
+
+.fc-header-toolbar {
+    display: inline-block;
+    padding: 4px 4px;
+    @apply space-x-8;
+}
+
+.fc-day {
+    @apply m-8;
+}
+
+.fc-scrollgrid-sync-table {
+    @apply w-full;
+}
+
+.fc-view {
+    @apply w-full h-full lg: h-3/4 xl:h-2/3 bg-white;
+}
+
+.fc-h-event {
+    @apply bg-violet-500 border border-violet-600;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    @apply bg-violet-100;
+}
+
+.fc .fc-button {
+    @apply bg-violet-800 hover: bg-violet-900;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+    @apply bg-violet-600;
+}
+
+.fc .fc-button-primary:disabled {
+    @apply bg-violet-600;
+}
+
+.fc-v-event {
+    @apply bg-violet-500 border border-violet-600;
+}

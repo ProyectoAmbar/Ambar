@@ -1,0 +1,32 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "172.0.0.178",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "CasurDatabase",
+            "database": "Casur",
+            "username": "admin_casur",
+            "password": "portalcasur*2022"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "18.229.125.75",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "wordpress",
+            "database": "wordpress_db",
+            "username": "wordpress_user",
+            "password": "wordpress"
+        }
+    ]
+}

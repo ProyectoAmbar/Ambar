@@ -1,0 +1,20 @@
+div.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+@media (min-width: 1024px) {
+    .containerFormTask {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+
+div.ant-select.css-dev-only-do-not-override-2rgkd4.ant-select-single.ant-select-show-arrow{
+    display: flex;
+}
+.table-responsive-container {
+    overflow-x: auto;
+}
