@@ -1,31 +1,26 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Table, Select } from 'antd';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';
-import { getTareasDontAsing, extractIdFromDBRef, fetchProductoName, getAllEmployees, updateTaskWithWorker, getAllDeliver, getAllReturns, updateTaskResponse, updateResponseReturn } from '../../../api/taskService'; //
-import './AsignentView.scss';
-const MySwal = withReactContent(Swal);
-const { Option } = Select;
-import Cookies from 'js-cookie';
+import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { Dialog } from 'primereact/dialog';
 import { Calendar } from 'primereact/calendar';
+import './AsignentView.scss';
+import { getTareasDontAsing, extractIdFromDBRef, fetchProductoName, getAllEmployees, updateTaskWithWorker, getAllDeliver, getAllReturns, updateTaskResponse, updateResponseReturn } from '../../../api/taskService';
+
+const MySwal = withReactContent(Swal);
 
 interface Task {
-    key: number;
+    key: string;
     id: string;
     name: string;
     nombre: string;
     date: string;
-    assignedTo: number | null;
-}
-
-interface Worker {
-    id: number;
-    name: string;
 }
 
 const Deliver = () => {
@@ -138,72 +133,16 @@ const Deliver = () => {
         maquilladora: '653ea80670556042587486bd'
     };
 
-    const columnDeliver = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id'
-        },
-        {
-            title: 'Nombre',
-            dataIndex: 'name',
-            key: 'name'
-        },
-        {
-            title: 'Nombre Producto',
-            dataIndex: 'nombre',
-            key: 'nombre'
-        },
-        {
-            title: 'Fecha Que se debe entregar',
-            dataIndex: 'date',
-            key: 'date'
-        },
-        {
-            title: 'Entregar Producto',
-            key: 'assign',
-            render: (_, record: any) => <Button onClick={() => openResponseModal(record.id, record.date)}>Entregar A cliente</Button>
-        }
-    ];
+    const deliverColumnTemplate = (rowData: Task) => {
+        return <Button label="Entregar A cliente" onClick={() => openResponseModal(rowData.id, rowData.date)} />;
+    };
 
-    // Columnas para devoluciones
-    const columnReturns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id'
-        },
-        {
-            title: 'Nombre',
-            dataIndex: 'name',
-            key: 'name'
-        },
-        {
-            title: 'Nombre Producto',
-            dataIndex: 'nombre',
-            key: 'nombre'
-        },
-        {
-            title: 'Fecha a devolver',
-            dataIndex: 'date',
-            key: 'date'
-        },
-        {
-            title: 'Acción',
-            key: 'action',
-            render: (_, record: any) => <Button onClick={() => acceptReturn(record.id)}>Recibir Producto</Button>
-        }
-    ];
+    const returnsColumnTemplate = (rowData: Task) => {
+        return <Button label="Recibir Producto" onClick={() => acceptReturn(rowData.id)} />;
+    };
 
-    const getCurrentColumns = () => {
-        switch (selectedOption) {
-            case 'deliver':
-                return columnDeliver;
-            case 'returns':
-                return columnReturns;
-            default:
-                return columnDeliver;
-        }
+    const dateTemplate = (rowData: Task) => {
+        return <span>{new Date(rowData.date).toLocaleDateString()}</span>;
     };
 
     const renderFooter = () => {
@@ -291,6 +230,11 @@ const Deliver = () => {
         }
     };
 
+    const optionItems = [
+        { label: 'Ver Entregas', value: 'deliver' },
+        { label: 'Ver Devoluciones', value: 'returns' }
+    ];
+
     return (
         <div className="containerFormTask">
             <div className="col-12 ">
@@ -303,23 +247,23 @@ const Deliver = () => {
                 <div className="card">
                     <div className="buttonContainer">
                         <h5>Lista de Entregas O Devoluciones</h5>
-                        {/* Dropdown para seleccionar la opción */}
-                        <Select defaultValue="deliver" style={{ width: 120, marginBottom: 10 }} onChange={handleOptionChange}>
-                            <Option value="deliver">Ver Entregas </Option>
-                            <Option value="returns">Ver Devoluciones</Option>
-                        </Select>{' '}
+                        <Dropdown value={selectedOption} options={optionItems} onChange={(e) => handleOptionChange(e.value)} placeholder="Seleccionar Opción" />
                     </div>
                     <div className="table-responsive-container">
-                        <Table columns={getCurrentColumns()} dataSource={tasks} scroll={{ x: 1300 }}/>
+                        <DataTable value={tasks} responsiveLayout="scroll">
+                            <Column field="id" header="ID" />
+                            <Column field="name" header="Nombre" />
+                            <Column field="nombre" header="Nombre Producto" />
+                            <Column field="date" header="Fecha" body={dateTemplate} />
+                            <Column body={selectedOption === 'deliver' ? deliverColumnTemplate : returnsColumnTemplate} />
+                        </DataTable>
                     </div>
                 </div>
             </div>
             <Dialog header="Respuesta de Entrega Producto" visible={isModalVisible} style={{ width: '50vw' }} footer={renderFooter} onHide={() => setIsModalVisible(false)}>
-                <div className="p-field ">
-                    <label className="" htmlFor="date">
-                        Fecha de Devolución
-                    </label>
-                    <Calendar id="date" value={devolutionDate} onChange={(e: any) => setDevolutionDate(e.value)} showIcon />
+                <div className="p-field">
+                    <label htmlFor="date">Fecha de Devolución</label>
+                    <Calendar id="date" value={devolutionDate} onChange={(e:any) => setDevolutionDate(e.value)} showIcon />
                 </div>
             </Dialog>
         </div>

@@ -109,8 +109,8 @@ const ClientLogin: FC = () => {
                 >
                     <div className="w-full surface-card py-7 px-6 sm:px-8" style={{ borderRadius: '53px' }}>
                         <div className="text-center mb-5">
-                            <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
-                            <div className="text-900 text-3xl font-medium mb-3">Bienvenido, Jhojan!</div>
+                            <img src="/demo/images/login/loginImage.jpg" alt="Image" height="50" className="mb-3" />
+                            <div className="text-900 text-3xl font-medium mb-3">Bienvenido, Ambar Couture!</div>
                             <span className="text-600 font-medium">Inicia Sesión para continuar</span>
                         </div>
 
