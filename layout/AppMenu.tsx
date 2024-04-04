@@ -195,7 +195,7 @@ const AppMenu = () => {
                 label: 'Mas Paginas ',
                 items: [
                     { label: 'Formulario Alquiler', icon: 'pi pi-fw pi-pencil', to: '/pages/formsAlquiler', roles: ['Admin'] },
-                    { label: 'Formulario Cita primera vez', icon: 'pi pi-fw pi-pencil', to: '/pages/formsCitaPrimera' },
+                    { label: 'Formulario Cita primera vez', icon: 'pi pi-fw pi-pencil', to: '/pages/formsCitaPrimera', roles: ['Admin', 'Asesor'] },
                     { label: 'Formulario Medidas', icon: 'pi pi-fw pi-pencil', to: '/pages/formsMedidas', roles: ['Admin'] },
                     { label: 'Formulario Sastreria', icon: 'pi pi-fw pi-pencil', to: '/pages/formsSastreria', roles: ['Admin'] },
                     { label: 'Formulario Lavanderia', icon: 'pi pi-fw pi-pencil', to: '/pages/formsLavanderia', roles: ['Admin'] },
@@ -203,7 +203,7 @@ const AppMenu = () => {
                     { label: 'Formulario Sesion de Fotos', icon: 'pi pi-fw pi-pencil', to: '/pages/FormPhoto', roles: ['Admin'] },
                     { label: 'Ver Tareas', icon: 'pi pi-fw pi-eye', to: '/pages/RolViewTask' },
                     { label: 'Ver Citas Primera Vez', icon: 'pi pi-fw pi-eye', to: '/pages/CitaPrimeraRespond', roles: ['Admin', 'Asesor'] },
-                    { label: 'Ver Sesion de Fotos', icon: 'pi pi-fw pi-eye', to: '/pages/fotosRespond' },
+                    { label: 'Ver Sesion de Fotos', icon: 'pi pi-fw pi-eye', to: '/pages/fotosRespond', roles: ['Admin', 'Asesor'] },
                     { label: 'Calendario', icon: 'pi pi-fw pi-calendar', to: '/pages/CalendarTask' },
                     // { label: 'Formulario Consult', icon: 'pi pi-fw pi-id-card', to: '/Consult' },
                     { label: 'Ingresos y Egresos', icon: 'pi pi-fw pi-money-bill', to: '/pages/Ingresos', roles: ['Admin'] },

@@ -2,7 +2,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { Table } from 'antd';
+import { Table } from '../../../../node_modules/antd/es/index';
 import withReactContent from 'sweetalert2-react-content';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';

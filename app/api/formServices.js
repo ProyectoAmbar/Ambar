@@ -89,6 +89,23 @@ export const responderTareaLavanderiaComplete = async (data) => {
     }
 };
 
+export const updateProductService = async (id, data) => {
+    const token = Cookies.get('Token');
+
+    try {
+        const response = await axios.put(`${API_URLS.microservicio1}/productos/${id}`, data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el producto:', error);
+        throw error;
+    }
+};
+
 export const saveProductService = async (productData) => {
     const token = Cookies.get('Token');
     const response = await axios.post(`${API_URLS.microservicio1}/productos`, productData, {

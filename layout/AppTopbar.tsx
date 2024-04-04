@@ -54,8 +54,8 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     };
 
     const items = [
-        { label: 'Profile', icon: 'pi pi-fw pi-user' },
-        { label: 'Settings', icon: 'pi pi-fw pi-cog' },
+        { label: 'Perfil', icon: 'pi pi-fw pi-user' },
+        { label: 'Configuracion', icon: 'pi pi-fw pi-cog' },
         { separator: true },
         {
             label: 'Salir',

@@ -14,8 +14,9 @@ import { Toolbar } from 'primereact/toolbar';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '../../../../types/types';
-import { getProducts, saveProductService, deleteProductService } from '../../../api/formServices';
+import { getProducts, saveProductService, deleteProductService, updateProductService } from '../../../api/formServices';
 import { Checkbox } from 'primereact/checkbox';
+import S3Client from '../../../api/s3Client';
 
 /* @todo Used 'as any' for types here. Will fix in next version due to onSelectionChange event type issue. */
 const Crud = () => {
@@ -70,12 +71,60 @@ const Crud = () => {
         setDeleteProductsDialog(false);
     };
 
-    const onUploadHandler = (e) => {
-        console.log('Evento de carga:', e);
+    const uploadImageToS3 = async (file) => {
+        const fileName = `${Date.now()}-${file.name}`;
+        const params = {
+            Bucket: 'ambar',
+            Key: fileName,
+            Body: file,
+            ACL: 'public-read',
+            ContentType: file.type
+        };
+
+        // try {
+        //     const { Location } = await S3Client.upload(params).promise();
+        //     return Location;
+        // } catch (error) {
+        //     console.error('Error al subir imagen a S3:', error);
+        //     throw new Error('Error al subir imagen a S3');
+        // }
+
+        try {
+            await S3Client.upload(params).promise();
+            const publicUrl = `https://usc1.contabostorage.com/5c79aa9fa2cf480a98b39361fe8831a3:ambar/${fileName}`;
+            return publicUrl;
+        } catch (error) {
+            console.error('Error al subir imagen a S3:', error);
+            throw new Error('Error al subir imagen a S3');
+        }
+    };
+
+    const onUploadHandler = async (e) => {
         if (e.files && e.files.length > 0) {
-            const fileName = e.files[0].name;
-            console.log('Nombre del archivo:', fileName);
-            setProduct((prevProduct) => ({ ...prevProduct, imagenProducto: fileName }));
+            const file = e.files[0];
+            const maxSize = 1 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'El archivo es demasiado grande. Tamaño máximo permitido: 1MB',
+                    life: 3000
+                });
+                return;
+            }
+
+            try {
+                const imageUrl = await uploadImageToS3(file);
+                setProduct((prevProduct) => ({ ...prevProduct, imagenProducto: imageUrl }));
+            } catch (error) {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Error al subir imagen',
+                    detail: error.message,
+                    life: 3000
+                });
+            }
         } else {
             console.log('No se han cargado archivos.');
         }
@@ -83,21 +132,47 @@ const Crud = () => {
 
     const saveProduct = async () => {
         setSubmitted(true);
-
         const { _id, ...productData } = product;
+
+        const referenciaExiste = products.some((prod) => prod.referencia === productData.referencia && prod._id !== _id);
+        if (referenciaExiste) {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Ya existe un producto con esa referencia.',
+                life: 3000
+            });
+            return;
+        }
+        const nombreExiste = products.some((prod) => prod.nombre.toLowerCase() === productData.nombre.trim().toLowerCase() && prod._id !== _id);
+        if (nombreExiste) {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Ya existe un producto con ese nombre.',
+                life: 3000
+            });
+            return;
+        }
 
         if (productData.nombre.trim()) {
             try {
-                console.log(productData, 'la data oficial es ');
-                await saveProductService(productData);
+                if (_id) {
+                    await updateProductService(_id, productData);
+                } else {
+                    await saveProductService(productData);
+                }
+
                 toast.current?.show({
                     severity: 'success',
                     summary: 'Éxito',
-                    detail: 'Producto guardado con éxito',
+                    detail: _id ? 'Producto actualizado con éxito' : 'Producto creado con éxito',
                     life: 3000
                 });
 
                 await loadProducts();
+                setProductDialog(false);
+                setProduct(emptyProduct);
             } catch (error) {
                 console.error('Error al guardar el producto:', error);
                 toast.current?.show({
@@ -107,9 +182,13 @@ const Crud = () => {
                     life: 3000
                 });
             }
-
-            setProductDialog(false);
-            setProduct(emptyProduct);
+        } else {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'El nombre del producto es obligatorio',
+                life: 3000
+            });
         }
     };
 
@@ -133,7 +212,7 @@ const Crud = () => {
                     detail: 'Product Deleted',
                     life: 3000
                 });
-                await loadProducts(); // Recargar la lista de productos
+                await loadProducts();
             } catch (error) {
                 console.error('Error al eliminar el producto:', error);
                 toast.current?.show({
@@ -231,25 +310,19 @@ const Crud = () => {
             </>
         );
     };
-    const imageBodyTemplate = (rowData: Demo.ProductAmbar) => {
-        if (rowData.imagenProducto) {
-            const imageUrl = `/DataForTest/${rowData.imagenProducto}`;
-            return (
-                <>
-                    <span className="p-column-title">Imagen</span>
-                    <img src={imageUrl} alt={rowData.nombre} className="product-image" />
-                </>
-            );
-        } else {
-            return (
-                <>
-                    <span className="p-column-title">Imagen</span>
-                    <span>No disponible</span>
-                </>
-            );
-        }
+    const imageBodyTemplate = (rowData) => {
+        return rowData.imagenProducto ? (
+            <>
+                <span className="p-column-title">Imagen</span>
+                <img src={rowData.imagenProducto} alt={rowData.nombre} className="product-image" />
+            </>
+        ) : (
+            <>
+                <span className="p-column-title">Imagen</span>
+                <span>No disponible</span>
+            </>
+        );
     };
-
     const referenceBodyTemplate = (rowData: Demo.ProductAmbar) => {
         return (
             <>
@@ -344,22 +417,24 @@ const Crud = () => {
 
                     {/* Modal para crear y editar Productos */}
                     <Dialog visible={productDialog} style={{ width: '450px' }} header="Detalles del Producto" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                        {!product._id && (
-                            <div className="field">
-                                <label htmlFor="image">Imagen</label>
-                                <FileUpload
-                                    mode="advanced"
-                                    name="demo[]"
-                                    accept="image/*"
-                                    maxFileSize={1000000}
-                                    chooseLabel="Seleccionar imagen"
-                                    customUpload={true}
-                                    uploadHandler={onUploadHandler}
-                                    emptyTemplate={<p className="m-0">Arrastre y suelte la imagen aquí o haga clic para seleccionar.</p>}
-                                />
-                            </div>
-                        )}
-                        {product.imagenProducto && product._id && <img src={`/DataForTest/${product.imagenProducto}`} alt={product.nombre} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
+                        <div className="field">
+                            <label htmlFor="image">Imagen (Máximo 1MB)</label>
+
+                            {/* Muestra la imagen actual si existe */}
+                            {product.imagenProducto && <img src={product.imagenProducto} alt="Imagen del producto" width="150" className="mb-2 block mx-auto" />}
+
+                            {/* Componente FileUpload siempre disponible para cargar o cambiar la imagen */}
+                            <FileUpload
+                                mode="advanced"
+                                name="demo[]"
+                                accept="image/*"
+                                maxFileSize={1000000}
+                                chooseLabel={product.imagenProducto ? 'Cambiar imagen' : 'Seleccionar imagen'}
+                                customUpload={true}
+                                uploadHandler={onUploadHandler}
+                                emptyTemplate={<p className="m-0">Arrastre y suelte la imagen aquí o haga clic para seleccionar. Tamaño máximo 1MB.</p>}
+                            />
+                        </div>
 
                         <div className="field">
                             <label htmlFor="nombre">Nombre</label>

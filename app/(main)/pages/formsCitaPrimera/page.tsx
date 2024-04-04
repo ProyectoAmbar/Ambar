@@ -64,7 +64,13 @@ const CitaPrimera = () => {
             { name: 'Alquiler', code: 'alquiler' },
             { name: 'Make-up', code: 'maleup' },
             { name: 'Sesion De Fotos', code: 'sesionFotos' },
-            { name: 'Foto-Make-uP', code: 'FotoMake' }
+            { name: 'Foto-Make-uP', code: 'FotoMake' },
+            { name: 'Novia', code: 'novia' },
+            { name: 'Traje', code: 'traje' },
+            { name: 'Gala', code: 'Gala' },
+            { name: 'Traje', code: 'traje' },
+            { name: 'Quince años', code: 'Quince-años' },
+            { name: 'Primera comunion', code: 'Primera-Comunion' }
         ],
         []
     );

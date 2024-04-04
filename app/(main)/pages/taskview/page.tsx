@@ -91,7 +91,7 @@ const TaskView = () => {
                 });
     
                 document.getElementById('maquillaje').addEventListener('click', () => {
-                    window.location.href = '/pages/formsMakeup';
+                    window.location.href = '/pages/FormMakeup';
                 });
     
                 document.getElementById('sesionFotos').addEventListener('click', () => {
