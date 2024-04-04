@@ -13,6 +13,7 @@ from controllers.tareaModistaController import tareaModisteriaController
 from repositories.repositorioProductos import RepositorioProductos
 from controllers.lavanderiaController import lavanderiaController
 from controllers.entregaDevolucionController import entregaDevolucionController
+from controllers.fotoMakeup import fotoMakeUpController
 from controllers.calendar import calendar
 from controllers.cajaController import cajaController
 from controllers.auditoriaController import auditoriaController
@@ -42,6 +43,8 @@ makeup = makeupController()
 tareaMake = tareaMakeupController()
 formFotos = fotosController()
 cita = primeraVezController()
+fotoMake = fotoMakeUpController()
+
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -153,7 +156,7 @@ def desbloquear(id):
     return jsonify(json)
 
 
-@app.route('/productos/getReferencia/<int:referencia>', methods=['GET'])
+@app.route('/productos/getReferencia/<string:referencia>', methods=['GET'])
 def getByReferencia(referencia):
     print(type(int(referencia)))
     json = product.getByRef(referencia)
@@ -770,6 +773,14 @@ def responderCita(id):
 def deleteCita(id):
     json = cita.deleteCita(id)
     return jsonify(json)
+
+#---------------------FOTOMAKEUP----------------------#
+@app.route('/fotomake', methods=['POST'])
+def createFotoMakeup():
+    data = request.get_json()
+    json = fotoMake.createFotoMakeUp(data)
+    return jsonify(json)
+
 
 
 # -----------CONFIG AND MAIN ROOT-----------##
